@@ -1,7 +1,6 @@
 'use client';
 
 import * as Select from '@radix-ui/react-select';
-import * as RadioGroup from '@radix-ui/react-radio-group';
 import * as Slider from '@radix-ui/react-slider';
 import { ChevronDownIcon, CheckIcon, MagicWandIcon, ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import { useState, useEffect, startTransition } from 'react';

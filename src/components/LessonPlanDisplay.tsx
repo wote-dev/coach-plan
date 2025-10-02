@@ -7,7 +7,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import * as Tabs from '@radix-ui/react-tabs';
 import { Cross2Icon, ChevronDownIcon } from '@radix-ui/react-icons';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface LessonPlanDisplayProps {
   lessonPlan: Partial<LessonPlan>;

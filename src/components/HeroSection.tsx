@@ -5,8 +5,6 @@ import { ChevronRightIcon, PlayIcon, MagicWandIcon } from '@radix-ui/react-icons
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShineBorder } from '@/components/ui/shine-border';
-import GradientText from './GradientText';
 import TennisLoader from './TennisLoader';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { useCallback } from 'react';

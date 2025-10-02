@@ -18,10 +18,10 @@ export default function BackButton({ onClick, className = '', children }: BackBu
       onClick();
       return;
     }
-    const hasVT = typeof document !== 'undefined' && (document as any).startViewTransition;
+    const hasVT = typeof document !== 'undefined' && (document as Document & { startViewTransition?: (callback: () => void) => void }).startViewTransition;
     if (hasVT) {
       e.preventDefault();
-      (document as any).startViewTransition(() => {
+      (document as Document & { startViewTransition: (callback: () => void) => void }).startViewTransition(() => {
         router.push('/');
       });
     } else {
