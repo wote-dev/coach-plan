@@ -3,14 +3,13 @@
 import { LessonPlan, DetailedActivity } from '@/data/lessonPlans';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
-import * as Separator from '@radix-ui/react-separator';
 import * as Accordion from '@radix-ui/react-accordion';
 import * as Tabs from '@radix-ui/react-tabs';
 import { Cross2Icon, ChevronDownIcon } from '@radix-ui/react-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface LessonPlanDisplayProps {
-  lessonPlan: LessonPlan;
+  lessonPlan: Partial<LessonPlan>;
   onClose?: () => void;
   onBack?: () => void;
 }
@@ -166,12 +165,12 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
           {/* Header */}
           <div className="flex items-center justify-between p-8 border-b border-white/20">
             <div className="flex-1 pr-4">
-              <Dialog.Title className="text-2xl font-bold text-white mb-3 tracking-tight">{lessonPlan.title}</Dialog.Title>
+              <Dialog.Title className="text-2xl font-bold text-white mb-3 tracking-tight">{lessonPlan.title || 'Lesson Plan'}</Dialog.Title>
               <div className="flex flex-wrap gap-3">
-                <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.sport}</span>
-                <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.level}</span>
-                <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.duration} min</span>
-                <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.numberOfPeople}</span>
+                {lessonPlan.sport && <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.sport}</span>}
+                {lessonPlan.level && <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.level}</span>}
+                {lessonPlan.duration && <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.duration} min</span>}
+                {lessonPlan.numberOfPeople && <span className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-3 py-2 rounded-xl text-sm font-medium">{lessonPlan.numberOfPeople}</span>}
               </div>
             </div>
             <Dialog.Close asChild>
@@ -208,34 +207,39 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
               <div className="p-8 space-y-10">
                 
                 {/* Description */}
-                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-xl">
-                  <p className="text-white/95 leading-relaxed text-lg font-medium">{lessonPlan.description}</p>
-                </div>
+                {lessonPlan.description && (
+                  <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-xl">
+                    <p className="text-white/95 leading-relaxed text-lg font-medium">{lessonPlan.description}</p>
+                  </div>
+                )}
 
                 {/* Key Information */}
                 <div className="grid lg:grid-cols-2 gap-6">
-                  <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-7 shadow-lg">
-                    <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider flex items-center gap-2.5">
-                      <span className="w-2.5 h-2.5 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"></span>
-                      Learning Objectives
-                    </h3>
-                    <ul className="space-y-3.5">
-                      {lessonPlan.objectives.map((objective, index) => (
-                        <li key={index} className="flex items-start gap-3.5 text-base text-white/85 leading-relaxed">
-                          <span className="text-blue-400 mt-1 font-bold text-lg">•</span>
-                          <span>{objective}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {lessonPlan.objectives && lessonPlan.objectives.length > 0 && (
+                    <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-7 shadow-lg">
+                      <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider flex items-center gap-2.5">
+                        <span className="w-2.5 h-2.5 bg-blue-400 rounded-full shadow-lg shadow-blue-400/50"></span>
+                        Learning Objectives
+                      </h3>
+                      <ul className="space-y-3.5">
+                        {lessonPlan.objectives.map((objective, index) => (
+                          <li key={index} className="flex items-start gap-3.5 text-base text-white/85 leading-relaxed">
+                            <span className="text-blue-400 mt-1 font-bold text-lg">•</span>
+                            <span>{objective}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-                  <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-7 shadow-lg">
-                    <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider flex items-center gap-2.5">
-                      <span className="w-2.5 h-2.5 bg-green-400 rounded-full shadow-lg shadow-green-400/50"></span>
-                      Required Equipment
-                    </h3>
-                    <div className="flex flex-wrap gap-2.5">
-                      {lessonPlan.equipment.map((item, index) => (
+                  {lessonPlan.equipment && lessonPlan.equipment.length > 0 && (
+                    <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-7 shadow-lg">
+                      <h3 className="text-sm font-bold text-white mb-5 uppercase tracking-wider flex items-center gap-2.5">
+                        <span className="w-2.5 h-2.5 bg-green-400 rounded-full shadow-lg shadow-green-400/50"></span>
+                        Required Equipment
+                      </h3>
+                      <div className="flex flex-wrap gap-2.5">
+                        {lessonPlan.equipment.map((item, index) => (
                         <motion.span
                           key={index}
                           className="bg-white/20 backdrop-blur-sm text-white border border-white/30 rounded-full text-sm font-medium px-4 py-2.5 shadow-md cursor-default"
@@ -251,9 +255,10 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                         >
                           {item}
                         </motion.span>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {lessonPlan.safetyConsiderations && lessonPlan.safetyConsiderations.length > 0 && (
@@ -343,31 +348,43 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
 
                     <Tabs.Content value="warmup" className="focus:outline-none">
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl overflow-hidden shadow-xl">
-                        <Accordion.Root type="multiple" defaultValue={lessonPlan.warmUp.map((_, i) => `activity-${i + 1}`)}>
-                          {lessonPlan.warmUp.map((activity, index) => (
-                            <ActivityCard key={index} activity={activity} index={index + 1} />
-                          ))}
-                        </Accordion.Root>
+                        {lessonPlan.warmUp && lessonPlan.warmUp.length > 0 ? (
+                          <Accordion.Root type="multiple" defaultValue={lessonPlan.warmUp.map((_, i) => `activity-${i + 1}`)}>
+                            {lessonPlan.warmUp.map((activity, index) => (
+                              <ActivityCard key={index} activity={activity} index={index + 1} />
+                            ))}
+                          </Accordion.Root>
+                        ) : (
+                          <p className="text-white/60 text-center p-8">No warm-up activities available</p>
+                        )}
                       </div>
                     </Tabs.Content>
 
                     <Tabs.Content value="main" className="focus:outline-none">
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl overflow-hidden shadow-xl">
-                        <Accordion.Root type="multiple" defaultValue={lessonPlan.mainActivities.map((_, i) => `activity-${i + 1}`)}>
-                          {lessonPlan.mainActivities.map((activity, index) => (
-                            <ActivityCard key={index} activity={activity} index={index + 1} />
-                          ))}
-                        </Accordion.Root>
+                        {lessonPlan.mainActivities && lessonPlan.mainActivities.length > 0 ? (
+                          <Accordion.Root type="multiple" defaultValue={lessonPlan.mainActivities.map((_, i) => `activity-${i + 1}`)}>
+                            {lessonPlan.mainActivities.map((activity, index) => (
+                              <ActivityCard key={index} activity={activity} index={index + 1} />
+                            ))}
+                          </Accordion.Root>
+                        ) : (
+                          <p className="text-white/60 text-center p-8">No main activities available</p>
+                        )}
                       </div>
                     </Tabs.Content>
 
                     <Tabs.Content value="cooldown" className="focus:outline-none">
                       <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-2xl overflow-hidden shadow-xl">
-                        <Accordion.Root type="multiple" defaultValue={lessonPlan.coolDown.map((_, i) => `activity-${i + 1}`)}>
-                          {lessonPlan.coolDown.map((activity, index) => (
-                            <ActivityCard key={index} activity={activity} index={index + 1} />
-                          ))}
-                        </Accordion.Root>
+                        {lessonPlan.coolDown && lessonPlan.coolDown.length > 0 ? (
+                          <Accordion.Root type="multiple" defaultValue={lessonPlan.coolDown.map((_, i) => `activity-${i + 1}`)}>
+                            {lessonPlan.coolDown.map((activity, index) => (
+                              <ActivityCard key={index} activity={activity} index={index + 1} />
+                            ))}
+                          </Accordion.Root>
+                        ) : (
+                          <p className="text-white/60 text-center p-8">No cool-down activities available</p>
+                        )}
                       </div>
                     </Tabs.Content>
                   </Tabs.Root>

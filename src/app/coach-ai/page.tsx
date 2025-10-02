@@ -8,7 +8,7 @@ import BackButton from '@/components/ui/BackButton';
 import { LessonPlan } from '@/data/lessonPlans';
 
 export default function CoachAIPage() {
-  const [generatedPlan, setGeneratedPlan] = useState<LessonPlan | null>(null);
+  const [generatedPlan, setGeneratedPlan] = useState<Partial<LessonPlan> | null>(null);
   const [selectedSport, setSelectedSport] = useState<string>('');
 
   // Sport background mapping
@@ -18,7 +18,7 @@ export default function CoachAIPage() {
 
   const currentBackground = selectedSport ? sportBackgrounds[selectedSport] : '/default-bg.jpg';
 
-  const handlePlanGenerated = (plan: LessonPlan) => {
+  const handlePlanGenerated = (plan: Partial<LessonPlan>) => {
     setGeneratedPlan(plan);
   };
 

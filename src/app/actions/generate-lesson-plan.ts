@@ -2,10 +2,12 @@
 
 import { generateLessonPlan, LessonPlanParams } from '@/lib/gemini';
 
+import { LessonPlan } from '@/data/lessonPlans';
+
 export interface GenerateLessonPlanState {
   success?: boolean;
   error?: string;
-  plan?: any;
+  plan?: Partial<LessonPlan>;
 }
 
 export async function generateAILessonPlan(

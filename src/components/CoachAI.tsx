@@ -8,11 +8,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useActionState } from 'react';
-import { generateAILessonPlan, GenerateLessonPlanState } from '@/app/actions/generate-lesson-plan';
-import GradientText from './GradientText';
+import { generateAILessonPlan } from '@/app/actions/generate-lesson-plan';
+import { LessonPlan } from '@/data/lessonPlans';
 
 interface CoachAIProps {
-  onPlanGenerated: (plan: any) => void;
+  onPlanGenerated: (plan: Partial<LessonPlan>) => void;
   onSportChange?: (sport: string) => void;
 }
 

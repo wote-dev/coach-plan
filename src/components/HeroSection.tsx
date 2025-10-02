@@ -1,6 +1,5 @@
 'use client';
 
-import * as Dialog from '@radix-ui/react-dialog';
 import { motion } from 'framer-motion';
 import { ChevronRightIcon, PlayIcon, MagicWandIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
