@@ -179,32 +179,31 @@ export default function PlannerPage() {
                 visible: { opacity: 1, y: 0 }
               }}
             >
-              <label className="text-sm font-medium text-white">
+              <label className="text-sm font-medium text-white text-center">
                 Client&apos;s Skill Level
               </label>
-              <RadioGroup.Root
-                value={level}
-                onValueChange={setLevel}
-                className="space-y-2"
-              >
-                {['Beginner', 'Intermediate', 'Advanced'].map((levelOption) => (
-                  <div key={levelOption} className="flex items-center space-x-3">
-                    <RadioGroup.Item
-                      value={levelOption}
-                      id={levelOption}
-                      className="w-5 h-5 rounded-full border-2 border-white/40 bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent data-[state=checked]:border-white data-[state=checked]:bg-white"
-                    >
-                      <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-black" />
-                    </RadioGroup.Item>
-                    <label
-                      htmlFor={levelOption}
-                      className="text-sm text-white cursor-pointer"
-                    >
-                      {levelOption}
-                    </label>
-                  </div>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { label: 'Beginner', borderColor: 'border-green-500', bgColor: 'bg-green-500/10', hoverBg: 'hover:bg-green-500/20' },
+                  { label: 'Intermediate', borderColor: 'border-yellow-500', bgColor: 'bg-yellow-500/10', hoverBg: 'hover:bg-yellow-500/20' },
+                  { label: 'Advanced', borderColor: 'border-red-500', bgColor: 'bg-red-500/10', hoverBg: 'hover:bg-red-500/20' }
+                ].map(({ label: levelOption, borderColor, bgColor, hoverBg }) => (
+                  <motion.button
+                    key={levelOption}
+                    type="button"
+                    onClick={() => setLevel(levelOption)}
+                    className={`py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 border-2 ${
+                      level === levelOption
+                        ? `${borderColor} ${bgColor} text-white shadow-lg`
+                        : `${borderColor} bg-white/5 text-white/80 ${hoverBg}`
+                    } focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent`}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {levelOption}
+                  </motion.button>
                 ))}
-              </RadioGroup.Root>
+              </div>
             </motion.div>
 
             {/* Number of People */}

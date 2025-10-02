@@ -125,7 +125,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
       </div>
 
       {/* Step Content with AnimatePresence */}
-      <div className="relative" style={{ minHeight: currentStep === 4 || currentStep === 5 ? '280px' : currentStep === 1 ? '280px' : '180px' }}>
+      <div className="relative" style={{ minHeight: currentStep === 4 || currentStep === 5 ? '220px' : currentStep === 1 ? '280px' : '180px' }}>
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 1 && (
             <motion.div
@@ -262,8 +262,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
               value={equipment}
               onChange={(e) => setEquipment(e.target.value)}
               placeholder="e.g., Tennis balls, cones, rackets..."
-              rows={5}
-              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-4"
+              rows={3}
+              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-2"
               style={{ fontSize: '16px' }}
             />
           </motion.div>
@@ -285,8 +285,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
               value={objectives}
               onChange={(e) => setObjectives(e.target.value)}
               placeholder="e.g., Improve forehand technique, develop footwork..."
-              rows={5}
-              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-4"
+              rows={3}
+              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-2"
               style={{ fontSize: '16px' }}
             />
           </motion.div>
