@@ -17,26 +17,62 @@ const TENNIS_TIPS = [
   "🌟 Focus on footwork - it's the foundation of every shot"
 ];
 
+// Tennis background images that cycle
+const TENNIS_BACKGROUNDS = [
+  '/tennis1.jpg',
+  '/tennis2.jpg',
+  '/tennis3.jpg'
+];
+
 export default function TennisLoaderWithTips() {
   const [currentTipIndex, setCurrentTipIndex] = useState(0);
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const tipInterval = setInterval(() => {
       setCurrentTipIndex((prevIndex) => (prevIndex + 1) % TENNIS_TIPS.length);
     }, 3000); // Change tip every 3 seconds
     
-    return () => clearInterval(interval);
+    return () => clearInterval(tipInterval);
+  }, []);
+
+  useEffect(() => {
+    const backgroundInterval = setInterval(() => {
+      setCurrentBackgroundIndex((prevIndex) => (prevIndex + 1) % TENNIS_BACKGROUNDS.length);
+    }, 5000); // Change background every 5 seconds
+    
+    return () => clearInterval(backgroundInterval);
   }, []);
 
   return (
     <motion.div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="relative flex flex-col items-center justify-center max-w-2xl px-6">
+      {/* Rotating tennis background images */}
+      <div className="fixed inset-0">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={currentBackgroundIndex}
+            className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${TENNIS_BACKGROUNDS[currentBackgroundIndex]})`,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ 
+              duration: 1.2,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+          />
+        </AnimatePresence>
+      </div>
+
+      <div className="relative flex flex-col items-center justify-center max-w-2xl px-6 z-10">
         {/* Outer glow effect */}
         <motion.div
           className="absolute inset-0 rounded-full blur-3xl"

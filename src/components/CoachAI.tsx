@@ -4,7 +4,7 @@ import * as Select from '@radix-ui/react-select';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import * as Slider from '@radix-ui/react-slider';
 import { ChevronDownIcon, CheckIcon, MagicWandIcon, ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActionState } from 'react';
 import { generateAILessonPlan } from '@/app/actions/generate-lesson-plan';
@@ -29,7 +29,6 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   const totalSteps = 5; // Skill Level, Number of People, Duration, Equipment, Objectives
 
   const [state, formAction, isPending] = useActionState(generateAILessonPlan, null);
-  const [isTransitionPending, startTransition] = useTransition();
 
   // Validation for current step
   const isStepValid = () => {
@@ -67,8 +66,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   
   // Notify parent of generating state changes
   useEffect(() => {
-    onGeneratingChange?.(isPending || isTransitionPending);
-  }, [isPending, isTransitionPending, onGeneratingChange]);
+    onGeneratingChange?.(isPending);
+  }, [isPending, onGeneratingChange]);
   
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -86,6 +85,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
     e.preventDefault();
     if (currentStep === totalSteps && isFormValid) {
       const formData = new FormData(e.currentTarget);
+      // Call useActionState action inside a transition so isPending tracks correctly
       startTransition(() => {
         formAction(formData);
       });
@@ -334,12 +334,12 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
         ) : (
           <motion.button
             type="submit"
-            disabled={!isFormValid || isPending || isTransitionPending}
+            disabled={!isFormValid || isPending}
             className="flex-1 bg-white border border-white rounded-2xl py-3 px-4 font-medium text-sm transition-all duration-200 hover:bg-white/90 hover:border-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white/50 flex items-center justify-center gap-2 text-black"
-            whileHover={{ scale: isFormValid && !isPending && !isTransitionPending ? 1.02 : 1 }}
-            whileTap={{ scale: isFormValid && !isPending && !isTransitionPending ? 0.98 : 1 }}
+            whileHover={{ scale: isFormValid && !isPending ? 1.02 : 1 }}
+            whileTap={{ scale: isFormValid && !isPending ? 0.98 : 1 }}
           >
-            {(isPending || isTransitionPending) ? (
+            {isPending ? (
               <>
                 <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                 <span>Generating...</span>

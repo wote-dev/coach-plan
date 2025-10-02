@@ -28,6 +28,8 @@ export default function CoachAIPage() {
 
   const handlePlanGenerated = (plan: Partial<LessonPlan>) => {
     setGeneratedPlan(plan);
+    // Explicitly clear generating state in case pending flag lingers
+    setIsGenerating(false);
   };
 
   const handleBack = () => {
@@ -46,7 +48,7 @@ export default function CoachAIPage() {
     <>
       <AnimatePresence mode="wait">
         {isLoading && <TennisLoader key="loader" />}
-        {isGenerating && <TennisLoaderWithTips key="generating" />}
+        {isGenerating && !generatedPlan && <TennisLoaderWithTips key="generating" />}
       </AnimatePresence>
 
       {!isLoading && (
