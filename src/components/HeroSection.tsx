@@ -11,16 +11,20 @@ import TennisLoader from './TennisLoader';
 export default function HeroSection() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [glassReady, setGlassReady] = useState(false);
 
   const handleCoachAI = () => {
     router.push('/coach-ai');
   };
 
   useEffect(() => {
-    // Simulate content loading
+    // Force backdrop-blur rendering first
+    setGlassReady(true);
+    
+    // Then show content
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 900);
 
     return () => clearTimeout(timer);
   }, []);
@@ -56,8 +60,8 @@ export default function HeroSection() {
         <div className="space-y-6 lg:space-y-8">
           {/* Hero Badge */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ scale: 0.8, y: -20 }}
+            animate={{ scale: 1, y: 0 }}
             transition={{ 
               delay: 0.2,
               duration: 0.6,
@@ -65,7 +69,8 @@ export default function HeroSection() {
               stiffness: 100,
               damping: 15
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 backdrop-blur-sm border border-white/20 text-sm font-medium text-white shadow-lg"
+            style={{ opacity: 1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 backdrop-blur-sm glass-effect border border-white/20 text-sm font-medium text-white shadow-lg"
           >
             <motion.div
               initial={{ rotate: -180, scale: 0 }}
@@ -180,8 +185,8 @@ export default function HeroSection() {
             ].map((feature, index) => (
               <motion.div 
                 key={index}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ y: 30, scale: 0.9 }}
+                animate={{ y: 0, scale: 1 }}
                 transition={{ 
                   delay: feature.delay,
                   duration: 0.6,
@@ -193,6 +198,7 @@ export default function HeroSection() {
                   y: -5,
                   transition: { duration: 0.2, type: "spring", stiffness: 300 }
                 }}
+                style={{ opacity: 1 }}
                 className="flex flex-col items-center space-y-2"
               >
                 <motion.div 
@@ -204,7 +210,8 @@ export default function HeroSection() {
                     type: "spring",
                     stiffness: 150
                   }}
-                  className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center"
+                  style={{ opacity: 1 }}
+                  className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/15 backdrop-blur-sm glass-effect flex items-center justify-center"
                 >
                   <svg className="w-5 h-5 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {feature.icon}
@@ -225,8 +232,8 @@ export default function HeroSection() {
 
           {/* CTA Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ y: 30, scale: 0.9 }}
+            animate={{ y: 0, scale: 1 }}
             transition={{ 
               delay: 1.3,
               duration: 0.6,
@@ -234,6 +241,7 @@ export default function HeroSection() {
               stiffness: 100,
               damping: 15
             }}
+            style={{ opacity: 1 }}
             className="flex justify-center items-center"
           >
             <motion.div 
@@ -250,7 +258,7 @@ export default function HeroSection() {
         />
               <button
                  onClick={handleCoachAI}
-                 className="group inline-flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-transparent border-2 border-white/30 backdrop-blur-sm rounded-full font-semibold text-base lg:text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-200 shadow-xl hover:shadow-2xl relative z-10"
+                 className="group inline-flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-transparent border-2 border-white/30 backdrop-blur-sm glass-effect rounded-full font-semibold text-base lg:text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-200 shadow-xl hover:shadow-2xl relative z-10"
                >
                 <motion.div
                   animate={{ rotate: [0, 5, -5, 0] }}
