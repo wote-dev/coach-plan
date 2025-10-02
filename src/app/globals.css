@@ -170,9 +170,22 @@ body {
   html {
     /* Ensure the page background never flashes white */
     @apply bg-background;
+    /* Prevent scrolling on the entire page */
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
   }
   body {
     @apply bg-background text-foreground;
+    /* Prevent scrolling on the body */
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    /* Prevent pull-to-refresh and overscroll on mobile */
+    overscroll-behavior: none;
+    touch-action: pan-x pan-y;
   }
 }
 

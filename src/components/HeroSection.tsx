@@ -141,7 +141,7 @@ export default function HeroSection() {
                 }}
                 className="block bg-gradient-to-r from-white via-white/95 to-white/90 bg-clip-text text-transparent drop-shadow-lg"
               >
-                Lesson Plans in Minutes
+                Lesson Plans in Seconds
               </motion.span>
             </h1>
 

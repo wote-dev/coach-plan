@@ -35,9 +35,7 @@ export default function RootLayout({
         className={`${nunito.variable} ${jetbrainsMono.variable} antialiased`}
       >
         {/* Global page fade transitions to prevent black flash */}
-        <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
-          <PageTransition>{children}</PageTransition>
-        </div>
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );
