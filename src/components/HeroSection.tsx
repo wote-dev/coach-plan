@@ -232,37 +232,16 @@ export default function HeroSection() {
             style={{ opacity: 1 }}
             className="flex justify-center items-center"
           >
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="relative"
+            <button
+              onClick={handleCoachAI}
+              className="group inline-flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-white/10 backdrop-blur-xl border-2 border-white rounded-full font-semibold text-base lg:text-lg text-white hover:bg-white/20 transition-all duration-200 shadow-xl hover:shadow-2xl"
             >
-              <ShineBorder
-          borderWidth={2}
-          duration={6}
-          shineColor={["#ffffff", "#ffffff80", "#ffffff"]}
-          className="rounded-full"
-        />
-              <button
-                 onClick={handleCoachAI}
-                 className="group inline-flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-transparent border-2 border-white/30 backdrop-blur-sm glass-effect rounded-full font-semibold text-base lg:text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-200 shadow-xl hover:shadow-2xl relative z-10"
-               >
-                <motion.div
-                  animate={{ rotate: [0, 5, -5, 0] }}
-                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                >
-                  <MagicWandIcon className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
-                </motion.div>
-                <GradientText 
-                  className="text-base lg:text-lg font-semibold"
-                  colors={['#ffffff', '#fffef8', '#fffdf0', '#fffce8', '#fffbe0', '#fffad8', '#fff9d0', '#fff8c8', '#fff9d0', '#fffad8', '#fffbe0', '#fffce8', '#fffdf0', '#fffef8', '#ffffff']}
-                >
-                  Try CoachAI
-                </GradientText>
-                <ChevronRightIcon className="w-4 h-4 lg:w-5 lg:h-5 text-white transition-transform group-hover:translate-x-1" />
-              </button>
-            </motion.div>
+              <MagicWandIcon className="w-4 h-4 lg:w-5 lg:h-5" />
+              <span className="text-base lg:text-lg font-semibold">
+                Try CoachAI
+              </span>
+              <ChevronRightIcon className="w-4 h-4 lg:w-5 lg:h-5 transition-transform group-hover:translate-x-1" />
+            </button>
           </motion.div>
 
           {/* Trust Indicators - Compact */}
