@@ -14,10 +14,10 @@ export default function TennisLoader() {
       <div className="relative">
         {/* Outer glow effect */}
         <motion.div
-          className="absolute inset-0 rounded-full blur-2xl"
+          className="absolute inset-0 rounded-full blur-xl"
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2],
+            scale: [1, 1.12, 1],
+            opacity: [0.2, 0.35, 0.2],
           }}
           transition={{
             duration: 2,
@@ -31,10 +31,10 @@ export default function TennisLoader() {
         
         {/* Spinning tennis ball */}
         <motion.div
-          className="text-9xl relative z-10"
+          className="text-5xl relative z-10"
           animate={{
             rotate: 360,
-            scale: [1, 1.05, 1],
+            scale: [1, 1.04, 1],
           }}
           transition={{
             rotate: {
