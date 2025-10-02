@@ -31,14 +31,16 @@ export default function HeroSection() {
         {isLoading && <TennisLoader key="loader" />}
       </AnimatePresence>
 
-      {!isLoading && (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="h-screen relative flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
-    >
+      <AnimatePresence>
+        {!isLoading && (
+      <motion.div
+        key="hero-content"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="h-screen relative flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
       {/* Background Image */}
       <motion.div 
         initial={{ scale: 1.1, opacity: 0 }}
@@ -97,7 +99,30 @@ export default function HeroSection() {
                 }}
                 className="block"
               >
-                Create Perfect 🎾
+                Create Perfect{' '}
+                <motion.span
+                  className="inline-block"
+                  animate={{ 
+                    y: [0, -12, 0],
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{ 
+                    y: {
+                      repeat: Infinity,
+                      duration: 1.2,
+                      ease: [0.4, 0, 0.6, 1],
+                      repeatDelay: 0.3
+                    },
+                    rotate: {
+                      repeat: Infinity,
+                      duration: 1.2,
+                      ease: "easeInOut",
+                      repeatDelay: 0.3
+                    }
+                  }}
+                >
+                  🎾
+                </motion.span>
               </motion.span>
               <motion.span 
                 initial={{ opacity: 0, y: 30 }}
@@ -256,11 +281,38 @@ export default function HeroSection() {
             className="pt-6 mt-4 border-t border-white/20"
           >
             <p className="text-sm text-white/80 font-medium drop-shadow-sm">🎾 Trusted by over 100+ coaches worldwide</p>
+            
+            {/* Built by section */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                delay: 1.7,
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="mt-4"
+            >
+              <a 
+                href="https://www.blackcubesolutions.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 opacity-60 hover:opacity-80 transition-opacity duration-300 cursor-pointer group"
+              >
+                <span className="text-xs text-white/60 font-medium group-hover:text-white/80 transition-colors duration-300">Built by:</span>
+                <img 
+                  src="/bcs-dark.png" 
+                  alt="BCS Logo" 
+                  className="h-4 w-auto filter brightness-0 invert opacity-70 group-hover:opacity-90 transition-opacity duration-300"
+                />
+              </a>
+            </motion.div>
           </motion.div>
         </div>
       </div>
-    </motion.div>
-      )}
+      </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
