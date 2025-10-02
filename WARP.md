@@ -4,12 +4,12 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-**Coach Plan** is a Next.js 15 application that generates customized sports coaching lesson plans. It features both static lesson plans and AI-powered generation using Google's Gemini API.
+**Coach Plan** is a Next.js 15 application that generates customized tennis coaching lesson plans. It features both static lesson plans and AI-powered generation using Google's Gemini API.
 
 **Key Features:**
-- AI-powered lesson plan generation via Gemini 2.5 Flash
-- Static pre-built lesson plans for Tennis
-- Dynamic sport-specific backgrounds with smooth transitions
+- AI-powered tennis lesson plan generation via Gemini 2.5 Flash
+- Static pre-built tennis lesson plans
+- Tennis-specific background with smooth transitions
 - Detailed lesson structure: warm-ups, main activities, cool-downs
 - Responsive glassmorphism UI design
 
@@ -92,10 +92,10 @@ The server action enriches AI responses with metadata (id, timestamps, isAIGener
 Both generator pages use the same `LessonPlanDisplay` component but with different data sources.
 
 #### 3. Background System
-Sport-specific backgrounds transition smoothly using Framer Motion:
+Tennis-specific background transitions smoothly using Framer Motion:
 - Mapping defined in both `/coach-ai/page.tsx` and `/planner/page.tsx`
 - Uses `AnimatePresence` with `mode="popLayout"` for crossfades
-- Images located in `/public/` directory (e.g., `tennis-bg.jpg`)
+- Tennis background image located in `/public/` directory (`tennis-bg.jpg`)
 
 #### 4. Form State Management
 The application uses two different patterns:
@@ -148,19 +148,16 @@ Configured in `tsconfig.json`:
 
 ## Development Guidelines
 
-### Adding New Sports
-1. Add sport option to Select components in both:
-   - `src/components/CoachAI.tsx` (line 74)
-   - `src/app/planner/page.tsx` (line 161)
-2. Add background image to `/public/` directory
-3. Update `sportBackgrounds` mapping in both pages
-4. For static plans: Add `LessonPlan` objects to `data/lessonPlans.ts`
+### Adding New Tennis Lesson Plans
+1. Add new `LessonPlan` objects to `data/lessonPlans.ts` with tennis-specific content
+2. Ensure all plans include appropriate tennis equipment, drills, and coaching cues
+3. Follow the established `LessonPlan` interface structure
 
 ### Modifying AI Prompts
 The prompt structure is defined in `src/lib/gemini.ts` (lines 24-70). Key elements:
 - JSON schema specification for response format
-- Parameter interpolation (sport, level, duration, etc.)
-- Activity structure with coaching cues and progressions
+- Tennis-specific parameter interpolation (level, duration, etc.)
+- Activity structure with tennis coaching cues and progressions
 
 ### Form Validation
 Client-side validation in `CoachAI.tsx`:
@@ -207,7 +204,7 @@ Page transitions use a wrapper component:
 <PageTransition>{children}</PageTransition>
 ```
 
-Background transitions use `AnimatePresence` with keyed transitions based on selected sport.
+Background transitions use `AnimatePresence` with smooth crossfade effects for the tennis background.
 
 ## Testing & Debugging
 
