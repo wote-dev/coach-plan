@@ -53,7 +53,6 @@ export default function HeroSection() {
         className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(/tennis5.jpg)`,
-          minHeight: '100vh',
           minHeight: '100dvh'
         }}
       />
