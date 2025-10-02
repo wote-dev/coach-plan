@@ -128,32 +128,35 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="space-y-3 absolute w-full"
+              className="space-y-4 absolute w-full"
             >
             <label className="text-sm font-medium text-white">What is the skill level?</label>
-            <RadioGroup.Root
-              value={level}
-              onValueChange={setLevel}
-              className="space-y-2"
-            >
-              {['Beginner', 'Intermediate', 'Advanced'].map((levelOption) => (
-                <div key={levelOption} className="flex items-center space-x-3">
-                  <RadioGroup.Item
-                    value={levelOption}
-                    id={levelOption}
-                    className="w-5 h-5 rounded-full border-2 border-white/40 bg-white/10 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent data-[state=checked]:border-white data-[state=checked]:bg-white"
-                  >
-                    <RadioGroup.Indicator className="flex items-center justify-center w-full h-full relative after:content-[''] after:block after:w-2 after:h-2 after:rounded-full after:bg-black" />
-                  </RadioGroup.Item>
-                  <label
-                    htmlFor={levelOption}
-                    className="text-sm text-white cursor-pointer"
-                  >
-                    {levelOption}
-                  </label>
-                </div>
+            <div className="flex gap-3 justify-center">
+              {[
+                { label: 'Beginner', color: 'bg-green-500 hover:bg-green-600' },
+                { label: 'Intermediate', color: 'bg-yellow-500 hover:bg-yellow-600' },
+                { label: 'Advanced', color: 'bg-red-500 hover:bg-red-600' }
+              ].map(({ label: levelOption, color }) => (
+                <motion.button
+                  key={levelOption}
+                  type="button"
+                  onClick={() => {
+                    setLevel(levelOption);
+                    // Auto-advance to next step after a brief delay
+                    setTimeout(() => handleNext(), 150);
+                  }}
+                  className={`py-2.5 px-5 rounded-xl text-base font-medium transition-all duration-200 ${
+                    level === levelOption
+                      ? `${color} text-white ring-2 ring-white ring-offset-2 ring-offset-transparent`
+                      : `${color} text-white opacity-70`
+                  } focus:outline-none focus:ring-2 focus:ring-white/50`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {levelOption}
+                </motion.button>
               ))}
-            </RadioGroup.Root>
+            </div>
           </motion.div>
         )}
 
