@@ -5,29 +5,16 @@ import { ChevronRightIcon, PlayIcon, MagicWandIcon } from '@radix-ui/react-icons
 import { useRouter } from 'next/navigation';
 import { ShineBorder } from '@/components/ui/shine-border';
 import GradientText from './GradientText';
-import { useState, useEffect } from 'react';
 import TennisLoader from './TennisLoader';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 export default function HeroSection() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [glassReady, setGlassReady] = useState(false);
+  const isLoading = useImagePreloader(['/tennis5.jpg'], 900);
 
   const handleCoachAI = () => {
     router.push('/coach-ai');
   };
-
-  useEffect(() => {
-    // Force backdrop-blur rendering first
-    setGlassReady(true);
-    
-    // Then show content
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 900);
-
-    return () => clearTimeout(timer);
-  }, []);
   
   return (
     <>

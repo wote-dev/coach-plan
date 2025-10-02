@@ -9,6 +9,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getLessonPlan, LessonPlan } from '@/data/lessonPlans';
 import LessonPlanDisplay from '@/components/LessonPlanDisplay';
 import BackButton from '@/components/ui/BackButton';
+import TennisLoader from '@/components/TennisLoader';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 export default function PlannerPage() {
   const sport = 'Tennis'; // Default to Tennis
@@ -19,6 +21,9 @@ export default function PlannerPage() {
 
   // Sport background mapping
   const currentBackground = '/tennis-bg.jpg';
+  
+  // Preload background image
+  const isLoading = useImagePreloader([currentBackground], 800);
 
   const handleGenerate = () => {
     console.log('Generate button clicked!');
@@ -99,6 +104,12 @@ export default function PlannerPage() {
   };
 
   return (
+    <>
+      <AnimatePresence mode="wait">
+        {isLoading && <TennisLoader key="loader" />}
+      </AnimatePresence>
+
+      {!isLoading && (
     <div className="w-full h-full flex items-center justify-center p-4 relative overflow-hidden">
       {/* Back Button - positioned absolutely in top-left */}
       <div className="absolute top-6 left-6 z-20">
@@ -319,5 +330,7 @@ export default function PlannerPage() {
         )}
       </AnimatePresence>
     </div>
+      )}
+    </>
   );
 }

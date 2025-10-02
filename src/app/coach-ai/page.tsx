@@ -1,22 +1,26 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CoachAI from '@/components/CoachAI';
 import LessonPlanDisplay from '@/components/LessonPlanDisplay';
 import BackButton from '@/components/ui/BackButton';
 import { LessonPlan } from '@/data/lessonPlans';
 import TennisLoader from '@/components/TennisLoader';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 export default function CoachAIPage() {
   const [generatedPlan, setGeneratedPlan] = useState<Partial<LessonPlan> | null>(null);
   const [selectedSport, setSelectedSport] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
 
   // Sport background mapping
   const sportBackgrounds: Record<string, string> = {
     'Tennis': '/tennis4.jpg'
   };
+
+  // Preload all background images
+  const allBackgrounds = ['/default-bg.jpg', ...Object.values(sportBackgrounds)];
+  const isLoading = useImagePreloader(allBackgrounds, 800);
 
   const currentBackground = selectedSport ? sportBackgrounds[selectedSport] : '/default-bg.jpg';
 
@@ -31,15 +35,6 @@ export default function CoachAIPage() {
   const handleSportChange = (sport: string) => {
     setSelectedSport(sport);
   };
-
-  useEffect(() => {
-    // Simulate content loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
