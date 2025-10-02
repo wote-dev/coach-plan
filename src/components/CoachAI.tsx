@@ -261,7 +261,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
               name="equipment"
               value={equipment}
               onChange={(e) => setEquipment(e.target.value)}
-              placeholder="e.g., Tennis balls, cones, rackets..."
+              placeholder="e.g., Tennis balls, cones, medicine balls..."
               rows={3}
               className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-2"
               style={{ fontSize: '16px' }}
