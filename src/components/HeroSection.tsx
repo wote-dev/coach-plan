@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRightIcon, PlayIcon, MagicWandIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShineBorder } from '@/components/ui/shine-border';
 import GradientText from './GradientText';
 import TennisLoader from './TennisLoader';
@@ -15,10 +16,10 @@ export default function HeroSection() {
   const isLoading = useImagePreloader(['/tennis5.jpg', '/tennis4.jpg', '/default-bg.jpg'], 900);
 
   const handleViewTransitionNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    const hasVT = typeof document !== 'undefined' && (document as any).startViewTransition;
+    const hasVT = typeof document !== 'undefined' && (document as Document & { startViewTransition?: (callback: () => void) => void }).startViewTransition;
     if (hasVT) {
       e.preventDefault();
-      (document as any).startViewTransition(() => {
+      (document as Document & { startViewTransition: (callback: () => void) => void }).startViewTransition(() => {
         router.push('/coach-ai');
       });
     }
@@ -285,9 +286,11 @@ export default function HeroSection() {
                 className="flex items-center justify-center gap-2 opacity-60 hover:opacity-80 transition-opacity duration-300 cursor-pointer group"
               >
                 <span className="text-xs text-white/60 font-medium group-hover:text-white/80 transition-colors duration-300">Built by:</span>
-                <img 
+                <Image 
                   src="/bcs-dark.png" 
                   alt="BCS Logo" 
+                  width={80}
+                  height={16}
                   className="h-4 w-auto filter brightness-0 invert opacity-70 group-hover:opacity-90 transition-opacity duration-300"
                 />
               </a>
