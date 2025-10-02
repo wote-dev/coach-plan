@@ -18,23 +18,23 @@ interface LessonPlanDisplayProps {
 function ActivityCard({ activity, index }: { activity: DetailedActivity | string; index: number }) {
   if (typeof activity === 'string') {
     return (
-      <div className="bg-amber-50/40 border-l-4 border-amber-700/30 p-5 my-3">
-        <p className="text-gray-800 text-base leading-7 font-serif italic">{activity}</p>
+      <div className="bg-white/10 backdrop-blur-sm border-l-4 border-white/40 p-3 sm:p-5 my-2 sm:my-3">
+        <p className="text-white text-sm sm:text-base leading-6 sm:leading-7 italic">{activity}</p>
       </div>
     );
   }
 
   return (
-    <Accordion.Item value={`activity-${index}`} className="border-b border-gray-300/50 last:border-b-0">
+    <Accordion.Item value={`activity-${index}`} className="border-b border-white/20 last:border-b-0">
       <Accordion.Header>
         <Accordion.Trigger asChild>
           <motion.button
-            className="group flex w-full items-center justify-between py-4 text-left px-4 hover:bg-amber-50/30 transition-colors"
+            className="group flex w-full items-center justify-between py-3 sm:py-4 text-left px-3 sm:px-4 hover:bg-white/10 active:bg-white/10 transition-colors"
             whileTap={{ scale: 0.99 }}
           >
-            <div className="flex items-center gap-4 flex-1">
+            <div className="flex items-center gap-2.5 sm:gap-4 flex-1 min-w-0">
               <motion.div 
-                className="flex-shrink-0 w-9 h-9 bg-amber-100 border-2 border-amber-800/40 rounded-full flex items-center justify-center text-sm font-bold text-amber-900"
+                className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 bg-white/20 backdrop-blur-sm border-2 border-white/40 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold text-white"
                 whileHover={{ 
                   scale: 1.1,
                   transition: { type: "spring", stiffness: 400, damping: 17 }
@@ -42,31 +42,31 @@ function ActivityCard({ activity, index }: { activity: DetailedActivity | string
               >
                 {index}
               </motion.div>
-              <div className="flex-1">
-                <h4 className="font-serif font-bold text-gray-900 text-lg mb-0.5">{activity.name}</h4>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-white text-base sm:text-lg mb-0.5 truncate">{activity.name}</h4>
                 {activity.duration && (
-                  <span className="text-sm text-gray-600 font-medium italic">{activity.duration}</span>
+                  <span className="text-xs sm:text-sm text-white/70 font-medium italic">{activity.duration}</span>
                 )}
               </div>
             </div>
-            <ChevronDownIcon className="h-5 w-5 text-gray-600 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+            <ChevronDownIcon className="h-4 w-4 sm:h-5 sm:w-5 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180 flex-shrink-0 ml-2" />
           </motion.button>
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-        <div className="px-4 pb-5 pt-2 space-y-4 bg-gradient-to-b from-transparent to-amber-50/20">
-          <p className="text-gray-800 text-base leading-7 font-serif pl-2 border-l-2 border-amber-300">{activity.description}</p>
+        <div className="px-3 sm:px-4 pb-4 sm:pb-5 pt-2 space-y-3 sm:space-y-4">
+          <p className="text-white/90 text-sm sm:text-base leading-6 sm:leading-7 pl-2 border-l-2 border-white/40">{activity.description}</p>
           
           {activity.coachingCues && activity.coachingCues.length > 0 && (
-            <div className="bg-blue-50/50 border border-blue-200/60 rounded p-4 shadow-sm">
-              <h5 className="text-xs font-bold text-blue-900 mb-3 uppercase tracking-wide flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-3 sm:p-4 shadow-sm">
+              <h5 className="text-[10px] sm:text-xs font-bold text-white mb-2 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                 Coaching Cues
               </h5>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5 sm:space-y-2">
                 {activity.coachingCues.map((cue, cueIndex) => (
-                  <li key={cueIndex} className="text-sm text-gray-700 flex items-start gap-3 leading-6 font-serif">
-                    <span className="text-blue-600 mt-0.5 font-bold">•</span>
+                  <li key={cueIndex} className="text-xs sm:text-sm text-white/90 flex items-start gap-2 sm:gap-3 leading-5 sm:leading-6">
+                    <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
                     <span>{cue}</span>
                   </li>
                 ))}
@@ -75,15 +75,15 @@ function ActivityCard({ activity, index }: { activity: DetailedActivity | string
           )}
           
           {activity.progressions && activity.progressions.length > 0 && (
-            <div className="bg-green-50/50 border border-green-200/60 rounded p-4 shadow-sm">
-              <h5 className="text-xs font-bold text-green-900 mb-3 uppercase tracking-wide flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-3 sm:p-4 shadow-sm">
+              <h5 className="text-[10px] sm:text-xs font-bold text-white mb-2 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                 Progressions
               </h5>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5 sm:space-y-2">
                 {activity.progressions.map((progression, progIndex) => (
-                  <li key={progIndex} className="text-sm text-gray-700 flex items-start gap-3 leading-6 font-serif">
-                    <span className="text-green-600 mt-0.5 font-bold">•</span>
+                  <li key={progIndex} className="text-xs sm:text-sm text-white/90 flex items-start gap-2 sm:gap-3 leading-5 sm:leading-6">
+                    <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
                     <span>{progression}</span>
                   </li>
                 ))}
@@ -92,15 +92,15 @@ function ActivityCard({ activity, index }: { activity: DetailedActivity | string
           )}
           
           {activity.modifications && activity.modifications.length > 0 && (
-            <div className="bg-amber-50/50 border border-amber-200/60 rounded p-4 shadow-sm">
-              <h5 className="text-xs font-bold text-amber-900 mb-3 uppercase tracking-wide flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-3 sm:p-4 shadow-sm">
+              <h5 className="text-[10px] sm:text-xs font-bold text-white mb-2 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
                 Modifications
               </h5>
-              <ul className="space-y-2">
+              <ul className="space-y-1.5 sm:space-y-2">
                 {activity.modifications.map((modification, modIndex) => (
-                  <li key={modIndex} className="text-sm text-gray-700 flex items-start gap-3 leading-6 font-serif">
-                    <span className="text-amber-600 mt-0.5 font-bold">•</span>
+                  <li key={modIndex} className="text-xs sm:text-sm text-white/90 flex items-start gap-2 sm:gap-3 leading-5 sm:leading-6">
+                    <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
                     <span>{modification}</span>
                   </li>
                 ))}
@@ -142,7 +142,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+            <Dialog.Overlay className="fixed inset-0 bg-black/70 backdrop-blur-md z-50" />
           </motion.div>
         </AnimatePresence>
         <motion.div
@@ -152,62 +152,42 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
           transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
           className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl max-h-[90vh] z-50"
         >
-        <Dialog.Content className="bg-[#f9f7f1] border-8 border-[#8b6f47] rounded-sm shadow-2xl shadow-black/40 overflow-hidden w-full h-full relative"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #e8dcc4 1px, transparent 1px),
-              linear-gradient(#faf8f0 0%, #f5f1e8 100%)
-            `,
-            backgroundSize: '60px 100%, 100% 100%',
-            backgroundPosition: '0 0, 0 0'
-          }}
+        <Dialog.Content className="bg-white/10 backdrop-blur-xl border-2 border-white/20 rounded-3xl shadow-2xl shadow-black/20 overflow-hidden w-full h-full relative"
         >
-          {/* Journal Binding Effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#6b5334] to-[#8b6f47] shadow-inner">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(0,0,0,0.1) 35px, rgba(0,0,0,0.1) 38px)',
-            }} />
-          </div>
           
           <Dialog.Description className="sr-only">
             Lesson plan details for {lessonPlan.title}
           </Dialog.Description>
           
-          {/* Header - Journal Style */}
-          <div className="flex items-start justify-between p-8 pb-6 pl-24 border-b-2 border-amber-900/20 relative">
-            {/* Decorative corner */}
-            <div className="absolute top-6 left-20 w-8 h-8 border-t-2 border-l-2 border-amber-900/20"></div>
-            
-            <div className="flex-1 pr-4">
+          {/* Header */}
+          <div className="flex items-start justify-between p-4 sm:p-8 pb-4 sm:pb-6 border-b border-white/20 relative">
+            <div className="flex-1 pr-2 sm:pr-4">
               {/* Date stamp */}
-              <div className="text-xs text-gray-500 mb-2 font-mono tracking-wide">{currentDate}</div>
+              <div className="text-[10px] sm:text-xs text-white/60 mb-1 sm:mb-2 font-mono tracking-wide">{currentDate}</div>
               
-              <Dialog.Title className="text-4xl font-serif font-bold text-gray-900 mb-4 tracking-tight" 
-                style={{ 
-                  textShadow: '1px 1px 0px rgba(139, 111, 71, 0.1)'
-                }}
+              <Dialog.Title className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 tracking-tight leading-tight" 
               >
                 {lessonPlan.title || 'Lesson Plan'}
               </Dialog.Title>
               
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                 {lessonPlan.sport && (
-                  <span className="bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1.5 rounded text-sm font-medium shadow-sm">
+                  <span className="bg-white/10 backdrop-blur-sm text-white border border-emerald-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
                     {lessonPlan.sport}
                   </span>
                 )}
                 {lessonPlan.level && (
-                  <span className="bg-blue-100 text-blue-900 border border-blue-300 px-3 py-1.5 rounded text-sm font-medium shadow-sm">
+                  <span className="bg-white/10 backdrop-blur-sm text-white border border-emerald-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
                     {lessonPlan.level}
                   </span>
                 )}
                 {lessonPlan.duration && (
-                  <span className="bg-green-100 text-green-900 border border-green-300 px-3 py-1.5 rounded text-sm font-medium shadow-sm">
+                  <span className="bg-white/10 backdrop-blur-sm text-white border border-yellow-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
                     ⏱ {lessonPlan.duration} min
                   </span>
                 )}
                 {lessonPlan.numberOfPeople && (
-                  <span className="bg-purple-100 text-purple-900 border border-purple-300 px-3 py-1.5 rounded text-sm font-medium shadow-sm">
+                  <span className="bg-white/10 backdrop-blur-sm text-white border border-yellow-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
                     👥 {lessonPlan.numberOfPeople}
                   </span>
                 )}
@@ -216,7 +196,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
             
             <Dialog.Close asChild>
               <motion.button 
-                className="p-2.5 rounded-full bg-amber-100 border-2 border-amber-800/30 hover:bg-amber-200 transition-colors shadow-md"
+                className="p-2 sm:p-2.5 rounded-full bg-white/10 backdrop-blur-sm border-2 border-white/30 hover:bg-white/20 active:bg-white/20 transition-colors shadow-md flex-shrink-0"
                 whileHover={{ 
                   scale: 1.1,
                   rotate: 90,
@@ -235,41 +215,34 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                   } 
                 }}
               >
-                <Cross2Icon className="w-5 h-5 text-amber-900" />
+                <Cross2Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </motion.button>
             </Dialog.Close>
           </div>
 
           {/* Content */}
-          <ScrollArea.Root className="h-[calc(90vh-180px)]">
+          <ScrollArea.Root className="h-[calc(90vh-120px)] sm:h-[calc(90vh-180px)]">
             <ScrollArea.Viewport className="w-full h-full">
-              <div className="p-8 pl-24 space-y-8 relative"
-                style={{
-                  backgroundImage: 'repeating-linear-gradient(transparent, transparent 31px, rgba(139, 111, 71, 0.08) 31px, rgba(139, 111, 71, 0.08) 32px)',
-                }}
-              >
-                {/* Left margin line */}
-                <div className="absolute left-20 top-0 bottom-0 w-px bg-red-300/40"></div>
-                
+              <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 relative">
                 {/* Description */}
                 {lessonPlan.description && (
-                  <div className="bg-amber-50/40 border-l-4 border-amber-700 p-6 rounded-r shadow-sm">
-                    <p className="text-gray-800 leading-8 text-lg font-serif italic">{lessonPlan.description}</p>
+                  <div className="bg-white/10 backdrop-blur-sm border-l-4 border-white/40 p-4 sm:p-6 rounded-r shadow-sm">
+                    <p className="text-white leading-6 sm:leading-8 text-base sm:text-lg italic">{lessonPlan.description}</p>
                   </div>
                 )}
 
                 {/* Key Information */}
-                <div className="grid lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                   {lessonPlan.objectives && lessonPlan.objectives.length > 0 && (
-                    <div className="bg-blue-50/60 border-2 border-blue-200 rounded-lg p-6 shadow-md">
-                      <h3 className="text-sm font-bold text-blue-900 mb-4 uppercase tracking-wide flex items-center gap-2">
-                        <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
+                    <div className="bg-white/10 backdrop-blur-sm border-2 border-emerald-500/30 rounded-2xl p-4 sm:p-6 shadow-md">
+                      <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
+                        <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                         Learning Objectives
                       </h3>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2 sm:space-y-3">
                         {lessonPlan.objectives.map((objective, index) => (
-                          <li key={index} className="flex items-start gap-3 text-base text-gray-800 leading-7 font-serif">
-                            <span className="text-blue-600 mt-1 font-bold">•</span>
+                          <li key={index} className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90 leading-6 sm:leading-7">
+                            <span className="text-white mt-0.5 sm:mt-1 font-bold">•</span>
                             <span>{objective}</span>
                           </li>
                         ))}
@@ -278,16 +251,16 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                   )}
 
                   {lessonPlan.equipment && lessonPlan.equipment.length > 0 && (
-                    <div className="bg-green-50/60 border-2 border-green-200 rounded-lg p-6 shadow-md">
-                      <h3 className="text-sm font-bold text-green-900 mb-4 uppercase tracking-wide flex items-center gap-2">
-                        <span className="w-2 h-2 bg-green-600 rounded-full"></span>
+                    <div className="bg-white/10 backdrop-blur-sm border-2 border-yellow-500/30 rounded-2xl p-4 sm:p-6 shadow-md">
+                      <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
+                        <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
                         Required Equipment
                       </h3>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {lessonPlan.equipment.map((item, index) => (
                         <motion.span
                           key={index}
-                          className="bg-white border border-green-300 text-gray-800 rounded-full text-sm font-medium px-4 py-2 shadow-sm"
+                          className="bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm"
                           whileHover={{ 
                             scale: 1.05,
                             y: -2,
@@ -306,14 +279,14 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                 </div>
 
                 {lessonPlan.safetyConsiderations && lessonPlan.safetyConsiderations.length > 0 && (
-                  <div className="bg-red-50/70 border-2 border-red-300 rounded-lg p-6 shadow-md">
-                    <h3 className="text-sm font-bold text-red-900 mb-4 uppercase tracking-wide flex items-center gap-2">
-                      <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+                  <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-4 sm:p-6 shadow-md">
+                    <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
+                      <span className="w-2 h-2 bg-white rounded-full"></span>
                       Safety Considerations
                     </h3>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2 sm:space-y-3">
                       {lessonPlan.safetyConsiderations.map((consideration, index) => (
-                        <li key={index} className="flex items-start gap-3 text-base text-gray-800 leading-7 font-serif">
+                        <li key={index} className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90 leading-6 sm:leading-7">
                           <span className="mt-0.5 text-xl">⚠️</span>
                           <span>{consideration}</span>
                         </li>
@@ -323,14 +296,14 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                 )}
 
                 {/* Lesson Activities */}
-                <div className="space-y-6 mt-8">
-                  <h2 className="text-3xl font-serif font-bold text-gray-900 tracking-tight mb-4 pb-2 border-b-2 border-amber-900/30">Lesson Activities</h2>
+                <div className="space-y-4 sm:space-y-6 mt-6 sm:mt-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3 sm:mb-4 pb-2 border-b-2 border-white/30">Lesson Activities</h2>
 
                   <Tabs.Root defaultValue="warmup" className="w-full">
-                    <Tabs.List className="flex gap-3 mb-6 bg-amber-50/60 p-3 rounded-lg border-2 border-amber-200 shadow-sm">
+                    <Tabs.List className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-4 sm:mb-6 bg-white/10 backdrop-blur-sm p-2 sm:p-3 rounded-2xl border-2 border-white/20 shadow-sm">
                       <Tabs.Trigger asChild value="warmup">
                         <motion.button
-                          className="flex-1 px-4 py-2.5 text-sm font-bold text-gray-700 bg-white rounded border-2 border-amber-300 transition-all hover:bg-amber-50 data-[state=active]:bg-amber-100 data-[state=active]:text-amber-900 data-[state=active]:shadow-md data-[state=active]:border-amber-400 uppercase tracking-wide"
+                          className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white bg-white/10 rounded-xl border-2 border-white/30 transition-all hover:bg-white/20 active:bg-white/20 data-[state=active]:bg-emerald-500/80 data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:border-emerald-400 uppercase tracking-wide"
                           whileHover={{ 
                             scale: 1.02,
                             y: -2,
@@ -338,15 +311,12 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                           }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <span className="flex items-center justify-center gap-2">
-                            <span className="text-base">🔥</span>
-                            Warm-Up
-                          </span>
+                          Warm-Up
                         </motion.button>
                       </Tabs.Trigger>
                       <Tabs.Trigger asChild value="main">
                         <motion.button
-                          className="flex-1 px-4 py-2.5 text-sm font-bold text-gray-700 bg-white rounded border-2 border-amber-300 transition-all hover:bg-amber-50 data-[state=active]:bg-amber-100 data-[state=active]:text-amber-900 data-[state=active]:shadow-md data-[state=active]:border-amber-400 uppercase tracking-wide"
+                          className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white bg-white/10 rounded-xl border-2 border-white/30 transition-all hover:bg-white/20 active:bg-white/20 data-[state=active]:bg-yellow-500/80 data-[state=active]:text-black data-[state=active]:shadow-md data-[state=active]:border-yellow-400 uppercase tracking-wide"
                           whileHover={{ 
                             scale: 1.02,
                             y: -2,
@@ -354,15 +324,12 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                           }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <span className="flex items-center justify-center gap-2">
-                            <span className="text-base">⚡</span>
-                            Main Activities
-                          </span>
+                          Main Activities
                         </motion.button>
                       </Tabs.Trigger>
                       <Tabs.Trigger asChild value="cooldown">
                         <motion.button
-                          className="flex-1 px-4 py-2.5 text-sm font-bold text-gray-700 bg-white rounded border-2 border-amber-300 transition-all hover:bg-amber-50 data-[state=active]:bg-amber-100 data-[state=active]:text-amber-900 data-[state=active]:shadow-md data-[state=active]:border-amber-400 uppercase tracking-wide"
+                          className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold text-white bg-white/10 rounded-xl border-2 border-white/30 transition-all hover:bg-white/20 active:bg-white/20 data-[state=active]:bg-emerald-500/80 data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:border-emerald-400 uppercase tracking-wide"
                           whileHover={{ 
                             scale: 1.02,
                             y: -2,
@@ -370,16 +337,13 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                           }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <span className="flex items-center justify-center gap-2">
-                            <span className="text-base">🧘</span>
-                            Cool-Down
-                          </span>
+                          Cool-Down
                         </motion.button>
                       </Tabs.Trigger>
                     </Tabs.List>
 
                     <Tabs.Content value="warmup" className="focus:outline-none">
-                      <div className="bg-white/60 border-2 border-amber-200 rounded-lg overflow-hidden shadow-md">
+                      <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md">
                         {lessonPlan.warmUp && lessonPlan.warmUp.length > 0 ? (
                           <Accordion.Root type="multiple" defaultValue={lessonPlan.warmUp.map((_, i) => `activity-${i + 1}`)}>
                             {lessonPlan.warmUp.map((activity, index) => (
@@ -387,13 +351,13 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                             ))}
                           </Accordion.Root>
                         ) : (
-                          <p className="text-gray-600 text-center p-8 font-serif italic">No warm-up activities available</p>
+                          <p className="text-white/60 text-center p-8 italic">No warm-up activities available</p>
                         )}
                       </div>
                     </Tabs.Content>
 
                     <Tabs.Content value="main" className="focus:outline-none">
-                      <div className="bg-white/60 border-2 border-amber-200 rounded-lg overflow-hidden shadow-md">
+                      <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md">
                         {lessonPlan.mainActivities && lessonPlan.mainActivities.length > 0 ? (
                           <Accordion.Root type="multiple" defaultValue={lessonPlan.mainActivities.map((_, i) => `activity-${i + 1}`)}>
                             {lessonPlan.mainActivities.map((activity, index) => (
@@ -401,13 +365,13 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                             ))}
                           </Accordion.Root>
                         ) : (
-                          <p className="text-gray-600 text-center p-8 font-serif italic">No main activities available</p>
+                          <p className="text-white/60 text-center p-8 italic">No main activities available</p>
                         )}
                       </div>
                     </Tabs.Content>
 
                     <Tabs.Content value="cooldown" className="focus:outline-none">
-                      <div className="bg-white/60 border-2 border-amber-200 rounded-lg overflow-hidden shadow-md">
+                      <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md">
                         {lessonPlan.coolDown && lessonPlan.coolDown.length > 0 ? (
                           <Accordion.Root type="multiple" defaultValue={lessonPlan.coolDown.map((_, i) => `activity-${i + 1}`)}>
                             {lessonPlan.coolDown.map((activity, index) => (
@@ -415,7 +379,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                             ))}
                           </Accordion.Root>
                         ) : (
-                          <p className="text-gray-600 text-center p-8 font-serif italic">No cool-down activities available</p>
+                          <p className="text-white/60 text-center p-8 italic">No cool-down activities available</p>
                         )}
                       </div>
                     </Tabs.Content>
@@ -424,16 +388,16 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
 
                 {/* Assessment Criteria */}
                 {lessonPlan.assessmentCriteria && lessonPlan.assessmentCriteria.length > 0 && (
-                  <div className="bg-purple-50/60 border-2 border-purple-200 rounded-lg p-6 shadow-md">
-                    <h3 className="text-sm font-bold text-purple-900 mb-4 uppercase tracking-wide flex items-center gap-2">
-                      <span className="w-2 h-2 bg-purple-600 rounded-full"></span>
+                  <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-4 sm:p-6 shadow-md">
+                    <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
+                      <span className="w-2 h-2 bg-white rounded-full"></span>
                       Assessment Criteria
                     </h3>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2.5 sm:space-y-3">
                       {lessonPlan.assessmentCriteria.map((criteria, index) => (
-                        <li key={index} className="flex items-start gap-4 text-base text-gray-800 font-serif">
-                          <span className="text-purple-900 mt-0.5 text-sm bg-purple-100 rounded-full w-7 h-7 flex items-center justify-center font-bold border-2 border-purple-300 flex-shrink-0">{index + 1}</span>
-                          <span className="leading-7 flex-1">{criteria}</span>
+                        <li key={index} className="flex items-start gap-3 sm:gap-4 text-sm sm:text-base text-white/90">
+                          <span className="text-black mt-0.5 text-xs sm:text-sm bg-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center font-bold border-2 border-white/30 flex-shrink-0">{index + 1}</span>
+                          <span className="leading-6 sm:leading-7 flex-1">{criteria}</span>
                         </li>
                       ))}
                     </ul>
@@ -442,20 +406,23 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
 
                 {/* Adaptations */}
                 {lessonPlan.adaptations && (
-                  <div className="space-y-5">
-                    <h3 className="text-2xl font-serif font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2 pb-2 border-b-2 border-amber-900/30">
-                      <span className="w-2 h-2 bg-amber-600 rounded-full"></span>
+                  <div className="space-y-4 sm:space-y-5">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white uppercase tracking-wide flex items-center gap-2 pb-2 border-b-2 border-white/30">
+                      <span className="w-2 h-2 bg-white rounded-full"></span>
                       Adaptations
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                       {/* Beginners */}
                       {lessonPlan.adaptations.forBeginners && lessonPlan.adaptations.forBeginners.length > 0 && (
-                        <div className="bg-yellow-50/60 border-2 border-yellow-200 rounded-lg p-5 shadow-md">
-                          <h4 className="text-sm font-bold text-yellow-900 mb-3 uppercase tracking-wide">For Beginners</h4>
-                          <ul className="space-y-2.5">
+                        <div className="bg-white/10 backdrop-blur-sm border-2 border-emerald-500/30 rounded-2xl p-4 sm:p-5 shadow-md">
+                          <h4 className="text-xs sm:text-sm font-bold text-white mb-2.5 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
+                            For Beginners
+                          </h4>
+                          <ul className="space-y-2 sm:space-y-2.5">
                             {lessonPlan.adaptations.forBeginners.map((adaptation, index) => (
-                              <li key={index} className="flex items-start gap-2.5 text-sm text-gray-800 leading-6 font-serif">
-                                <span className="text-yellow-600 mt-0.5 font-bold">•</span>
+                              <li key={index} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6">
+                                <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
                                 <span>{adaptation}</span>
                               </li>
                             ))}
@@ -465,12 +432,15 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                       
                       {/* Advanced */}
                       {lessonPlan.adaptations.forAdvanced && lessonPlan.adaptations.forAdvanced.length > 0 && (
-                        <div className="bg-orange-50/60 border-2 border-orange-200 rounded-lg p-5 shadow-md">
-                          <h4 className="text-sm font-bold text-orange-900 mb-3 uppercase tracking-wide">For Advanced</h4>
-                          <ul className="space-y-2.5">
+                        <div className="bg-white/10 backdrop-blur-sm border-2 border-yellow-500/30 rounded-2xl p-4 sm:p-5 shadow-md">
+                          <h4 className="text-xs sm:text-sm font-bold text-white mb-2.5 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></span>
+                            For Advanced
+                          </h4>
+                          <ul className="space-y-2 sm:space-y-2.5">
                             {lessonPlan.adaptations.forAdvanced.map((adaptation, index) => (
-                              <li key={index} className="flex items-start gap-2.5 text-sm text-gray-800 leading-6 font-serif">
-                                <span className="text-orange-600 mt-0.5 font-bold">•</span>
+                              <li key={index} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6">
+                                <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
                                 <span>{adaptation}</span>
                               </li>
                             ))}
@@ -480,12 +450,15 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                       
                       {/* Injuries */}
                       {lessonPlan.adaptations.forInjuries && lessonPlan.adaptations.forInjuries.length > 0 && (
-                        <div className="bg-rose-50/60 border-2 border-rose-200 rounded-lg p-5 shadow-md">
-                          <h4 className="text-sm font-bold text-rose-900 mb-3 uppercase tracking-wide">For Injuries</h4>
-                          <ul className="space-y-2.5">
+                        <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-4 sm:p-5 shadow-md">
+                          <h4 className="text-xs sm:text-sm font-bold text-white mb-2.5 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                            For Injuries
+                          </h4>
+                          <ul className="space-y-2 sm:space-y-2.5">
                             {lessonPlan.adaptations.forInjuries.map((adaptation, index) => (
-                              <li key={index} className="flex items-start gap-2.5 text-sm text-gray-800 leading-6 font-serif">
-                                <span className="text-rose-600 mt-0.5 font-bold">•</span>
+                              <li key={index} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6">
+                                <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
                                 <span>{adaptation}</span>
                               </li>
                             ))}
@@ -498,16 +471,16 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
 
                 {/* Coaching Tips */}
                 {lessonPlan.coachingTips && lessonPlan.coachingTips.length > 0 && (
-                  <div className="bg-cyan-50/60 border-2 border-cyan-200 rounded-lg p-6 shadow-md">
-                    <h3 className="text-sm font-bold text-cyan-900 mb-4 uppercase tracking-wide flex items-center gap-2">
-                      <span className="w-2 h-2 bg-cyan-600 rounded-full"></span>
+                  <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-4 sm:p-6 shadow-md">
+                    <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
+                      <span className="w-2 h-2 bg-white rounded-full"></span>
                       Coaching Tips
                     </h3>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2.5 sm:space-y-3">
                       {lessonPlan.coachingTips.map((tip, index) => (
-                        <li key={index} className="flex items-start gap-3 text-base text-gray-800 font-serif">
-                          <span className="text-xl mt-0.5">💡</span>
-                          <span className="leading-7 flex-1">{tip}</span>
+                        <li key={index} className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90">
+                          <span className="text-lg sm:text-xl mt-0.5 flex-shrink-0">💡</span>
+                          <span className="leading-6 sm:leading-7 flex-1">{tip}</span>
                         </li>
                       ))}
                     </ul>
@@ -515,8 +488,8 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                 )}
 
                 {/* Bottom decorative element */}
-                <div className="flex justify-center pt-8 pb-4">
-                  <div className="w-32 h-px bg-gradient-to-r from-transparent via-amber-900/30 to-transparent"></div>
+                <div className="flex justify-center pt-6 sm:pt-8 pb-3 sm:pb-4">
+                  <div className="w-24 sm:w-32 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                 </div>
 
               </div>
@@ -525,7 +498,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
               orientation="vertical" 
               className="flex select-none touch-none p-1 transition-all duration-200 ease-out data-[orientation=vertical]:w-3 data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:h-3 mr-2"
             >
-              <ScrollArea.Thumb className="flex-1 bg-amber-800/40 hover:bg-amber-800/60 rounded transition-colors duration-200 relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
+              <ScrollArea.Thumb className="flex-1 bg-white/40 hover:bg-white/60 rounded transition-colors duration-200 relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
             </ScrollArea.Scrollbar>
           </ScrollArea.Root>
           
