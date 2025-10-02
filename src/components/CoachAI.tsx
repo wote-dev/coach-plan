@@ -119,7 +119,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
       </div>
 
       {/* Step Content with AnimatePresence */}
-      <div className="relative" style={{ minHeight: currentStep === 4 || currentStep === 5 ? '280px' : '180px' }}>
+      <div className="relative" style={{ minHeight: currentStep === 4 || currentStep === 5 ? '280px' : currentStep === 1 ? '280px' : '180px' }}>
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 1 && (
             <motion.div
@@ -128,11 +128,11 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="space-y-8 absolute w-full flex flex-col justify-center"
-              style={{ minHeight: '180px' }}
+              className="space-y-6 absolute w-full flex flex-col justify-center"
+              style={{ minHeight: '280px' }}
             >
-            <label className="text-sm font-medium text-white text-center">What is the skill level?</label>
-            <div className="flex gap-3 justify-center">
+            <label className="text-sm font-medium text-white text-center">What is your client&apos;s skill level?</label>
+            <div className="flex flex-col md:flex-row gap-3 justify-center">
               {[
                 { label: 'Beginner', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
                 { label: 'Intermediate', borderColor: 'border-yellow-500', hoverBg: 'hover:bg-yellow-500/10' },
@@ -170,10 +170,10 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="space-y-2 absolute w-full"
           >
-            <label className="text-sm font-medium text-white">How many people will participate?</label>
+            <label className="text-sm font-medium text-white">How many people will you be coaching?</label>
             <Select.Root value={numberOfPeople} onValueChange={setNumberOfPeople}>
               <Select.Trigger className="w-full flex items-center justify-between bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 overflow-visible">
-                <Select.Value placeholder="Select number of people" />
+                <Select.Value placeholder="Select number of clients" />
                 <Select.Icon>
                   <ChevronDownIcon className="h-4 w-4 text-white/60" />
                 </Select.Icon>
@@ -209,7 +209,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="space-y-4 absolute w-full"
           >
-            <label className="text-sm font-medium text-white">How long should the lesson be?</label>
+            <label className="text-sm font-medium text-white">How long should your coaching session be?</label>
             <div className="space-y-3">
               <Slider.Root
                 value={duration}
@@ -249,8 +249,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="space-y-2 absolute w-full"
           >
-            <label className="text-sm font-medium text-white">What equipment is available? (Optional)</label>
-            <p className="text-xs text-white/60 mb-2">List any specific equipment you have available for the lesson.</p>
+            <label className="text-sm font-medium text-white">What equipment do you have available? (Optional)</label>
+            <p className="text-xs text-white/60 mb-2">List any specific equipment you have available for your coaching session.</p>
             <textarea
               name="equipment"
               value={equipment}
@@ -272,8 +272,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="space-y-2 absolute w-full"
           >
-            <label className="text-sm font-medium text-white">What are your learning objectives? (Optional)</label>
-            <p className="text-xs text-white/60 mb-2">What should participants learn or improve during this lesson?</p>
+            <label className="text-sm font-medium text-white">What are your coaching objectives? (Optional)</label>
+            <p className="text-xs text-white/60 mb-2">What should your client(s) learn or improve during this session?</p>
             <textarea
               name="objectives"
               value={objectives}

@@ -30,13 +30,15 @@ export async function generateLessonPlan(params: LessonPlanParams) {
   }
   
   const prompt = `
-Create a detailed sports lesson plan with the following parameters:
+Create a detailed sports coaching plan for a coach who will be teaching their client(s) with the following parameters:
 - Sport: ${params.sport}
-- Skill Level: ${params.level}
-- Duration: ${params.duration} minutes
-- Number of People: ${params.numberOfPeople}
+- Client Skill Level: ${params.level}
+- Session Duration: ${params.duration} minutes
+- Number of Clients: ${params.numberOfPeople}
 - Available Equipment: ${params.equipment || 'Standard equipment'}
-- Learning Objectives: ${params.objectives || 'Improve fundamental skills'}
+- Coaching Objectives: ${params.objectives || 'Improve fundamental skills'}
+
+Important: Write this plan from the coach's perspective. Use language like "your client(s)", "guide them", "coach them", etc. The plan should help the coach understand what to do and how to coach their clients.
 
 Please structure the lesson plan as a JSON object with the following format:
 {
@@ -73,7 +75,7 @@ Please structure the lesson plan as a JSON object with the following format:
   "progressionTips": ["Tips for skill progression"]
 }
 
-Make sure the activities are appropriate for the skill level and can be completed within the specified duration. Include specific time allocations for each activity.
+Make sure the activities are appropriate for the client's skill level and can be completed within the specified duration. Include specific time allocations for each activity. Remember: you are writing this for the COACH to use when coaching their client(s), so use coaching language and perspective throughout.
 `;
 
   console.log('📝 Generated prompt:', prompt);

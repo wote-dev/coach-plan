@@ -70,7 +70,7 @@ export default function CoachAIPage() {
             </AnimatePresence>
           </div>
           
-          <div className="w-full max-w-2xl relative z-10 my-8 overflow-visible">
+          <div className="w-full max-w-2xl relative z-10 mt-20 mb-8 md:my-8 overflow-visible">
             <AnimatePresence mode="wait">
               {!generatedPlan ? (
                 <motion.div
@@ -86,7 +86,7 @@ export default function CoachAIPage() {
                       CoachAI
                     </h1>
                     <p className="text-white/80 text-base font-medium">
-                      Generate personalized tennis lesson plans with AI
+                      Generate personalized coaching plans for your clients with AI
                     </p>
                   </div>
                   <div 

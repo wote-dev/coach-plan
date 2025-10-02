@@ -144,8 +144,8 @@ export default function HeroSection() {
               }}
               className="text-base lg:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow-sm"
             >
-              Generate customized tennis coaching lesson plans for any skill level and group size. 
-              From warm-ups to cool-downs, we&apos;ve got your training sessions covered.
+              Generate customized tennis coaching plans for your clients at any skill level and group size. 
+              From warm-ups to cool-downs, we&apos;ve got your coaching sessions covered.
             </motion.p>
           </div>
 

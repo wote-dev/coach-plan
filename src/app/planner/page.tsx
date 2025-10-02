@@ -152,7 +152,7 @@ export default function PlannerPage() {
               Tennis Lesson Planner
             </h1>
             <p className="text-white/80 text-base font-medium">
-              Create personalized tennis training sessions
+              Create personalized coaching plans for your clients
             </p>
           </motion.div>
 
@@ -180,7 +180,7 @@ export default function PlannerPage() {
               }}
             >
               <label className="text-sm font-medium text-white">
-                Client Level
+                Client&apos;s Skill Level
               </label>
               <RadioGroup.Root
                 value={level}
@@ -216,11 +216,11 @@ export default function PlannerPage() {
               }}
             >
               <label className="text-sm font-medium text-white">
-                Number of People
+                Number of Clients
               </label>
               <Select.Root value={numberOfPeople} onValueChange={setNumberOfPeople}>
                 <Select.Trigger className="w-full flex items-center justify-between bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent">
-                  <Select.Value placeholder="Select number of people" />
+                  <Select.Value placeholder="Select number of clients" />
                   <Select.Icon>
                     <ChevronDownIcon className="h-4 w-4 text-white/60" />
                   </Select.Icon>
@@ -255,7 +255,7 @@ export default function PlannerPage() {
               }}
             >
               <label className="text-sm font-medium text-white">
-                Lesson Duration
+                Session Duration
               </label>
               <div className="space-y-3">
                 <Slider.Root
