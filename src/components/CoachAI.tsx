@@ -4,8 +4,7 @@ import * as Select from '@radix-ui/react-select';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import * as Slider from '@radix-ui/react-slider';
 import { ChevronDownIcon, CheckIcon, MagicWandIcon, ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActionState } from 'react';
 import { generateAILessonPlan } from '@/app/actions/generate-lesson-plan';
@@ -29,6 +28,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
   const totalSteps = 5; // Skill Level, Number of People, Duration, Equipment, Objectives
 
   const [state, formAction, isPending] = useActionState(generateAILessonPlan, null);
+  const [isTransitionPending, startTransition] = useTransition();
 
   // Validation for current step
   const isStepValid = () => {
@@ -80,7 +80,9 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
     e.preventDefault();
     if (currentStep === totalSteps && isFormValid) {
       const formData = new FormData(e.currentTarget);
-      formAction(formData);
+      startTransition(() => {
+        formAction(formData);
+      });
     } else if (isStepValid()) {
       handleNext();
     }
@@ -89,7 +91,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
   return (
     <form 
       onSubmit={handleSubmit}
-      className="space-y-6 pb-8"
+      className="space-y-6"
+      style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}
     >
       {/* Hidden inputs to capture state values for form submission */}
       <input type="hidden" name="sport" value={sport} />
@@ -116,7 +119,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
       </div>
 
       {/* Step Content with AnimatePresence */}
-      <div className="relative min-h-[180px]">
+      <div className="relative" style={{ minHeight: currentStep === 4 || currentStep === 5 ? '280px' : '180px' }}>
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 1 && (
             <motion.div
@@ -240,7 +243,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="space-y-2 min-h-[200px] absolute w-full"
+            className="space-y-2 absolute w-full"
           >
             <label className="text-sm font-medium text-white">What equipment is available? (Optional)</label>
             <p className="text-xs text-white/60 mb-2">List any specific equipment you have available for the lesson.</p>
@@ -250,7 +253,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
               onChange={(e) => setEquipment(e.target.value)}
               placeholder="e.g., Tennis balls, cones, rackets..."
               rows={5}
-              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible"
+              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-4"
+              style={{ fontSize: '16px' }}
             />
           </motion.div>
         )}
@@ -262,7 +266,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="space-y-2 min-h-[200px] absolute w-full"
+            className="space-y-2 absolute w-full"
           >
             <label className="text-sm font-medium text-white">What are your learning objectives? (Optional)</label>
             <p className="text-xs text-white/60 mb-2">What should participants learn or improve during this lesson?</p>
@@ -272,7 +276,8 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
               onChange={(e) => setObjectives(e.target.value)}
               placeholder="e.g., Improve forehand technique, develop footwork..."
               rows={5}
-              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible"
+              className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-4"
+              style={{ fontSize: '16px' }}
             />
           </motion.div>
         )}
@@ -319,12 +324,12 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
         ) : (
           <motion.button
             type="submit"
-            disabled={!isFormValid || isPending}
+            disabled={!isFormValid || isPending || isTransitionPending}
             className="flex-1 bg-white border border-white rounded-2xl py-3 px-4 font-medium text-sm transition-all duration-200 hover:bg-white/90 hover:border-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white/50 flex items-center justify-center gap-2 text-black"
-            whileHover={{ scale: isFormValid && !isPending ? 1.02 : 1 }}
-            whileTap={{ scale: isFormValid && !isPending ? 0.98 : 1 }}
+            whileHover={{ scale: isFormValid && !isPending && !isTransitionPending ? 1.02 : 1 }}
+            whileTap={{ scale: isFormValid && !isPending && !isTransitionPending ? 0.98 : 1 }}
           >
-            {isPending ? (
+            {(isPending || isTransitionPending) ? (
               <>
                 <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                 <span>Generating...</span>

@@ -48,20 +48,22 @@ export default function CoachAIPage() {
       </AnimatePresence>
 
       {!isLoading && (
-        <div className="w-full h-full flex items-center justify-center p-4 relative overflow-visible">
+        <div className="w-full h-screen flex items-center justify-center p-4 relative overflow-visible" style={{ height: '100vh', height: '100dvh' }}>
           {/* Back Button - positioned absolutely in top-left */}
           <div className="absolute top-6 left-6 z-20">
             <BackButton />
           </div>
           
           {/* Background container with perfect cross-fade */}
-          <div className="absolute inset-0 pointer-events-none">
+          <div className="fixed inset-0 pointer-events-none">
             <AnimatePresence mode="popLayout">
               <motion.div
                 key={currentBackground}
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
-                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${currentBackground})`
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${currentBackground})`,
+                  minHeight: '100vh',
+                  minHeight: '100dvh'
                 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -93,7 +95,13 @@ export default function CoachAIPage() {
                       Generate personalized tennis lesson plans with AI
                     </p>
                   </div>
-                  <div className="max-h-[calc(100vh-300px)] overflow-y-auto overflow-x-visible px-3 pb-10 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-white/10 hover:scrollbar-thumb-white/40">
+                  <div 
+                    className="overflow-y-auto overflow-x-visible px-3 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-white/10 hover:scrollbar-thumb-white/40"
+                    style={{
+                      maxHeight: 'calc(100dvh - 300px)',
+                      paddingBottom: 'max(2.5rem, env(safe-area-inset-bottom))'
+                    }}
+                  >
                     <CoachAI onPlanGenerated={handlePlanGenerated} onSportChange={handleSportChange} />
                   </div>
                   {/* Bottom fade overlay to avoid hard edge cut-off */}

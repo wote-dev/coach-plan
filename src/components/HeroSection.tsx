@@ -50,9 +50,11 @@ export default function HeroSection() {
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0 }}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(/tennis5.jpg)`
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(/tennis5.jpg)`,
+          minHeight: '100vh',
+          minHeight: '100dvh'
         }}
       />
       

@@ -1,12 +1,15 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-if (!process.env.GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY is not set in environment variables');
+// Support multiple environment variable names for flexibility
+const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+if (!API_KEY) {
+  console.error('❌ Gemini API key not found. Checked: GEMINI_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, NEXT_PUBLIC_GEMINI_API_KEY');
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
-export const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+export const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-2.5-flash' }) : null;
 
 export interface LessonPlanParams {
   sport: string;
@@ -19,6 +22,12 @@ export interface LessonPlanParams {
 
 export async function generateLessonPlan(params: LessonPlanParams) {
   console.log('🚀 Starting lesson plan generation with params:', params);
+  
+  // Check if the API is configured
+  if (!model) {
+    console.error('❌ Gemini API not initialized - API key is missing');
+    throw new Error('Gemini API key is not configured. Please set GEMINI_API_KEY in your environment variables.');
+  }
   
   const prompt = `
 Create a detailed sports lesson plan with the following parameters:
