@@ -13,9 +13,10 @@ import { LessonPlan } from '@/data/lessonPlans';
 interface CoachAIProps {
   onPlanGenerated: (plan: Partial<LessonPlan>) => void;
   onSportChange?: (sport: string) => void;
+  onGeneratingChange?: (isGenerating: boolean) => void;
 }
 
-export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps) {
+export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingChange }: CoachAIProps) {
   const [sport] = useState<string>('Tennis'); // Default to Tennis
   const [level, setLevel] = useState<string>('');
   const [duration, setDuration] = useState<number[]>([60]);
@@ -63,6 +64,11 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
   useEffect(() => {
     onSportChange?.('Tennis');
   }, [onSportChange]);
+  
+  // Notify parent of generating state changes
+  useEffect(() => {
+    onGeneratingChange?.(isPending || isTransitionPending);
+  }, [isPending, isTransitionPending, onGeneratingChange]);
   
   const handleNext = () => {
     if (currentStep < totalSteps) {

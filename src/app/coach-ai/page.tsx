@@ -7,11 +7,13 @@ import LessonPlanDisplay from '@/components/LessonPlanDisplay';
 import BackButton from '@/components/ui/BackButton';
 import { LessonPlan } from '@/data/lessonPlans';
 import TennisLoader from '@/components/TennisLoader';
+import TennisLoaderWithTips from '@/components/TennisLoaderWithTips';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 export default function CoachAIPage() {
   const [generatedPlan, setGeneratedPlan] = useState<Partial<LessonPlan> | null>(null);
   const [selectedSport, setSelectedSport] = useState<string>('');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // Sport background mapping
   const sportBackgrounds: Record<string, string> = {
@@ -36,10 +38,15 @@ export default function CoachAIPage() {
     setSelectedSport(sport);
   };
 
+  const handleGeneratingChange = (generating: boolean) => {
+    setIsGenerating(generating);
+  };
+
   return (
     <>
       <AnimatePresence mode="wait">
         {isLoading && <TennisLoader key="loader" />}
+        {isGenerating && <TennisLoaderWithTips key="generating" />}
       </AnimatePresence>
 
       {!isLoading && (
@@ -96,7 +103,11 @@ export default function CoachAIPage() {
                       paddingBottom: 'max(2.5rem, env(safe-area-inset-bottom))'
                     }}
                   >
-                    <CoachAI onPlanGenerated={handlePlanGenerated} onSportChange={handleSportChange} />
+                    <CoachAI 
+                      onPlanGenerated={handlePlanGenerated} 
+                      onSportChange={handleSportChange}
+                      onGeneratingChange={handleGeneratingChange}
+                    />
                   </div>
                   {/* Bottom fade overlay to avoid hard edge cut-off */}
                   <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 rounded-b-3xl bg-gradient-to-t from-black/40 to-transparent" />
