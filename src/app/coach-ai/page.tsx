@@ -48,7 +48,7 @@ export default function CoachAIPage() {
       </AnimatePresence>
 
       {!isLoading && (
-        <div className="w-full h-screen flex items-center justify-center p-4 relative overflow-visible" style={{ height: '100vh', height: '100dvh' }}>
+        <div className="w-full h-screen flex items-center justify-center p-4 relative overflow-visible" style={{ height: '100dvh' }}>
           {/* Back Button - positioned absolutely in top-left */}
           <div className="absolute top-6 left-6 z-20">
             <BackButton />
@@ -62,7 +62,6 @@ export default function CoachAIPage() {
                 className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${currentBackground})`,
-                  minHeight: '100vh',
                   minHeight: '100dvh'
                 }}
                 initial={{ opacity: 0 }}

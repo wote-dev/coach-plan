@@ -128,15 +128,16 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="space-y-4 absolute w-full"
+              className="space-y-8 absolute w-full flex flex-col justify-center"
+              style={{ minHeight: '180px' }}
             >
-            <label className="text-sm font-medium text-white">What is the skill level?</label>
+            <label className="text-sm font-medium text-white text-center">What is the skill level?</label>
             <div className="flex gap-3 justify-center">
               {[
-                { label: 'Beginner', color: 'bg-green-500 hover:bg-green-600' },
-                { label: 'Intermediate', color: 'bg-yellow-500 hover:bg-yellow-600' },
-                { label: 'Advanced', color: 'bg-red-500 hover:bg-red-600' }
-              ].map(({ label: levelOption, color }) => (
+                { label: 'Beginner', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
+                { label: 'Intermediate', borderColor: 'border-yellow-500', hoverBg: 'hover:bg-yellow-500/10' },
+                { label: 'Advanced', borderColor: 'border-red-500', hoverBg: 'hover:bg-red-500/10' }
+              ].map(({ label: levelOption, borderColor, hoverBg }) => (
                 <motion.button
                   key={levelOption}
                   type="button"
@@ -145,10 +146,10 @@ export default function CoachAI({ onPlanGenerated, onSportChange }: CoachAIProps
                     // Auto-advance to next step after a brief delay
                     setTimeout(() => handleNext(), 150);
                   }}
-                  className={`py-2.5 px-5 rounded-xl text-base font-medium transition-all duration-200 ${
+                  className={`py-2.5 px-5 rounded-xl text-base font-medium transition-all duration-200 border-2 ${
                     level === levelOption
-                      ? `${color} text-white ring-2 ring-white ring-offset-2 ring-offset-transparent`
-                      : `${color} text-white opacity-70`
+                      ? `${borderColor} bg-white/10 text-white`
+                      : `${borderColor} bg-transparent text-white ${hoverBg}`
                   } focus:outline-none focus:ring-2 focus:ring-white/50`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
