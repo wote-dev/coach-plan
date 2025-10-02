@@ -14,12 +14,11 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={pathname}
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        exit={{ opacity: 1 }}
         transition={{ 
-          duration: 0.3, 
-          ease: [0.22, 0.61, 0.36, 1] // Smooth cubic bezier
+          duration: 0
         }}
         style={{
           position: 'absolute',

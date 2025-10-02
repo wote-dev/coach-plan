@@ -8,7 +8,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 **Key Features:**
 - AI-powered lesson plan generation via Gemini 2.5 Flash
-- Static pre-built lesson plans for Tennis, Basketball, Swimming, Soccer
+- Static pre-built lesson plans for Tennis
 - Dynamic sport-specific backgrounds with smooth transitions
 - Detailed lesson structure: warm-ups, main activities, cool-downs
 - Responsive glassmorphism UI design

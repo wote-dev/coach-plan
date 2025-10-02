@@ -170,6 +170,7 @@ body {
   html {
     /* Ensure the page background never flashes white */
     @apply bg-background;
+    background: #1a1a1a !important;
     /* Prevent scrolling on the entire page */
     overflow: hidden;
     height: 100vh;
@@ -179,19 +180,79 @@ body {
     top: 0;
     left: 0;
   }
+  
+  html::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: #1a1a1a;
+    z-index: -1;
+  }
   body {
     @apply bg-background text-foreground;
+    background: #1a1a1a !important;
     /* Prevent scrolling on the body */
     overflow: hidden;
     height: 100vh;
     height: 100dvh; /* Dynamic viewport height for mobile */
     width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     /* Prevent pull-to-refresh and overscroll on mobile */
     overscroll-behavior: none;
     touch-action: pan-x pan-y;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: #1a1a1a;
+    z-index: -1;
+  }
+  
+  /* Prevent any white/black flash during page transitions */
+  #__next,
+  main,
+  [data-nextjs-scroll-focus-boundary] {
+    background: transparent !important;
+  }
+  
+  /* Ensure all containers have a dark background */
+  div[style*="position: absolute"] {
+    background: transparent !important;
+  }
+  
+  /* Enable view transitions with smooth crossfade */
+  @view-transition {
+    navigation: auto;
+  }
+  
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+    animation-timing-function: ease-in-out;
+  }
+  
+  ::view-transition-old(root) {
+    animation-name: fade-out;
+  }
+  
+  ::view-transition-new(root) {
+    animation-name: fade-in;
+  }
+  
+  ::view-transition-group(root) {
+    animation-duration: 200ms;
+  }
+  
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 

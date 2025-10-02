@@ -13,9 +13,17 @@ interface BackButtonProps {
 export default function BackButton({ onClick, className = '', children }: BackButtonProps) {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick();
+      return;
+    }
+    const hasVT = typeof document !== 'undefined' && (document as any).startViewTransition;
+    if (hasVT) {
+      e.preventDefault();
+      (document as any).startViewTransition(() => {
+        router.push('/');
+      });
     } else {
       router.push('/');
     }
@@ -50,12 +58,8 @@ export default function BackButton({ onClick, className = '', children }: BackBu
           damping: 17 
         } 
       }}
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ 
-        duration: 0.5, 
-        ease: [0.22, 0.61, 0.36, 1] 
-      }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
     >
       <motion.div
         animate={{ x: 0 }}

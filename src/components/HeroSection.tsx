@@ -3,18 +3,26 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRightIcon, PlayIcon, MagicWandIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { ShineBorder } from '@/components/ui/shine-border';
 import GradientText from './GradientText';
 import TennisLoader from './TennisLoader';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
+import { useCallback } from 'react';
 
 export default function HeroSection() {
   const router = useRouter();
-  const isLoading = useImagePreloader(['/tennis5.jpg'], 900);
+  const isLoading = useImagePreloader(['/tennis5.jpg', '/tennis4.jpg', '/default-bg.jpg'], 900);
 
-  const handleCoachAI = () => {
-    router.push('/coach-ai');
-  };
+  const handleViewTransitionNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const hasVT = typeof document !== 'undefined' && (document as any).startViewTransition;
+    if (hasVT) {
+      e.preventDefault();
+      (document as any).startViewTransition(() => {
+        router.push('/coach-ai');
+      });
+    }
+  }, [router]);
   
   return (
     <>
@@ -232,8 +240,10 @@ export default function HeroSection() {
             style={{ opacity: 1 }}
             className="flex justify-center items-center"
           >
-            <button
-              onClick={handleCoachAI}
+            <Link
+              href="/coach-ai"
+              prefetch
+              onClick={handleViewTransitionNav}
               className="group inline-flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-white/10 backdrop-blur-xl border-2 border-white rounded-full font-semibold text-base lg:text-lg text-white hover:bg-white/20 transition-all duration-200 shadow-xl hover:shadow-2xl"
             >
               <MagicWandIcon className="w-4 h-4 lg:w-5 lg:h-5" />
@@ -241,7 +251,7 @@ export default function HeroSection() {
                 Try CoachAI
               </span>
               <ChevronRightIcon className="w-4 h-4 lg:w-5 lg:h-5 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Link>
           </motion.div>
 
           {/* Trust Indicators - Compact */}

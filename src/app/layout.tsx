@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import PageTransition from "@/components/PageTransition";
+import SmoothPageTransition from "@/components/SmoothPageTransition";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -45,8 +45,7 @@ export default function RootLayout({
       <body
         className={`${nunito.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        {/* Global page fade transitions to prevent black flash */}
-        <PageTransition>{children}</PageTransition>
+        <SmoothPageTransition>{children}</SmoothPageTransition>
       </body>
     </html>
   );

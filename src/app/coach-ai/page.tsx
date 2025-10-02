@@ -6,13 +6,13 @@ import CoachAI from '@/components/CoachAI';
 import LessonPlanDisplay from '@/components/LessonPlanDisplay';
 import BackButton from '@/components/ui/BackButton';
 import { LessonPlan } from '@/data/lessonPlans';
-import TennisLoader from '@/components/TennisLoader';
 import TennisLoaderWithTips from '@/components/TennisLoaderWithTips';
+import TennisLoader from '@/components/TennisLoader';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
 
 export default function CoachAIPage() {
   const [generatedPlan, setGeneratedPlan] = useState<Partial<LessonPlan> | null>(null);
-  const [selectedSport, setSelectedSport] = useState<string>('');
+  const [selectedSport, setSelectedSport] = useState<string>('Tennis');
   const [isGenerating, setIsGenerating] = useState(false);
 
   // Sport background mapping
@@ -20,11 +20,11 @@ export default function CoachAIPage() {
     'Tennis': '/tennis4.jpg'
   };
 
-  // Preload all background images
+  // Preload all background images and show a quick loader on entry
   const allBackgrounds = ['/default-bg.jpg', ...Object.values(sportBackgrounds)];
-  const isLoading = useImagePreloader(allBackgrounds, 800);
+  const isLoading = useImagePreloader(allBackgrounds, 600);
 
-  const currentBackground = selectedSport ? sportBackgrounds[selectedSport] : '/default-bg.jpg';
+  const currentBackground = selectedSport ? sportBackgrounds[selectedSport] : sportBackgrounds['Tennis'];
 
   const handlePlanGenerated = (plan: Partial<LessonPlan>) => {
     setGeneratedPlan(plan);
@@ -66,11 +66,11 @@ export default function CoachAIPage() {
                   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${currentBackground})`,
                   minHeight: '100dvh'
                 }}
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 1 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ 
-                  duration: 1.2, 
+                  duration: 0.25, 
                   ease: [0.25, 0.46, 0.45, 0.94] // Smooth easing curve
                 }}
               />
@@ -82,10 +82,10 @@ export default function CoachAIPage() {
               {!generatedPlan ? (
                 <motion.div
                   key="form"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15 }}
                   className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl shadow-black/20 overflow-visible"
                 >
                   <div className="text-center mb-8">
@@ -115,10 +115,10 @@ export default function CoachAIPage() {
               ) : (
                 <motion.div
                   key="plan"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.15 }}
                 >
                   <LessonPlanDisplay 
                     lessonPlan={generatedPlan} 
