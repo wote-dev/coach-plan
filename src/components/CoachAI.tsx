@@ -139,10 +139,10 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
             <label className="text-sm font-medium text-white text-center">What is your client&apos;s skill level?</label>
             <div className="flex flex-col md:flex-row gap-3 justify-center">
               {[
-                { label: 'Beginner', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
-                { label: 'Intermediate', borderColor: 'border-yellow-500', hoverBg: 'hover:bg-yellow-500/10' },
-                { label: 'Advanced', borderColor: 'border-red-500', hoverBg: 'hover:bg-red-500/10' }
-              ].map(({ label: levelOption, borderColor, hoverBg }) => (
+                { label: 'Beginner', emoji: '👶🏻', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
+                { label: 'Intermediate', emoji: '👱🏻‍♂️', borderColor: 'border-yellow-500', hoverBg: 'hover:bg-yellow-500/10' },
+                { label: 'Advanced', emoji: '👵🏽', borderColor: 'border-red-500', hoverBg: 'hover:bg-red-500/10' }
+              ].map(({ label: levelOption, emoji, borderColor, hoverBg }) => (
                 <motion.button
                   key={levelOption}
                   type="button"
@@ -155,11 +155,12 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
                     level === levelOption
                       ? `${borderColor} bg-white/10 text-white`
                       : `${borderColor} bg-transparent text-white ${hoverBg}`
-                  } focus:outline-none focus:ring-2 focus:ring-white/50`}
+                  } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {levelOption}
+                  <span className="text-lg">{emoji}</span>
+                  <span>{levelOption}</span>
                 </motion.button>
               ))}
             </div>

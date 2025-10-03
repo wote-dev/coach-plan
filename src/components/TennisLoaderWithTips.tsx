@@ -92,23 +92,6 @@ export default function TennisLoaderWithTips() {
       </div>
 
       <div className="relative flex flex-col items-center justify-center max-w-2xl px-6 z-[30]">
-        {/* Outer glow effect */}
-        <motion.div
-          className="absolute inset-0 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{
-            background: "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)",
-          }}
-        />
-        
         {/* Spinning tennis ball */}
         <motion.div
           className="text-5xl relative z-10 mb-4"
@@ -148,7 +131,7 @@ export default function TennisLoaderWithTips() {
         </motion.p>
 
         <motion.p
-          className="text-white/60 text-center text-sm mb-8"
+          className="text-white/60 text-center text-sm mb-16"
         >
           This may take a few moments
         </motion.p>

@@ -12,23 +12,6 @@ export default function TennisLoader() {
       transition={{ duration: 0.3 }}
     >
       <div className="relative">
-        {/* Outer glow effect */}
-        <motion.div
-          className="absolute inset-0 rounded-full blur-xl"
-          animate={{
-            scale: [1, 1.12, 1],
-            opacity: [0.2, 0.35, 0.2],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{
-            background: "radial-gradient(circle, rgba(200,200,200,0.4) 0%, transparent 70%)",
-          }}
-        />
-        
         {/* Spinning tennis ball */}
         <motion.div
           className="text-5xl relative z-10"
