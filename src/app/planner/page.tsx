@@ -183,20 +183,24 @@ export default function PlannerPage() {
               </label>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { label: 'Beginner', emoji: '👶', borderColor: 'border-green-500', bgColor: 'bg-green-500/10', hoverBg: 'hover:bg-green-500/20' },
-                  { label: 'Intermediate', emoji: '🧑', borderColor: 'border-yellow-500', bgColor: 'bg-yellow-500/10', hoverBg: 'hover:bg-yellow-500/20' },
-                  { label: 'Advanced', emoji: '👴', borderColor: 'border-red-500', bgColor: 'bg-red-500/10', hoverBg: 'hover:bg-red-500/20' }
-                ].map(({ label: levelOption, emoji, borderColor, bgColor, hoverBg }) => (
+                  { label: 'Beginner', emoji: '👶', color: '#10b981' },
+                  { label: 'Intermediate', emoji: '🧑', color: '#eab308' },
+                  { label: 'Advanced', emoji: '👴', color: '#ef4444' }
+                ].map(({ label: levelOption, emoji, color }) => (
                   <motion.button
                     key={levelOption}
                     type="button"
                     onClick={() => setLevel(levelOption)}
-                    className={`py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 border-2 ${
+                    style={{
+                      backgroundColor: color,
+                      opacity: level === levelOption ? 1 : 0.7
+                    }}
+                    className={`py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 text-white ${
                       level === levelOption
-                        ? `${borderColor} ${bgColor} text-white shadow-lg`
-                        : `${borderColor} bg-white/5 text-white/80 ${hoverBg}`
+                        ? 'shadow-lg ring-2 ring-white/50'
+                        : ''
                     } focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent flex flex-col items-center gap-1`}
-                    whileHover={{ scale: 1.03 }}
+                    whileHover={{ scale: 1.03, opacity: 1 }}
                     whileTap={{ scale: 0.97 }}
                   >
                     <span className="text-xl">{emoji}</span>

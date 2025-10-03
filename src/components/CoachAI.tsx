@@ -146,10 +146,10 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
             <label className="text-sm font-medium text-white text-center">What is your client&apos;s skill level?</label>
             <div className="flex flex-col md:flex-row gap-3 justify-center">
               {[
-                { label: 'Beginner', emoji: '👶🏻', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
-                { label: 'Intermediate', emoji: '👱🏻‍♂️', borderColor: 'border-yellow-500', hoverBg: 'hover:bg-yellow-500/10' },
-                { label: 'Advanced', emoji: '👵🏽', borderColor: 'border-red-500', hoverBg: 'hover:bg-red-500/10' }
-              ].map(({ label: levelOption, emoji, borderColor, hoverBg }) => (
+                { label: 'Beginner', emoji: '👶🏻', color: '#10b981' },
+                { label: 'Intermediate', emoji: '👱🏻‍♂️', color: '#eab308' },
+                { label: 'Advanced', emoji: '👵🏽', color: '#ef4444' }
+              ].map(({ label: levelOption, emoji, color }) => (
                 <motion.button
                   key={levelOption}
                   type="button"
@@ -158,12 +158,16 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
                     // Auto-advance to next step after a brief delay
                     setTimeout(() => handleNext(), 150);
                   }}
-                  className={`py-2.5 px-5 rounded-xl text-base font-medium transition-all duration-200 border-2 ${
+                  style={{
+                    backgroundColor: color,
+                    opacity: level === levelOption ? 1 : 0.7
+                  }}
+                  className={`py-2.5 px-5 rounded-xl text-base font-medium transition-all duration-200 text-white ${
                     level === levelOption
-                      ? `${borderColor} bg-white/10 text-white`
-                      : `${borderColor} bg-transparent text-white ${hoverBg}`
+                      ? 'shadow-lg ring-2 ring-white/50'
+                      : ''
                   } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, opacity: 1 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <span className="text-lg">{emoji}</span>
@@ -187,11 +191,11 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
             <label className="text-sm font-medium text-white text-center">What is your client&apos;s age group?</label>
             <div className="flex flex-wrap gap-3 justify-center">
               {[
-                { label: 'Youth (5-12)', emoji: '🧒', borderColor: 'border-blue-500', hoverBg: 'hover:bg-blue-500/10' },
-                { label: 'Teen (13-17)', emoji: '🧑', borderColor: 'border-purple-500', hoverBg: 'hover:bg-purple-500/10' },
-                { label: 'Adult (18-59)', emoji: '👨', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
-                { label: 'Senior (60+)', emoji: '👴', borderColor: 'border-orange-500', hoverBg: 'hover:bg-orange-500/10' }
-              ].map(({ label: ageOption, emoji, borderColor, hoverBg }) => (
+                { label: 'Youth (5-12)', emoji: '🧒', color: '#3b82f6' },
+                { label: 'Teen (13-17)', emoji: '🧑', color: '#a855f7' },
+                { label: 'Adult (18-59)', emoji: '👨', color: '#10b981' },
+                { label: 'Senior (60+)', emoji: '👴', color: '#f97316' }
+              ].map(({ label: ageOption, emoji, color }) => (
                 <motion.button
                   key={ageOption}
                   type="button"
@@ -200,12 +204,16 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
                     // Auto-advance to next step after a brief delay
                     setTimeout(() => handleNext(), 150);
                   }}
-                  className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all duration-200 border-2 ${
+                  style={{
+                    backgroundColor: color,
+                    opacity: age === ageOption ? 1 : 0.7
+                  }}
+                  className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all duration-200 text-white ${
                     age === ageOption
-                      ? `${borderColor} bg-white/10 text-white`
-                      : `${borderColor} bg-transparent text-white ${hoverBg}`
+                      ? 'shadow-lg ring-2 ring-white/50'
+                      : ''
                   } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, opacity: 1 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <span className="text-lg">{emoji}</span>
