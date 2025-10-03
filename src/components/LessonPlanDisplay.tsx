@@ -8,6 +8,8 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { Cross2Icon, ChevronDownIcon } from '@radix-ui/react-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { Chip } from './ui/Chip';
+import { SectionCard, SectionHeader } from './ui/Section';
 
 interface LessonPlanDisplayProps {
   lessonPlan: Partial<LessonPlan>;
@@ -144,7 +146,14 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black/70 backdrop-blur-md z-50" />
+            <Dialog.Overlay
+              className="fixed inset-0 z-50"
+              style={{
+                backgroundImage: "linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.35)), url(/tennis5.jpg)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
           </motion.div>
         </AnimatePresence>
         <motion.div
@@ -154,7 +163,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
           transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
           className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl max-h-[90vh] z-50"
         >
-        <Dialog.Content className="bg-white/10 backdrop-blur-xl border-2 border-white/20 rounded-3xl shadow-2xl shadow-black/20 overflow-hidden w-full h-full relative"
+        <Dialog.Content className="bg-white/12 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl shadow-black/20 overflow-hidden w-full h-full relative"
         >
           
           <Dialog.Description className="sr-only">
@@ -172,26 +181,18 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                 {lessonPlan.title || 'Lesson Plan'}
               </Dialog.Title>
               
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
-                {lessonPlan.sport && (
-                  <span className="bg-white/10 backdrop-blur-sm text-white border border-emerald-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
-                    {lessonPlan.sport}
-                  </span>
-                )}
-                {lessonPlan.level && (
-                  <span className="bg-white/10 backdrop-blur-sm text-white border border-emerald-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
-                    {lessonPlan.level}
-                  </span>
-                )}
+              <div className="flex flex-wrap gap-2 mt-3">
+                {lessonPlan.sport && <Chip color="emerald">{lessonPlan.sport}</Chip>}
+                {lessonPlan.level && <Chip color="blue">{lessonPlan.level}</Chip>}
                 {lessonPlan.duration && (
-                  <span className="bg-white/10 backdrop-blur-sm text-white border border-yellow-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
-                    ⏱ {lessonPlan.duration} min
-                  </span>
+                  <Chip color="yellow" leading="⏱">
+                    {lessonPlan.duration} min
+                  </Chip>
                 )}
                 {lessonPlan.numberOfPeople && (
-                  <span className="bg-white/10 backdrop-blur-sm text-white border border-yellow-400/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-sm">
-                    👥 {lessonPlan.numberOfPeople}
-                  </span>
+                  <Chip color="purple" leading="👥">
+                    {lessonPlan.numberOfPeople}
+                  </Chip>
                 )}
               </div>
             </div>
@@ -235,67 +236,57 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                 )}
 
                 {/* Key Information */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {lessonPlan.objectives && lessonPlan.objectives.length > 0 && (
-                    <div className="bg-white/10 backdrop-blur-sm border-2 border-emerald-500/30 rounded-2xl p-4 sm:p-6 shadow-md">
-                      <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
-                        <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    <SectionCard tone="emerald" className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                      <SectionHeader dotColor="emerald" size="sm">
                         Learning Objectives
-                      </h3>
+                      </SectionHeader>
                       <ul className="space-y-2 sm:space-y-3">
                         {lessonPlan.objectives.map((objective, index) => (
-                          <li key={index} className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90 leading-6 sm:leading-7">
+                          <li
+                            key={index}
+                            className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90 leading-6 sm:leading-7"
+                          >
                             <span className="text-white mt-0.5 sm:mt-1 font-bold">•</span>
                             <span>{objective}</span>
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </SectionCard>
                   )}
 
                   {lessonPlan.equipment && lessonPlan.equipment.length > 0 && (
-                    <div className="bg-white/10 backdrop-blur-sm border-2 border-yellow-500/30 rounded-2xl p-4 sm:p-6 shadow-md">
-                      <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
-                        <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                    <SectionCard tone="yellow" className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                      <SectionHeader dotColor="yellow" size="sm">
                         Required Equipment
-                      </h3>
-                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      </SectionHeader>
+                      <div className="flex flex-wrap gap-2">
                         {lessonPlan.equipment.map((item, index) => (
-                        <motion.span
-                          key={index}
-                          className="bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm"
-                          whileHover={{ 
-                            scale: 1.05,
-                            y: -2,
-                            transition: { type: "spring", stiffness: 400, damping: 17 }
-                          }}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.05, duration: 0.3 }}
-                        >
-                          {item}
-                        </motion.span>
+                          <Chip key={index}>{item}</Chip>
                         ))}
                       </div>
-                    </div>
+                    </SectionCard>
                   )}
                 </div>
 
                 {lessonPlan.safetyConsiderations && lessonPlan.safetyConsiderations.length > 0 && (
-                  <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-4 sm:p-6 shadow-md">
-                    <h3 className="text-xs sm:text-sm font-bold text-white mb-3 sm:mb-4 uppercase tracking-wide flex items-center gap-2">
-                      <span className="w-2 h-2 bg-white rounded-full"></span>
+                  <SectionCard tone="danger" className="p-4 sm:p-6">
+                    <SectionHeader dotColor="red" size="sm" className="mb-3 sm:mb-4">
                       Safety Considerations
-                    </h3>
+                    </SectionHeader>
                     <ul className="space-y-2 sm:space-y-3">
                       {lessonPlan.safetyConsiderations.map((consideration, index) => (
-                        <li key={index} className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90 leading-6 sm:leading-7">
+                        <li
+                          key={index}
+                          className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90 leading-6 sm:leading-7"
+                        >
                           <span className="mt-0.5 text-xl">⚠️</span>
                           <span>{consideration}</span>
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </SectionCard>
                 )}
 
                 {/* Quick View - Activity Timeline */}
@@ -383,7 +374,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                             ))}
                           </Accordion.Root>
                         ) : (
-                          <p className="text-white/60 text-center p-8 italic">No warm-up activities available</p>
+                          <p className="text-white/70 text-center p-8 italic">No warm-up activities yet</p>
                         )}
                       </div>
                     </Tabs.Content>
@@ -397,7 +388,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                             ))}
                           </Accordion.Root>
                         ) : (
-                          <p className="text-white/60 text-center p-8 italic">No main activities available</p>
+                          <p className="text-white/70 text-center p-8 italic">No main activities yet</p>
                         )}
                       </div>
                     </Tabs.Content>
@@ -411,7 +402,7 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                             ))}
                           </Accordion.Root>
                         ) : (
-                          <p className="text-white/60 text-center p-8 italic">No cool-down activities available</p>
+                          <p className="text-white/70 text-center p-8 italic">No cool-down activities yet</p>
                         )}
                       </div>
                     </Tabs.Content>
@@ -425,21 +416,28 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
                   <Accordion.Root type="multiple" className="space-y-3">
                     {/* Assessment Criteria */}
                     {lessonPlan.assessmentCriteria && lessonPlan.assessmentCriteria.length > 0 && (
-                      <Accordion.Item value="assessment" className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md">
+                      <Accordion.Item
+                        value="assessment"
+                        className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md"
+                      >
                         <Accordion.Header>
                           <Accordion.Trigger className="group flex w-full items-center justify-between p-4 sm:p-5 text-left hover:bg-white/10 transition-colors">
-                            <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
-                              <span className="w-2 h-2 bg-white rounded-full"></span>
+                            <SectionHeader size="sm" dotColor="white">
                               Assessment Criteria
-                            </h3>
+                            </SectionHeader>
                             <ChevronDownIcon className="h-5 w-5 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                           </Accordion.Trigger>
                         </Accordion.Header>
                         <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                           <ul className="space-y-2.5 sm:space-y-3 px-4 sm:px-5 pb-4 sm:pb-5">
                             {lessonPlan.assessmentCriteria.map((criteria, index) => (
-                              <li key={index} className="flex items-start gap-3 sm:gap-4 text-sm sm:text-base text-white/90">
-                                <span className="text-black mt-0.5 text-xs sm:text-sm bg-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center font-bold border-2 border-white/30 flex-shrink-0">{index + 1}</span>
+                              <li
+                                key={index}
+                                className="flex items-start gap-3 sm:gap-4 text-sm sm:text-base text-white/90"
+                              >
+                                <span className="text-black mt-0.5 text-xs sm:text-sm bg-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center font-bold border-2 border-white/30 flex-shrink-0">
+                                  {index + 1}
+                                </span>
                                 <span className="leading-6 sm:leading-7 flex-1">{criteria}</span>
                               </li>
                             ))}
@@ -450,71 +448,91 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
 
                     {/* Adaptations */}
                     {lessonPlan.adaptations && (
-                      <Accordion.Item value="adaptations" className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md">
+                      <Accordion.Item
+                        value="adaptations"
+                        className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md"
+                      >
                         <Accordion.Header>
                           <Accordion.Trigger className="group flex w-full items-center justify-between p-4 sm:p-5 text-left hover:bg-white/10 transition-colors">
-                            <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
-                              <span className="w-2 h-2 bg-white rounded-full"></span>
+                            <SectionHeader size="sm" dotColor="white">
                               Adaptations
-                            </h3>
+                            </SectionHeader>
                             <ChevronDownIcon className="h-5 w-5 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                           </Accordion.Trigger>
                         </Accordion.Header>
                         <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 px-4 sm:px-5 pb-4 sm:pb-5">
                             {/* Beginners */}
-                            {lessonPlan.adaptations.forBeginners && lessonPlan.adaptations.forBeginners.length > 0 && (
-                              <div className="bg-white/10 backdrop-blur-sm border-2 border-emerald-500/30 rounded-xl p-3 sm:p-4 shadow-sm">
-                                <h4 className="text-xs sm:text-sm font-bold text-white mb-2.5 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
-                                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
-                                  For Beginners
-                                </h4>
-                                <ul className="space-y-2 sm:space-y-2.5">
-                                  {lessonPlan.adaptations.forBeginners.map((adaptation, index) => (
-                                    <li key={index} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6">
-                                      <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
-                                      <span>{adaptation}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            
+                            {lessonPlan.adaptations.forBeginners &&
+                              lessonPlan.adaptations.forBeginners.length > 0 && (
+                                <SectionCard tone="emerald" className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+                                  <SectionHeader as="h4" dotColor="emerald" size="sm">
+                                    For Beginners
+                                  </SectionHeader>
+                                  <ul className="space-y-2 sm:space-y-2.5">
+                                    {lessonPlan.adaptations.forBeginners.map((adaptation, index) => (
+                                      <li
+                                        key={index}
+                                        className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6"
+                                      >
+                                        <span className="text-white mt-0.5 font-bold flex-shrink-0">
+                                          •
+                                        </span>
+                                        <span>{adaptation}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </SectionCard>
+                              )}
+
                             {/* Advanced */}
-                            {lessonPlan.adaptations.forAdvanced && lessonPlan.adaptations.forAdvanced.length > 0 && (
-                              <div className="bg-white/10 backdrop-blur-sm border-2 border-yellow-500/30 rounded-xl p-3 sm:p-4 shadow-sm">
-                                <h4 className="text-xs sm:text-sm font-bold text-white mb-2.5 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
-                                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></span>
-                                  For Advanced
-                                </h4>
-                                <ul className="space-y-2 sm:space-y-2.5">
-                                  {lessonPlan.adaptations.forAdvanced.map((adaptation, index) => (
-                                    <li key={index} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6">
-                                      <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
-                                      <span>{adaptation}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            
+                            {lessonPlan.adaptations.forAdvanced &&
+                              lessonPlan.adaptations.forAdvanced.length > 0 && (
+                                <SectionCard tone="yellow" className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+                                  <SectionHeader as="h4" dotColor="yellow" size="sm">
+                                    For Advanced
+                                  </SectionHeader>
+                                  <ul className="space-y-2 sm:space-y-2.5">
+                                    {lessonPlan.adaptations.forAdvanced.map((adaptation, index) => (
+                                      <li
+                                        key={index}
+                                        className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6"
+                                      >
+                                        <span className="text-white mt-0.5 font-bold flex-shrink-0">
+                                          •
+                                        </span>
+                                        <span>{adaptation}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </SectionCard>
+                              )}
+
                             {/* Injuries */}
-                            {lessonPlan.adaptations.forInjuries && lessonPlan.adaptations.forInjuries.length > 0 && (
-                              <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-xl p-3 sm:p-4 shadow-sm">
-                                <h4 className="text-xs sm:text-sm font-bold text-white mb-2.5 sm:mb-3 uppercase tracking-wide flex items-center gap-2">
-                                  <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
-                                  For Injuries
-                                </h4>
-                                <ul className="space-y-2 sm:space-y-2.5">
-                                  {lessonPlan.adaptations.forInjuries.map((adaptation, index) => (
-                                    <li key={index} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6">
-                                      <span className="text-white mt-0.5 font-bold flex-shrink-0">•</span>
-                                      <span>{adaptation}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
+                            {lessonPlan.adaptations.forInjuries &&
+                              lessonPlan.adaptations.forInjuries.length > 0 && (
+                                <SectionCard
+                                  tone="neutral"
+                                  className="p-3 sm:p-4 space-y-2.5 sm:space-y-3"
+                                >
+                                  <SectionHeader as="h4" dotColor="white" size="sm">
+                                    For Injuries
+                                  </SectionHeader>
+                                  <ul className="space-y-2 sm:space-y-2.5">
+                                    {lessonPlan.adaptations.forInjuries.map((adaptation, index) => (
+                                      <li
+                                        key={index}
+                                        className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-white/90 leading-5 sm:leading-6"
+                                      >
+                                        <span className="text-white mt-0.5 font-bold flex-shrink-0">
+                                          •
+                                        </span>
+                                        <span>{adaptation}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </SectionCard>
+                              )}
                           </div>
                         </Accordion.Content>
                       </Accordion.Item>
@@ -522,20 +540,25 @@ export default function LessonPlanDisplay({ lessonPlan, onClose, onBack }: Lesso
 
                     {/* Coaching Tips */}
                     {lessonPlan.coachingTips && lessonPlan.coachingTips.length > 0 && (
-                      <Accordion.Item value="tips" className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md">
+                      <Accordion.Item
+                        value="tips"
+                        className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl overflow-hidden shadow-md"
+                      >
                         <Accordion.Header>
                           <Accordion.Trigger className="group flex w-full items-center justify-between p-4 sm:p-5 text-left hover:bg-white/10 transition-colors">
-                            <h3 className="text-sm sm:text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
-                              <span className="w-2 h-2 bg-white rounded-full"></span>
+                            <SectionHeader size="sm" dotColor="white">
                               Coaching Tips
-                            </h3>
+                            </SectionHeader>
                             <ChevronDownIcon className="h-5 w-5 text-white/70 transition-transform duration-200 group-data-[state=open]:rotate-180" />
                           </Accordion.Trigger>
                         </Accordion.Header>
                         <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                           <ul className="space-y-2.5 sm:space-y-3 px-4 sm:px-5 pb-4 sm:pb-5">
                             {lessonPlan.coachingTips.map((tip, index) => (
-                              <li key={index} className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90">
+                              <li
+                                key={index}
+                                className="flex items-start gap-2 sm:gap-3 text-sm sm:text-base text-white/90"
+                              >
                                 <span className="text-lg sm:text-xl mt-0.5 flex-shrink-0">💡</span>
                                 <span className="leading-6 sm:leading-7 flex-1">{tip}</span>
                               </li>

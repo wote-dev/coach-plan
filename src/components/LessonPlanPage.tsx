@@ -123,7 +123,15 @@ export default function LessonPlanPage({ lessonPlan }: LessonPlanPageProps) {
   });
 
   return (
-    <div className="w-full min-h-screen bg-transparent">
+    <div className="w-full min-h-screen bg-transparent relative">
+      <div
+        className="fixed inset-0 -z-10"
+        style={{
+          backgroundImage: "linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.35)), url(/tennis4.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
       <ScrollArea.Root className="w-full h-screen">
         <ScrollArea.Viewport className="w-full h-full">
           <div className="max-w-4xl mx-auto px-6 py-12 pb-24">
