@@ -14,6 +14,7 @@ export const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-2.5-flash
 export interface LessonPlanParams {
   sport: string;
   level: string;
+  age: string;
   duration: number;
   numberOfPeople: string;
   equipment?: string;
@@ -33,12 +34,15 @@ export async function generateLessonPlan(params: LessonPlanParams) {
 Create a detailed sports coaching plan for a coach who will be teaching their client(s) with the following parameters:
 - Sport: ${params.sport}
 - Client Skill Level: ${params.level}
+- Client Age Group: ${params.age}
 - Session Duration: ${params.duration} minutes
 - Number of Clients: ${params.numberOfPeople}
 - Available Equipment: ${params.equipment || 'Standard equipment'}
 - Coaching Objectives: ${params.objectives || 'Improve fundamental skills'}
 
 Important: Write this plan from the coach's perspective. Use language like "your client(s)", "guide them", "coach them", etc. The plan should help the coach understand what to do and how to coach their clients.
+
+CRITICAL: Tailor ALL drills, activities, and exercises to be age-appropriate for the ${params.age} age group. Consider their physical capabilities, attention span, learning style, and safety needs specific to this age group. The activities should be developmentally appropriate and engaging for clients in this age range.
 
 Please structure the lesson plan as a JSON object with the following format:
 {

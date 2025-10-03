@@ -18,6 +18,7 @@ interface CoachAIProps {
 export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingChange }: CoachAIProps) {
   const [sport] = useState<string>('Tennis'); // Default to Tennis
   const [level, setLevel] = useState<string>('');
+  const [age, setAge] = useState<string>('');
   const [duration, setDuration] = useState<number[]>([60]);
   const [numberOfPeople, setNumberOfPeople] = useState<string>('');
   const [equipment, setEquipment] = useState<string>('');
@@ -25,7 +26,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   
   // Step management
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const totalSteps = 5; // Skill Level, Number of People, Duration, Equipment, Objectives
+  const totalSteps = 6; // Skill Level, Age, Number of People, Duration, Equipment, Objectives
   
   // Track if we've already processed this plan to avoid re-triggering on remount
   const [processedPlanId, setProcessedPlanId] = useState<string | null>(null);
@@ -36,15 +37,16 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   const isStepValid = () => {
     switch (currentStep) {
       case 1: return level !== '';
-      case 2: return numberOfPeople !== '';
-      case 3: return true; // Duration always has a default value
-      case 4: return true; // Optional field
+      case 2: return age !== '';
+      case 3: return numberOfPeople !== '';
+      case 4: return true; // Duration always has a default value
       case 5: return true; // Optional field
+      case 6: return true; // Optional field
       default: return false;
     }
   };
   
-  const isFormValid = level && numberOfPeople; // sport is always Tennis
+  const isFormValid = level && age && numberOfPeople; // sport is always Tennis
 
   // Handle successful plan generation using useEffect to avoid state updates during render
   useEffect(() => {
@@ -106,6 +108,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
       {/* Hidden inputs to capture state values for form submission */}
       <input type="hidden" name="sport" value={sport} />
       <input type="hidden" name="level" value={level} />
+      <input type="hidden" name="age" value={age} />
       <input type="hidden" name="duration" value={duration[0]} />
       <input type="hidden" name="numberOfPeople" value={numberOfPeople} />
       <input type="hidden" name="equipment" value={equipment} />
@@ -128,7 +131,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
       </div>
 
       {/* Step Content with AnimatePresence */}
-      <div className="relative" style={{ minHeight: currentStep === 4 || currentStep === 5 ? '220px' : currentStep === 1 ? '280px' : '180px' }}>
+      <div className="relative" style={{ minHeight: currentStep === 5 || currentStep === 6 ? '220px' : currentStep === 1 || currentStep === 2 ? '280px' : '180px' }}>
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 1 && (
             <motion.div
@@ -178,6 +181,48 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="space-y-6 absolute w-full flex flex-col justify-center"
+            style={{ minHeight: '280px' }}
+          >
+            <label className="text-sm font-medium text-white text-center">What is your client&apos;s age group?</label>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {[
+                { label: 'Youth (5-12)', emoji: '🧒', borderColor: 'border-blue-500', hoverBg: 'hover:bg-blue-500/10' },
+                { label: 'Teen (13-17)', emoji: '🧑', borderColor: 'border-purple-500', hoverBg: 'hover:bg-purple-500/10' },
+                { label: 'Adult (18-59)', emoji: '👨', borderColor: 'border-green-500', hoverBg: 'hover:bg-green-500/10' },
+                { label: 'Senior (60+)', emoji: '👴', borderColor: 'border-orange-500', hoverBg: 'hover:bg-orange-500/10' }
+              ].map(({ label: ageOption, emoji, borderColor, hoverBg }) => (
+                <motion.button
+                  key={ageOption}
+                  type="button"
+                  onClick={() => {
+                    setAge(ageOption);
+                    // Auto-advance to next step after a brief delay
+                    setTimeout(() => handleNext(), 150);
+                  }}
+                  className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all duration-200 border-2 ${
+                    age === ageOption
+                      ? `${borderColor} bg-white/10 text-white`
+                      : `${borderColor} bg-transparent text-white ${hoverBg}`
+                  } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="text-lg">{emoji}</span>
+                  <span>{ageOption}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {currentStep === 3 && (
+          <motion.div
+            key="step3"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             className="space-y-2 absolute w-full"
           >
             <label className="text-sm font-medium text-white">How many people will you be coaching?</label>
@@ -210,9 +255,9 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
           </motion.div>
         )}
 
-        {currentStep === 3 && (
+        {currentStep === 4 && (
           <motion.div
-            key="step3"
+            key="step4"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -250,9 +295,9 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
           </motion.div>
         )}
 
-        {currentStep === 4 && (
+        {currentStep === 5 && (
           <motion.div
-            key="step4"
+            key="step5"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -273,9 +318,9 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
           </motion.div>
         )}
 
-        {currentStep === 5 && (
+        {currentStep === 6 && (
           <motion.div
-            key="step5"
+            key="step6"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}

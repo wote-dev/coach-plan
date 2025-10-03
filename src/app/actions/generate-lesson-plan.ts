@@ -20,6 +20,7 @@ export async function generateAILessonPlan(
     // Extract form data
     const sport = formData.get('sport') as string;
     const level = formData.get('level') as string;
+    const age = formData.get('age') as string;
     const duration = parseInt(formData.get('duration') as string) || 60;
     const numberOfPeople = formData.get('numberOfPeople') as string;
     const equipment = formData.get('equipment') as string;
@@ -28,6 +29,7 @@ export async function generateAILessonPlan(
     console.log('📋 Extracted form data:', {
       sport,
       level,
+      age,
       duration,
       numberOfPeople,
       equipment,
@@ -35,11 +37,11 @@ export async function generateAILessonPlan(
     });
 
     // Validate required fields
-    if (!sport || !level || !numberOfPeople) {
+    if (!sport || !level || !age || !numberOfPeople) {
       console.log('❌ Validation failed - missing required fields');
       return {
         success: false,
-        error: 'Please fill in all required fields (Sport, Level, and Number of People)'
+        error: 'Please fill in all required fields (Sport, Level, Age, and Number of People)'
       };
     }
 
@@ -49,6 +51,7 @@ export async function generateAILessonPlan(
     const params: LessonPlanParams = {
       sport,
       level,
+      age,
       duration,
       numberOfPeople,
       equipment: equipment || undefined,
