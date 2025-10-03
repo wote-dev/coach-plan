@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CoachAI from '@/components/CoachAI';
 import LessonPlanOverlay from '@/components/LessonPlanOverlay';
@@ -14,6 +14,8 @@ export default function CoachAIPage() {
   const [generatedPlan, setGeneratedPlan] = useState<Partial<LessonPlan> | null>(null);
   const [selectedSport, setSelectedSport] = useState<string>('Tennis');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [formKey, setFormKey] = useState<number>(0);
+  const shouldIgnoreNextPlan = useRef(false);
 
   // Sport background mapping
   const sportBackgrounds: Record<string, string> = {
@@ -27,12 +29,20 @@ export default function CoachAIPage() {
   const currentBackground = selectedSport ? sportBackgrounds[selectedSport] : sportBackgrounds['Tennis'];
 
   const handlePlanGenerated = (plan: Partial<LessonPlan>) => {
+    if (shouldIgnoreNextPlan.current) {
+      shouldIgnoreNextPlan.current = false;
+      return;
+    }
     setGeneratedPlan(plan);
     setIsGenerating(false);
   };
 
   const handleCloseOverlay = () => {
     setGeneratedPlan(null);
+    // Ignore any plan generation callbacks during the reset
+    shouldIgnoreNextPlan.current = true;
+    // Reset the CoachAI form by changing the key, forcing a complete remount
+    setFormKey(prev => prev + 1);
   };
 
   const handleSportChange = (sport: string) => {
@@ -101,6 +111,7 @@ export default function CoachAIPage() {
                 }}
               >
                 <CoachAI 
+                  key={formKey}
                   onPlanGenerated={handlePlanGenerated} 
                   onSportChange={handleSportChange}
                   onGeneratingChange={handleGeneratingChange}

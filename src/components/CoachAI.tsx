@@ -26,6 +26,9 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   // Step management
   const [currentStep, setCurrentStep] = useState<number>(1);
   const totalSteps = 5; // Skill Level, Number of People, Duration, Equipment, Objectives
+  
+  // Track if we've already processed this plan to avoid re-triggering on remount
+  const [processedPlanId, setProcessedPlanId] = useState<string | null>(null);
 
   const [state, formAction, isPending] = useActionState(generateAILessonPlan, null);
 
@@ -45,11 +48,12 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
 
   // Handle successful plan generation using useEffect to avoid state updates during render
   useEffect(() => {
-    if (state?.success && state.plan) {
+    if (state?.success && state.plan && state.plan.id !== processedPlanId) {
       console.log('🎉 Plan generation successful, calling onPlanGenerated:', state.plan);
+      setProcessedPlanId(state.plan.id);
       onPlanGenerated(state.plan);
     }
-  }, [state?.success, state?.plan, onPlanGenerated]);
+  }, [state?.success, state?.plan, onPlanGenerated, processedPlanId]);
 
   // Handle errors
   useEffect(() => {

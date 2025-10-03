@@ -1,10 +1,31 @@
 'use client';
 
 import { LessonPlan, DetailedActivity } from '@/data/lessonPlans';
-import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Cross2Icon, ArrowLeftIcon, ArrowRightIcon, CheckIcon, PlayIcon, PauseIcon, ResetIcon } from '@radix-ui/react-icons';
+import { 
+  Cross2Icon, 
+  ArrowLeftIcon, 
+  ArrowRightIcon, 
+  CheckIcon, 
+  PlayIcon, 
+  PauseIcon, 
+  ResetIcon,
+  CheckCircledIcon,
+  LightningBoltIcon,
+  RocketIcon,
+  ActivityLogIcon,
+  ClockIcon,
+  PersonIcon,
+  TargetIcon,
+  CubeIcon,
+  ExclamationTriangleIcon,
+  ChatBubbleIcon,
+  BarChartIcon,
+  UpdateIcon,
+  LapTimerIcon,
+  MixIcon
+} from '@radix-ui/react-icons';
 
 interface LessonPlanOverlayProps {
   lessonPlan: Partial<LessonPlan>;
@@ -12,104 +33,109 @@ interface LessonPlanOverlayProps {
   onClose: () => void;
 }
 
-function ActivitySection({ activity, index }: { activity: DetailedActivity | string; index: number }) {
-  const [isExpanded, setIsExpanded] = useState(true);
-
-  if (typeof activity === 'string') {
-    return (
-      <div className="bg-white/20 backdrop-blur-lg border-l-4 border-white/50 p-4 rounded-r-lg shadow-xl">
-        <p className="text-white text-sm leading-relaxed italic">{activity}</p>
-      </div>
-    );
-  }
-
+// Circular Timer Component
+function CircularTimer({ 
+  timeRemaining, 
+  totalTime,
+  isRunning 
+}: { 
+  timeRemaining: number; 
+  totalTime: number;
+  isRunning: boolean;
+}) {
+  const progress = totalTime > 0 ? (totalTime - timeRemaining) / totalTime : 0;
+  const circumference = 2 * Math.PI * 45; // radius = 45
+  const strokeDashoffset = circumference - (progress * circumference);
+  
   return (
-    <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl overflow-hidden hover:border-white/50 transition-all shadow-xl">
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-5 flex items-start gap-4 hover:bg-white/10 transition-colors text-left"
-      >
-        <div className="flex-shrink-0 w-8 h-8 bg-white/30 backdrop-blur-sm rounded-lg flex items-center justify-center text-sm font-semibold text-white border border-white/40 shadow-lg">
-          {index}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-white text-base mb-1">{activity.name}</h4>
-          {activity.duration && (
-            <span className="text-xs text-white/80 font-medium">{activity.duration}</span>
+    <div className="relative w-32 h-32">
+      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+        {/* Background circle */}
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="currentColor"
+          strokeWidth="6"
+          fill="none"
+          className="text-white/10"
+        />
+        {/* Progress circle */}
+        <motion.circle
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="currentColor"
+          strokeWidth="6"
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          className={`transition-all duration-300 ${
+            timeRemaining === 0 ? 'text-emerald-400' : 'text-white'
+          }`}
+          style={{
+            transition: 'stroke-dashoffset 0.5s ease'
+          }}
+        />
+      </svg>
+      {/* Center text */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-white font-mono tracking-tight">
+            {formatTime(timeRemaining)}
+          </div>
+          {isRunning && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-[10px] text-white/60 font-medium uppercase tracking-wider mt-0.5"
+            >
+              Running
+            </motion.div>
           )}
         </div>
-        <motion.div
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="flex-shrink-0 text-white/70"
-        >
-          ▼
-        </motion.div>
-      </button>
-      
-      {isExpanded && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="border-t border-white/20"
-        >
-          <div className="p-5 pt-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed border-l-2 border-white/50 pl-4">
-              {activity.description}
-            </p>
-            
-            {activity.coachingCues && activity.coachingCues.length > 0 && (
-              <div className="space-y-2">
-                <h5 className="text-xs font-semibold text-white/80 uppercase tracking-wider">
-                  Coaching Cues
-                </h5>
-                <ul className="space-y-1.5">
-                  {activity.coachingCues.map((cue, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                      <span className="text-white/70 mt-0.5">•</span>
-                      <span className="leading-relaxed">{cue}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            
-            {activity.progressions && activity.progressions.length > 0 && (
-              <div className="space-y-2">
-                <h5 className="text-xs font-semibold text-white/80 uppercase tracking-wider">
-                  Progressions
-                </h5>
-                <ul className="space-y-1.5">
-                  {activity.progressions.map((prog, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                      <span className="text-white/70 mt-0.5">→</span>
-                      <span className="leading-relaxed">{prog}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            
-            {activity.modifications && activity.modifications.length > 0 && (
-              <div className="space-y-2">
-                <h5 className="text-xs font-semibold text-white/80 uppercase tracking-wider">
-                  Modifications
-                </h5>
-                <ul className="space-y-1.5">
-                  {activity.modifications.map((mod, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                      <span className="text-white/70 mt-0.5">◆</span>
-                      <span className="leading-relaxed">{mod}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </motion.div>
-      )}
+      </div>
+    </div>
+  );
+}
+
+// Activity Type Badge
+function ActivityTypeBadge({ type }: { type: 'warmup' | 'main' | 'cooldown' | 'overview' | 'summary' }) {
+  const config = {
+    warmup: {
+      label: 'Warm-Up',
+      icon: LightningBoltIcon,
+      className: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+    },
+    main: {
+      label: 'Main Activity',
+      icon: RocketIcon,
+      className: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
+    },
+    cooldown: {
+      label: 'Cool-Down',
+      icon: ActivityLogIcon,
+      className: 'bg-blue-500/20 text-blue-300 border-blue-500/30'
+    },
+    overview: {
+      label: 'Overview',
+      icon: MixIcon,
+      className: 'bg-white/20 text-white border-white/30'
+    },
+    summary: {
+      label: 'Summary',
+      icon: CheckCircledIcon,
+      className: 'bg-white/20 text-white border-white/30'
+    }
+  };
+  
+  const { label, icon: Icon, className } = config[type];
+  
+  return (
+    <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border backdrop-blur-sm text-xs font-semibold ${className}`}>
+      <Icon className="w-3.5 h-3.5" />
+      <span>{label}</span>
     </div>
   );
 }
@@ -137,16 +163,6 @@ function formatTime(seconds: number): string {
 }
 
 export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: LessonPlanOverlayProps) {
-  const [currentDate] = useState(() => {
-    const date = new Date();
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'long',
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-  });
-  
   const [currentStep, setCurrentStep] = useState<number>(0);
   const scrollViewportRef = useRef<HTMLDivElement>(null);
   
@@ -162,6 +178,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
       id: string;
       title: string;
       subtitle?: string;
+      type: 'overview' | 'warmup' | 'main' | 'cooldown' | 'summary';
       content: JSX.Element;
     }> = [];
     
@@ -170,28 +187,29 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
       id: 'overview',
       title: 'Lesson Overview',
       subtitle: 'Start your coaching session with confidence',
+      type: 'overview',
       content: (
-        <div className="space-y-8">
+        <div className="space-y-6">
           {lessonPlan.description && (
-            <div className="bg-white/20 backdrop-blur-lg border-l-4 border-white/50 p-6 rounded-r-xl shadow-xl">
-              <p className="text-white text-lg leading-relaxed">
+            <div className="bg-white/15 backdrop-blur-sm border border-white/20 p-6 rounded-xl shadow-lg">
+              <p className="text-white text-lg leading-relaxed font-light">
                 {lessonPlan.description}
               </p>
             </div>
           )}
           
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-5">
             {lessonPlan.objectives && lessonPlan.objectives.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <TargetIcon className="w-4 h-4 text-emerald-400" />
                   Learning Objectives
                 </h3>
-                <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-xl">
+                <div className="bg-white/15 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg hover:border-white/30 transition-colors">
                   <ul className="space-y-3">
                     {lessonPlan.objectives.map((objective, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                        <span className="text-emerald-400 mt-1 font-bold">✓</span>
+                      <li key={idx} className="flex items-start gap-3 text-[15px] text-white/95 leading-relaxed">
+                        <CheckCircledIcon className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                         <span>{objective}</span>
                       </li>
                     ))}
@@ -202,16 +220,16 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             
             {lessonPlan.equipment && lessonPlan.equipment.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></span>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <CubeIcon className="w-4 h-4 text-yellow-400" />
                   Required Equipment
                 </h3>
-                <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-xl">
+                <div className="bg-white/15 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg hover:border-white/30 transition-colors">
                   <div className="flex flex-wrap gap-2">
                     {lessonPlan.equipment.map((item, idx) => (
                       <span
                         key={idx}
-                        className="inline-block bg-white/25 backdrop-blur-sm border border-white/40 text-white rounded-lg text-sm font-medium px-4 py-2 shadow-lg"
+                        className="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-lg text-sm font-medium px-3.5 py-2 shadow-sm hover:bg-white/25 transition-colors"
                       >
                         {item}
                       </span>
@@ -224,15 +242,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
           
           {lessonPlan.safetyConsiderations && lessonPlan.safetyConsiderations.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <ExclamationTriangleIcon className="w-4 h-4 text-red-400" />
                 Safety Considerations
               </h3>
-              <div className="bg-red-500/20 backdrop-blur-lg border border-red-500/40 rounded-xl p-5 shadow-xl">
+              <div className="bg-red-500/15 backdrop-blur-sm border border-red-500/30 rounded-xl p-5 shadow-lg">
                 <ul className="space-y-3">
                   {lessonPlan.safetyConsiderations.map((consideration, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                      <span className="mt-0.5 text-xl">⚠️</span>
+                    <li key={idx} className="flex items-start gap-3 text-[15px] text-white/95 leading-relaxed">
+                      <ExclamationTriangleIcon className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                       <span>{consideration}</span>
                     </li>
                   ))}
@@ -251,38 +269,40 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
           id: `warmup-${idx}`,
           title: `Warm-Up ${lessonPlan.warmUp!.length > 1 ? `(${idx + 1}/${lessonPlan.warmUp!.length})` : ''}`,
           subtitle: typeof activity === 'string' ? activity : activity.name,
+          type: 'warmup',
           content: (
-            <div className="space-y-6">
+            <div className="space-y-5">
               {typeof activity === 'string' ? (
-                <div className="bg-white/20 backdrop-blur-lg border-l-4 border-emerald-400 p-6 rounded-r-xl shadow-xl">
-                  <p className="text-white text-lg leading-relaxed">{activity}</p>
+                <div className="bg-white/15 backdrop-blur-sm border-l-4 border-emerald-400 p-6 rounded-r-xl shadow-lg">
+                  <p className="text-white text-lg leading-relaxed font-light">{activity}</p>
                 </div>
               ) : (
                 <>
-                  <div className="bg-white/20 backdrop-blur-lg border border-emerald-400/40 rounded-xl p-6 shadow-xl space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-2xl font-bold text-white">{activity.name}</h3>
+                  <div className="bg-white/15 backdrop-blur-sm border border-emerald-400/30 rounded-xl p-6 shadow-lg space-y-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-2xl font-bold text-white leading-tight">{activity.name}</h3>
                       {activity.duration && (
-                        <span className="bg-emerald-400/30 text-white px-4 py-2 rounded-lg text-sm font-semibold border border-emerald-400/40">
-                          ⏱ {activity.duration}
-                        </span>
+                        <div className="flex items-center gap-2 bg-emerald-400/20 text-emerald-300 px-3 py-2 rounded-lg text-sm font-semibold border border-emerald-400/30 flex-shrink-0">
+                          <ClockIcon className="w-4 h-4" />
+                          <span>{activity.duration}</span>
+                        </div>
                       )}
                     </div>
-                    <p className="text-white text-lg leading-relaxed border-l-4 border-emerald-400 pl-4">
+                    <p className="text-white/90 text-base leading-relaxed border-l-2 border-emerald-400 pl-4">
                       {activity.description}
                     </p>
                   </div>
                   
                   {activity.coachingCues && activity.coachingCues.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">💬</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <ChatBubbleIcon className="w-4 h-4" />
                         Coaching Cues
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.coachingCues.map((cue, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-white/70 mt-1">→</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-white/50 mt-0.5 select-none">•</span>
                             <span>{cue}</span>
                           </li>
                         ))}
@@ -291,15 +311,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   )}
                   
                   {activity.progressions && activity.progressions.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">📈</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <BarChartIcon className="w-4 h-4" />
                         Progressions
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.progressions.map((prog, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-emerald-400 mt-1 font-bold">{idx + 1}.</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-emerald-400 mt-0.5 font-bold select-none">{idx + 1}.</span>
                             <span>{prog}</span>
                           </li>
                         ))}
@@ -308,15 +328,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   )}
                   
                   {activity.modifications && activity.modifications.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">🔄</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <UpdateIcon className="w-4 h-4" />
                         Modifications
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.modifications.map((mod, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-white/70 mt-1">◆</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-white/50 mt-0.5 select-none">•</span>
                             <span>{mod}</span>
                           </li>
                         ))}
@@ -338,38 +358,40 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
           id: `main-${idx}`,
           title: `Main Activity ${lessonPlan.mainActivities!.length > 1 ? `(${idx + 1}/${lessonPlan.mainActivities!.length})` : ''}`,
           subtitle: typeof activity === 'string' ? activity : activity.name,
+          type: 'main',
           content: (
-            <div className="space-y-6">
+            <div className="space-y-5">
               {typeof activity === 'string' ? (
-                <div className="bg-white/20 backdrop-blur-lg border-l-4 border-yellow-400 p-6 rounded-r-xl shadow-xl">
-                  <p className="text-white text-lg leading-relaxed">{activity}</p>
+                <div className="bg-white/15 backdrop-blur-sm border-l-4 border-yellow-400 p-6 rounded-r-xl shadow-lg">
+                  <p className="text-white text-lg leading-relaxed font-light">{activity}</p>
                 </div>
               ) : (
                 <>
-                  <div className="bg-white/20 backdrop-blur-lg border border-yellow-400/40 rounded-xl p-6 shadow-xl space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-2xl font-bold text-white">{activity.name}</h3>
+                  <div className="bg-white/15 backdrop-blur-sm border border-yellow-400/30 rounded-xl p-6 shadow-lg space-y-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-2xl font-bold text-white leading-tight">{activity.name}</h3>
                       {activity.duration && (
-                        <span className="bg-yellow-400/30 text-white px-4 py-2 rounded-lg text-sm font-semibold border border-yellow-400/40">
-                          ⏱ {activity.duration}
-                        </span>
+                        <div className="flex items-center gap-2 bg-yellow-400/20 text-yellow-300 px-3 py-2 rounded-lg text-sm font-semibold border border-yellow-400/30 flex-shrink-0">
+                          <ClockIcon className="w-4 h-4" />
+                          <span>{activity.duration}</span>
+                        </div>
                       )}
                     </div>
-                    <p className="text-white text-lg leading-relaxed border-l-4 border-yellow-400 pl-4">
+                    <p className="text-white/90 text-base leading-relaxed border-l-2 border-yellow-400 pl-4">
                       {activity.description}
                     </p>
                   </div>
                   
                   {activity.coachingCues && activity.coachingCues.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">💬</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <ChatBubbleIcon className="w-4 h-4" />
                         Coaching Cues
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.coachingCues.map((cue, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-white/70 mt-1">→</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-white/50 mt-0.5 select-none">•</span>
                             <span>{cue}</span>
                           </li>
                         ))}
@@ -378,15 +400,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   )}
                   
                   {activity.progressions && activity.progressions.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">📈</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <BarChartIcon className="w-4 h-4" />
                         Progressions
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.progressions.map((prog, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-yellow-400 mt-1 font-bold">{idx + 1}.</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-yellow-400 mt-0.5 font-bold select-none">{idx + 1}.</span>
                             <span>{prog}</span>
                           </li>
                         ))}
@@ -395,15 +417,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   )}
                   
                   {activity.modifications && activity.modifications.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">🔄</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <UpdateIcon className="w-4 h-4" />
                         Modifications
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.modifications.map((mod, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-white/70 mt-1">◆</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-white/50 mt-0.5 select-none">•</span>
                             <span>{mod}</span>
                           </li>
                         ))}
@@ -425,38 +447,40 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
           id: `cooldown-${idx}`,
           title: `Cool-Down ${lessonPlan.coolDown!.length > 1 ? `(${idx + 1}/${lessonPlan.coolDown!.length})` : ''}`,
           subtitle: typeof activity === 'string' ? activity : activity.name,
+          type: 'cooldown',
           content: (
-            <div className="space-y-6">
+            <div className="space-y-5">
               {typeof activity === 'string' ? (
-                <div className="bg-white/20 backdrop-blur-lg border-l-4 border-blue-400 p-6 rounded-r-xl shadow-xl">
-                  <p className="text-white text-lg leading-relaxed">{activity}</p>
+                <div className="bg-white/15 backdrop-blur-sm border-l-4 border-blue-400 p-6 rounded-r-xl shadow-lg">
+                  <p className="text-white text-lg leading-relaxed font-light">{activity}</p>
                 </div>
               ) : (
                 <>
-                  <div className="bg-white/20 backdrop-blur-lg border border-blue-400/40 rounded-xl p-6 shadow-xl space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-2xl font-bold text-white">{activity.name}</h3>
+                  <div className="bg-white/15 backdrop-blur-sm border border-blue-400/30 rounded-xl p-6 shadow-lg space-y-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-2xl font-bold text-white leading-tight">{activity.name}</h3>
                       {activity.duration && (
-                        <span className="bg-blue-400/30 text-white px-4 py-2 rounded-lg text-sm font-semibold border border-blue-400/40">
-                          ⏱ {activity.duration}
-                        </span>
+                        <div className="flex items-center gap-2 bg-blue-400/20 text-blue-300 px-3 py-2 rounded-lg text-sm font-semibold border border-blue-400/30 flex-shrink-0">
+                          <ClockIcon className="w-4 h-4" />
+                          <span>{activity.duration}</span>
+                        </div>
                       )}
                     </div>
-                    <p className="text-white text-lg leading-relaxed border-l-4 border-blue-400 pl-4">
+                    <p className="text-white/90 text-base leading-relaxed border-l-2 border-blue-400 pl-4">
                       {activity.description}
                     </p>
                   </div>
                   
                   {activity.coachingCues && activity.coachingCues.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">💬</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <ChatBubbleIcon className="w-4 h-4" />
                         Coaching Cues
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.coachingCues.map((cue, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-white/70 mt-1">→</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-white/50 mt-0.5 select-none">•</span>
                             <span>{cue}</span>
                           </li>
                         ))}
@@ -465,15 +489,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   )}
                   
                   {activity.progressions && activity.progressions.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">📈</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <BarChartIcon className="w-4 h-4" />
                         Progressions
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.progressions.map((prog, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-blue-400 mt-1 font-bold">{idx + 1}.</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-blue-400 mt-0.5 font-bold select-none">{idx + 1}.</span>
                             <span>{prog}</span>
                           </li>
                         ))}
@@ -482,15 +506,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   )}
                   
                   {activity.modifications && activity.modifications.length > 0 && (
-                    <div className="bg-white/15 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl space-y-3">
-                      <h4 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                        <span className="text-lg">🔄</span>
+                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg space-y-3">
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <UpdateIcon className="w-4 h-4" />
                         Modifications
                       </h4>
-                      <ul className="space-y-3">
+                      <ul className="space-y-2.5">
                         {activity.modifications.map((mod, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                            <span className="text-white/70 mt-1">◆</span>
+                          <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                            <span className="text-white/50 mt-0.5 select-none">•</span>
                             <span>{mod}</span>
                           </li>
                         ))}
@@ -510,27 +534,35 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
       id: 'summary',
       title: 'Session Complete!',
       subtitle: 'Review and next steps',
+      type: 'summary',
       content: (
-        <div className="space-y-8">
-          <div className="bg-gradient-to-br from-emerald-500/20 to-blue-500/20 backdrop-blur-lg border border-white/30 rounded-xl p-8 shadow-xl text-center">
-            <div className="text-6xl mb-4">🎾</div>
+        <div className="space-y-6">
+          <div className="bg-white/15 backdrop-blur-sm border border-white/20 rounded-xl p-8 shadow-lg text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              className="inline-flex items-center justify-center w-20 h-20 mb-4 bg-emerald-500/20 border border-emerald-500/30 rounded-full"
+            >
+              <CheckCircledIcon className="w-10 h-10 text-emerald-400" />
+            </motion.div>
             <h3 className="text-2xl font-bold text-white mb-2">Great Coaching Session!</h3>
-            <p className="text-white/80 text-lg">
+            <p className="text-white/70 text-base">
               You've completed all {allSteps.length - 2} activities
             </p>
           </div>
           
           {lessonPlan.assessmentCriteria && lessonPlan.assessmentCriteria.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <TargetIcon className="w-4 h-4" />
                 Assessment Criteria
               </h3>
-              <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-xl">
+              <div className="bg-white/15 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg">
                 <ul className="space-y-3">
                   {lessonPlan.assessmentCriteria.map((criteria, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-base text-white">
-                      <span className="flex-shrink-0 w-7 h-7 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-sm font-bold text-white border border-white/40 shadow-lg">
+                    <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90">
+                      <span className="flex-shrink-0 w-6 h-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-xs font-bold text-white border border-white/30">
                         {idx + 1}
                       </span>
                       <span className="leading-relaxed flex-1">{criteria}</span>
@@ -543,15 +575,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
           
           {lessonPlan.coachingTips && lessonPlan.coachingTips.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <ChatBubbleIcon className="w-4 h-4" />
                 Coaching Tips for Next Time
               </h3>
-              <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-xl">
+              <div className="bg-white/15 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg">
                 <ul className="space-y-3">
                   {lessonPlan.coachingTips.map((tip, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                      <span className="mt-0.5 text-xl">💡</span>
+                    <li key={idx} className="flex items-start gap-3 text-[15px] text-white/90 leading-relaxed">
+                      <ChatBubbleIcon className="w-4 h-4 text-white/70 flex-shrink-0 mt-0.5" />
                       <span>{tip}</span>
                     </li>
                   ))}
@@ -686,9 +718,9 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
       if (e.key === 'Escape') {
         handleClose();
       } else if (e.key === 'ArrowRight' && currentStep < totalSteps - 1) {
-        handleNext();
+        setCurrentStep(prev => prev + 1);
       } else if (e.key === 'ArrowLeft' && currentStep > 0) {
-        handleBack();
+        setCurrentStep(prev => prev - 1);
       }
     };
     
@@ -699,7 +731,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, currentStep, totalSteps]);
+  }, [isOpen, currentStep, totalSteps, handleClose]);
 
   return (
     <AnimatePresence>
@@ -744,33 +776,36 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             style={{ maxHeight: '85vh' }}
           >
             {/* Header with progress */}
-            <div className="bg-white/5 backdrop-blur-sm border-b border-white/20 px-6 py-4">
+            <div className="bg-white/5 backdrop-blur-sm border-b border-white/20 px-6 py-5">
               <div className="space-y-4">
                 {/* Title and metadata */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-xl font-bold text-white mb-2 truncate">
+                    <h1 className="text-xl font-bold text-white mb-3 tracking-tight">
                       {lessonPlan.title || 'Lesson Plan'}
                     </h1>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <ActivityTypeBadge type={currentStepData?.type || 'overview'} />
                       {lessonPlan.sport && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
+                        <span className="inline-flex items-center bg-white/15 backdrop-blur-sm text-white border border-white/25 px-2.5 py-1.5 rounded-lg text-xs font-medium">
                           {lessonPlan.sport}
                         </span>
                       )}
                       {lessonPlan.level && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
+                        <span className="inline-flex items-center bg-white/15 backdrop-blur-sm text-white border border-white/25 px-2.5 py-1.5 rounded-lg text-xs font-medium">
                           {lessonPlan.level}
                         </span>
                       )}
                       {lessonPlan.duration && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
-                          ⏱ {lessonPlan.duration} min
+                        <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-white border border-white/25 px-2.5 py-1.5 rounded-lg text-xs font-medium">
+                          <LapTimerIcon className="w-3.5 h-3.5" />
+                          {lessonPlan.duration} min
                         </span>
                       )}
                       {lessonPlan.numberOfPeople && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
-                          👥 {lessonPlan.numberOfPeople}
+                        <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-white border border-white/25 px-2.5 py-1.5 rounded-lg text-xs font-medium">
+                          <PersonIcon className="w-3.5 h-3.5" />
+                          {lessonPlan.numberOfPeople}
                         </span>
                       )}
                     </div>
@@ -779,13 +814,13 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                 
                 {/* Progress indicator */}
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs text-white/70">
+                  <div className="flex items-center justify-between text-xs font-medium text-white/60">
                     <span>Step {currentStep + 1} of {totalSteps}</span>
                     <span>{Math.round(((currentStep + 1) / totalSteps) * 100)}%</span>
                   </div>
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                     <motion.div 
-                      className="h-full bg-white rounded-full"
+                      className="h-full bg-white rounded-full shadow-sm"
                       initial={{ width: 0 }}
                       animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
                       transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -793,70 +828,62 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   </div>
                 </div>
                 
-                {/* Timer Display */}
+                {/* Circular Timer Display */}
                 {currentStepDuration > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 shadow-lg"
+                    className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg"
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="text-xs text-white/60 mb-2 font-medium uppercase tracking-wider">Activity Timer</div>
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-white font-mono">
-                            {formatTime(timeRemaining)}
-                          </span>
-                          <span className="text-xs text-white/60">/ {formatTime(timerInitialTime)}</span>
-                        </div>
-                        {/* Progress bar */}
-                        <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                          <motion.div
-                            className={`h-full rounded-full transition-colors ${
-                              timeRemaining === 0 ? 'bg-emerald-400' : 'bg-white'
-                            }`}
-                            style={{
-                              width: `${timerInitialTime > 0 ? ((timerInitialTime - timeRemaining) / timerInitialTime) * 100 : 0}%`
-                            }}
-                            transition={{ duration: 0.3 }}
-                          />
-                        </div>
-                      </div>
+                    <div className="flex items-center justify-between gap-6">
+                      {/* Circular Timer */}
+                      <CircularTimer 
+                        timeRemaining={timeRemaining}
+                        totalTime={timerInitialTime}
+                        isRunning={isTimerRunning}
+                      />
                       
-                      {/* Timer Controls */}
-                      <div className="flex items-center gap-1.5">
-                        {!isTimerRunning ? (
+                      <div className="flex-1">
+                        <div className="text-[10px] text-white/50 mb-1.5 font-bold uppercase tracking-wider">Activity Timer</div>
+                        <div className="text-sm text-white/70 mb-3 font-medium">
+                          {formatTime(timerInitialTime - timeRemaining)} / {formatTime(timerInitialTime)}
+                        </div>
+                        
+                        {/* Timer Controls */}
+                        <div className="flex items-center gap-2">
+                          {!isTimerRunning ? (
+                            <motion.button
+                              onClick={handleTimerStart}
+                              disabled={timeRemaining === 0}
+                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-semibold"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <PlayIcon className="w-4 h-4" />
+                              <span>Start</span>
+                            </motion.button>
+                          ) : (
+                            <motion.button
+                              onClick={handleTimerPause}
+                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all text-white text-sm font-semibold"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <PauseIcon className="w-4 h-4" />
+                              <span>Pause</span>
+                            </motion.button>
+                          )}
                           <motion.button
-                            onClick={handleTimerStart}
-                            disabled={timeRemaining === 0}
-                            className="p-2.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                            onClick={handleTimerReset}
+                            className="p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 active:bg-white/20 transition-all"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            title="Start Timer"
+                            title="Reset Timer"
                           >
-                            <PlayIcon className="w-4 h-4 text-white" />
+                            <ResetIcon className="w-4 h-4 text-white/80" />
                           </motion.button>
-                        ) : (
-                          <motion.button
-                            onClick={handleTimerPause}
-                            className="p-2.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            title="Pause Timer"
-                          >
-                            <PauseIcon className="w-4 h-4 text-white" />
-                          </motion.button>
-                        )}
-                        <motion.button
-                          onClick={handleTimerReset}
-                          className="p-2.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          title="Reset Timer"
-                        >
-                          <ResetIcon className="w-4 h-4 text-white" />
-                        </motion.button>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -883,9 +910,9 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                               initial={{ opacity: 0, y: -10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: 0.1 }}
-                              className="bg-white/10 backdrop-blur-sm border-l-4 border-white/50 rounded-r-xl px-5 py-3"
+                              className="bg-white/10 backdrop-blur-sm border-l-2 border-white/40 rounded-r-xl px-5 py-3.5"
                             >
-                              <h3 className="text-white/90 text-base font-semibold">
+                              <h3 className="text-white text-base font-semibold leading-relaxed">
                                 {currentStepData.subtitle}
                               </h3>
                             </motion.div>
@@ -913,7 +940,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   <motion.button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl py-2.5 px-5 font-medium text-sm transition-all duration-200 hover:bg-white/20 hover:border-white/40 text-white"
+                    className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/25 rounded-xl py-2.5 px-5 font-semibold text-sm transition-all duration-200 hover:bg-white/15 hover:border-white/30 text-white"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -924,7 +951,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   <div style={{ width: '100px' }} />
                 )}
                 
-                {/* Center: Step indicator dots */}
+                {/* Center: Step indicator dots with completion states */}
                 <div className="flex items-center justify-center gap-2">
                   {steps.map((_, idx) => (
                     <motion.button
@@ -932,16 +959,21 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                       onClick={() => setCurrentStep(idx)}
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.9 }}
+                      className="relative"
+                      title={`Step ${idx + 1}`}
                     >
-                      <div 
-                        className={`h-2 rounded-full transition-all duration-300 ${
-                          idx === currentStep 
-                            ? 'w-8 bg-white' 
-                            : idx < currentStep
-                            ? 'w-2 bg-white/60'
-                            : 'w-2 bg-white/30'
-                        }`}
-                      />
+                      {idx < currentStep ? (
+                        // Completed step
+                        <div className="flex items-center justify-center w-2 h-2 bg-white/60 rounded-full">
+                          <div className="w-1 h-1 bg-white rounded-full" />
+                        </div>
+                      ) : idx === currentStep ? (
+                        // Current step
+                        <div className="w-8 h-2 bg-white rounded-full shadow-sm" />
+                      ) : (
+                        // Future step
+                        <div className="w-2 h-2 bg-white/20 rounded-full" />
+                      )}
                     </motion.button>
                   ))}
                 </div>
@@ -951,7 +983,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   <motion.button
                     type="button"
                     onClick={handleNext}
-                    className="flex items-center gap-2 bg-white border border-white rounded-xl py-2.5 px-5 font-semibold text-sm transition-all duration-200 hover:bg-white/90 text-black"
+                    className="flex items-center gap-2 bg-white border border-white rounded-xl py-2.5 px-5 font-bold text-sm transition-all duration-200 hover:bg-white/95 text-black shadow-sm"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -962,7 +994,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   <motion.button
                     type="button"
                     onClick={handleClose}
-                    className="flex items-center gap-2 bg-white border-2 border-white rounded-xl py-2.5 px-6 font-bold text-sm transition-all duration-200 hover:bg-white/90 text-black"
+                    className="flex items-center gap-2 bg-emerald-500 border border-emerald-600 rounded-xl py-2.5 px-6 font-bold text-sm transition-all duration-200 hover:bg-emerald-600 text-white shadow-lg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
