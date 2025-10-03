@@ -24,7 +24,9 @@ import {
   BarChartIcon,
   UpdateIcon,
   LapTimerIcon,
-  MixIcon
+  MixIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
 } from '@radix-ui/react-icons';
 
 interface LessonPlanOverlayProps {
@@ -170,6 +172,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
   const [timerInitialTime, setTimerInitialTime] = useState<number>(0);
+  const [isTimerMinimized, setIsTimerMinimized] = useState<boolean>(false);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
   // Build steps dynamically based on lesson plan content
@@ -674,6 +677,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
     setIsTimerRunning(false);
     setTimeRemaining(currentStepDuration);
     setTimerInitialTime(currentStepDuration);
+    setIsTimerMinimized(false); // Reset to expanded state on step change
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
       timerIntervalRef.current = null;
@@ -832,60 +836,134 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                 {currentStepDuration > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={{ 
+                      opacity: 1, 
+                      y: 0,
+                      height: isTimerMinimized ? 'auto' : 'auto'
+                    }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 shadow-lg"
+                    className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg overflow-hidden"
                   >
-                    <div className="flex items-center justify-between gap-6">
-                      {/* Circular Timer */}
-                      <CircularTimer 
-                        timeRemaining={timeRemaining}
-                        totalTime={timerInitialTime}
-                        isRunning={isTimerRunning}
-                      />
-                      
-                      <div className="flex-1">
-                        <div className="text-[10px] text-white/50 mb-1.5 font-bold uppercase tracking-wider">Activity Timer</div>
-                        <div className="text-sm text-white/70 mb-3 font-medium">
-                          {formatTime(timerInitialTime - timeRemaining)} / {formatTime(timerInitialTime)}
+                    {isTimerMinimized ? (
+                      // Minimized Timer View
+                      <div className="p-3 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2">
+                            <ClockIcon className="w-4 h-4 text-white/70" />
+                            <span className="text-lg font-bold text-white font-mono">
+                              {formatTime(timeRemaining)}
+                            </span>
+                          </div>
+                          {isTimerRunning && (
+                            <div className="flex items-center gap-1">
+                              <motion.div
+                                className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
+                                animate={{ opacity: [1, 0.3, 1] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                              />
+                              <span className="text-xs text-white/60 font-medium">Running</span>
+                            </div>
+                          )}
                         </div>
-                        
-                        {/* Timer Controls */}
                         <div className="flex items-center gap-2">
+                          {/* Quick timer controls in minimized state */}
                           {!isTimerRunning ? (
                             <motion.button
                               onClick={handleTimerStart}
                               disabled={timeRemaining === 0}
-                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-semibold"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
+                              className="p-1.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
                             >
-                              <PlayIcon className="w-4 h-4" />
-                              <span>Start</span>
+                              <PlayIcon className="w-3.5 h-3.5 text-white" />
                             </motion.button>
                           ) : (
                             <motion.button
                               onClick={handleTimerPause}
-                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all text-white text-sm font-semibold"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
+                              className="p-1.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
                             >
-                              <PauseIcon className="w-4 h-4" />
-                              <span>Pause</span>
+                              <PauseIcon className="w-3.5 h-3.5 text-white" />
                             </motion.button>
                           )}
                           <motion.button
-                            onClick={handleTimerReset}
-                            className="p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 active:bg-white/20 transition-all"
+                            onClick={() => setIsTimerMinimized(false)}
+                            className="p-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 active:bg-white/20 transition-all"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            title="Reset Timer"
+                            title="Expand Timer"
                           >
-                            <ResetIcon className="w-4 h-4 text-white/80" />
+                            <ChevronDownIcon className="w-3.5 h-3.5 text-white/80" />
                           </motion.button>
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      // Expanded Timer View
+                      <div className="p-5">
+                        <div className="flex items-start justify-between gap-3 mb-4">
+                          <div className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Activity Timer</div>
+                          <motion.button
+                            onClick={() => setIsTimerMinimized(true)}
+                            className="p-1 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 active:bg-white/20 transition-all"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            title="Minimize Timer"
+                          >
+                            <ChevronUpIcon className="w-3.5 h-3.5 text-white/80" />
+                          </motion.button>
+                        </div>
+                        <div className="flex items-center justify-between gap-6">
+                          {/* Circular Timer */}
+                          <CircularTimer 
+                            timeRemaining={timeRemaining}
+                            totalTime={timerInitialTime}
+                            isRunning={isTimerRunning}
+                          />
+                          
+                          <div className="flex-1">
+                            <div className="text-sm text-white/70 mb-3 font-medium">
+                              {formatTime(timerInitialTime - timeRemaining)} / {formatTime(timerInitialTime)}
+                            </div>
+                            
+                            {/* Timer Controls */}
+                            <div className="flex items-center gap-2">
+                              {!isTimerRunning ? (
+                                <motion.button
+                                  onClick={handleTimerStart}
+                                  disabled={timeRemaining === 0}
+                                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all disabled:opacity-30 disabled:cursor-not-allowed text-white text-sm font-semibold"
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                >
+                                  <PlayIcon className="w-4 h-4" />
+                                  <span>Start</span>
+                                </motion.button>
+                              ) : (
+                                <motion.button
+                                  onClick={handleTimerPause}
+                                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/25 hover:bg-white/20 active:bg-white/25 transition-all text-white text-sm font-semibold"
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                >
+                                  <PauseIcon className="w-4 h-4" />
+                                  <span>Pause</span>
+                                </motion.button>
+                              )}
+                              <motion.button
+                                onClick={handleTimerReset}
+                                className="p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 active:bg-white/20 transition-all"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                title="Reset Timer"
+                              >
+                                <ResetIcon className="w-4 h-4 text-white/80" />
+                              </motion.button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </motion.div>
                 )}
               </div>
