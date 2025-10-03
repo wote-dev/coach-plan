@@ -179,7 +179,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
       title: string;
       subtitle?: string;
       type: 'overview' | 'warmup' | 'main' | 'cooldown' | 'summary';
-      content: JSX.Element;
+      content: React.JSX.Element;
     }> = [];
     
     // Overview step
@@ -548,7 +548,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             </motion.div>
             <h3 className="text-2xl font-bold text-white mb-2">Great Coaching Session!</h3>
             <p className="text-white/70 text-base">
-              You've completed all {allSteps.length - 2} activities
+              You&apos;ve completed all {allSteps.length - 2} activities
             </p>
           </div>
           

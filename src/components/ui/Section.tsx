@@ -68,7 +68,7 @@ export function SectionHeader({
   children,
   ...props
 }: SectionHeaderProps) {
-  const Comp = as as any;
+  const Comp = as as React.ElementType;
   return (
     <Comp
       className={cn(

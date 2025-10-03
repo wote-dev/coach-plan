@@ -50,7 +50,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
 
   // Handle successful plan generation using useEffect to avoid state updates during render
   useEffect(() => {
-    if (state?.success && state.plan && state.plan.id !== processedPlanId) {
+    if (state?.success && state.plan && state.plan.id && state.plan.id !== processedPlanId) {
       console.log('🎉 Plan generation successful, calling onPlanGenerated:', state.plan);
       setProcessedPlanId(state.plan.id);
       onPlanGenerated(state.plan);
