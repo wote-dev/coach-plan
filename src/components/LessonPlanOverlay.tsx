@@ -716,14 +716,14 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             backgroundPosition: "center",
           }}
         >
-          {/* Close button - fixed in top right */}
+          {/* Close button */}
           <motion.button
             onClick={handleClose}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ delay: 0.1 }}
-            className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/20 backdrop-blur-lg border border-white/30 hover:bg-white/30 active:bg-white/30 transition-all shadow-xl group"
+            className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/20 backdrop-blur-lg border border-white/30 hover:bg-white/30 active:bg-white/40 transition-all shadow-xl"
             whileHover={{ 
               scale: 1.1,
               rotate: 90,
@@ -740,36 +740,36 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="w-full max-w-4xl mx-auto relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden"
+            className="w-full max-w-3xl mx-auto relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
             style={{ maxHeight: '85vh' }}
           >
             {/* Header with progress */}
-            <div className="bg-white/5 backdrop-blur-sm border-b border-white/20 p-6">
+            <div className="bg-white/5 backdrop-blur-sm border-b border-white/20 px-6 py-4">
               <div className="space-y-4">
-                {/* Title and metadata badges */}
+                {/* Title and metadata */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-3xl font-bold text-white mb-2 truncate">
+                    <h1 className="text-xl font-bold text-white mb-2 truncate">
                       {lessonPlan.title || 'Lesson Plan'}
                     </h1>
                     <div className="flex flex-wrap gap-2">
                       {lessonPlan.sport && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-emerald-400/40 px-2.5 py-1 rounded-lg text-xs font-medium">
+                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
                           {lessonPlan.sport}
                         </span>
                       )}
                       {lessonPlan.level && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-blue-400/40 px-2.5 py-1 rounded-lg text-xs font-medium">
+                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
                           {lessonPlan.level}
                         </span>
                       )}
                       {lessonPlan.duration && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-yellow-400/40 px-2.5 py-1 rounded-lg text-xs font-medium">
+                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
                           ⏱ {lessonPlan.duration} min
                         </span>
                       )}
                       {lessonPlan.numberOfPeople && (
-                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-purple-400/40 px-2.5 py-1 rounded-lg text-xs font-medium">
+                        <span className="inline-flex items-center bg-white/20 backdrop-blur-lg text-white border border-white/30 px-2.5 py-1 rounded-lg text-xs font-medium">
                           👥 {lessonPlan.numberOfPeople}
                         </span>
                       )}
@@ -777,11 +777,11 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   </div>
                 </div>
                 
-                {/* Progress indicator and Timer */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs text-white/60">
+                {/* Progress indicator */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs text-white/70">
                     <span>Step {currentStep + 1} of {totalSteps}</span>
-                    <span>{Math.round(((currentStep + 1) / totalSteps) * 100)}% Complete</span>
+                    <span>{Math.round(((currentStep + 1) / totalSteps) * 100)}%</span>
                   </div>
                   <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                     <motion.div 
@@ -791,173 +791,187 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                       transition={{ duration: 0.3, ease: 'easeOut' }}
                     />
                   </div>
-                  
-                  {/* Timer Display - only show for activity steps */}
-                  {currentStepDuration > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-3 shadow-lg"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex-1">
-                          <div className="text-xs text-white/60 mb-1 font-medium uppercase tracking-wider">Activity Timer</div>
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-white font-mono">
-                              {formatTime(timeRemaining)}
-                            </span>
-                            <span className="text-xs text-white/60">/ {formatTime(timerInitialTime)}</span>
-                          </div>
-                          {/* Progress bar */}
-                          <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                            <motion.div
-                              className={`h-full rounded-full transition-colors ${
-                                timeRemaining === 0 ? 'bg-emerald-400' : 'bg-white'
-                              }`}
-                              style={{
-                                width: `${timerInitialTime > 0 ? ((timerInitialTime - timeRemaining) / timerInitialTime) * 100 : 0}%`
-                              }}
-                              transition={{ duration: 0.3 }}
-                            />
-                          </div>
+                </div>
+                
+                {/* Timer Display */}
+                {currentStepDuration > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl p-4 shadow-lg"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="text-xs text-white/60 mb-2 font-medium uppercase tracking-wider">Activity Timer</div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-bold text-white font-mono">
+                            {formatTime(timeRemaining)}
+                          </span>
+                          <span className="text-xs text-white/60">/ {formatTime(timerInitialTime)}</span>
                         </div>
-                        
-                        {/* Timer Controls */}
-                        <div className="flex items-center gap-1.5">
-                          {!isTimerRunning ? (
-                            <motion.button
-                              onClick={handleTimerStart}
-                              disabled={timeRemaining === 0}
-                              className="p-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              title="Start Timer"
-                            >
-                              <PlayIcon className="w-4 h-4 text-white" />
-                            </motion.button>
-                          ) : (
-                            <motion.button
-                              onClick={handleTimerPause}
-                              className="p-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all group"
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              title="Pause Timer"
-                            >
-                              <PauseIcon className="w-4 h-4 text-white" />
-                            </motion.button>
-                          )}
-                          <motion.button
-                            onClick={handleTimerReset}
-                            className="p-2 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all group"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            title="Reset Timer"
-                          >
-                            <ResetIcon className="w-4 h-4 text-white" />
-                          </motion.button>
+                        {/* Progress bar */}
+                        <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                          <motion.div
+                            className={`h-full rounded-full transition-colors ${
+                              timeRemaining === 0 ? 'bg-emerald-400' : 'bg-white'
+                            }`}
+                            style={{
+                              width: `${timerInitialTime > 0 ? ((timerInitialTime - timeRemaining) / timerInitialTime) * 100 : 0}%`
+                            }}
+                            transition={{ duration: 0.3 }}
+                          />
                         </div>
                       </div>
-                    </motion.div>
-                  )}
-                </div>
+                      
+                      {/* Timer Controls */}
+                      <div className="flex items-center gap-1.5">
+                        {!isTimerRunning ? (
+                          <motion.button
+                            onClick={handleTimerStart}
+                            disabled={timeRemaining === 0}
+                            className="p-2.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            title="Start Timer"
+                          >
+                            <PlayIcon className="w-4 h-4 text-white" />
+                          </motion.button>
+                        ) : (
+                          <motion.button
+                            onClick={handleTimerPause}
+                            className="p-2.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            title="Pause Timer"
+                          >
+                            <PauseIcon className="w-4 h-4 text-white" />
+                          </motion.button>
+                        )}
+                        <motion.button
+                          onClick={handleTimerReset}
+                          className="p-2.5 rounded-lg bg-white/15 backdrop-blur-sm border border-white/30 hover:bg-white/25 active:bg-white/25 transition-all"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          title="Reset Timer"
+                        >
+                          <ResetIcon className="w-4 h-4 text-white" />
+                        </motion.button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
             
             {/* Scrollable step content */}
-            <ScrollArea.Root className="flex-1" style={{ height: 'calc(85vh - 180px)' }}>
-              <ScrollArea.Viewport className="w-full h-full" ref={scrollViewportRef}>
-                <div className="p-8">
-                  {/* Step content with animation */}
-                  <div className="relative" style={{ minHeight: '400px' }}>
+            <div className="flex-1 overflow-y-auto" ref={scrollViewportRef}>
+              <div className="px-6 py-4">
                     <AnimatePresence mode="wait">
                       {currentStepData && (
                         <motion.div
                           key={currentStep}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                           className="space-y-6"
                         >
-                          {/* Step title and subtitle */}
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-3">
-                              <div className="flex-shrink-0 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white font-bold border border-white/30">
-                                {currentStep + 1}
-                              </div>
-                              <h2 className="text-2xl font-bold text-white">
-                                {currentStepData.title}
-                              </h2>
-                            </div>
-                            {currentStepData.subtitle && (
-                              <p className="text-white/80 text-lg ml-13">
+                          {/* Step subtitle banner */}
+                          {currentStepData.subtitle && (
+                            <motion.div 
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: 0.1 }}
+                              className="bg-white/10 backdrop-blur-sm border-l-4 border-white/50 rounded-r-xl px-5 py-3"
+                            >
+                              <h3 className="text-white/90 text-base font-semibold">
                                 {currentStepData.subtitle}
-                              </p>
-                            )}
-                          </div>
+                              </h3>
+                            </motion.div>
+                          )}
                           
                           {/* Step content */}
-                          <div>
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.15 }}
+                          >
                             {currentStepData.content}
-                          </div>
-                          
-                          {/* Navigation buttons within content */}
-                          <div className="mt-8 pt-6 border-t border-white/20">
-                            <div className="flex gap-3">
-                              {currentStep > 0 ? (
-                                <motion.button
-                                  type="button"
-                                  onClick={handleBack}
-                                  className="flex-1 bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl py-3 px-4 font-medium text-sm transition-all duration-200 hover:bg-white/20 hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center justify-center gap-2 text-white"
-                                  whileHover={{ scale: 1.02 }}
-                                  whileTap={{ scale: 0.98 }}
-                                >
-                                  <ArrowLeftIcon className="w-4 h-4" />
-                                  <span>Back</span>
-                                </motion.button>
-                              ) : (
-                                <div className="flex-1" />
-                              )}
-                              
-                              {currentStep < totalSteps - 1 ? (
-                                <motion.button
-                                  type="button"
-                                  onClick={handleNext}
-                                  className="flex-1 bg-white border border-white rounded-2xl py-3 px-4 font-medium text-sm transition-all duration-200 hover:bg-white/90 hover:border-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center justify-center gap-2 text-black"
-                                  whileHover={{ scale: 1.02 }}
-                                  whileTap={{ scale: 0.98 }}
-                                >
-                                  <span>Next</span>
-                                  <ArrowRightIcon className="w-4 h-4" />
-                                </motion.button>
-                              ) : (
-                                <motion.button
-                                  type="button"
-                                  onClick={handleClose}
-                                  className="flex-1 bg-white border-2 border-white rounded-2xl py-3 px-4 font-medium text-sm transition-all duration-200 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center justify-center gap-2 text-black shadow-lg"
-                                  whileHover={{ scale: 1.02 }}
-                                  whileTap={{ scale: 0.98 }}
-                                >
-                                  <CheckIcon className="w-4 h-4" />
-                                  <span>Finish</span>
-                                </motion.button>
-                              )}
-                            </div>
-                          </div>
+                          </motion.div>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+              </div>
+            </div>
+            
+            {/* Fixed Navigation Footer */}
+            <div className="bg-white/5 backdrop-blur-sm border-t border-white/20 px-6 py-4">
+              <div className="flex items-center justify-between gap-3">
+                {/* Back Button */}
+                {currentStep > 0 ? (
+                  <motion.button
+                    type="button"
+                    onClick={handleBack}
+                    className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 rounded-xl py-2.5 px-5 font-medium text-sm transition-all duration-200 hover:bg-white/20 hover:border-white/40 text-white"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <ArrowLeftIcon className="w-4 h-4" />
+                    <span>Back</span>
+                  </motion.button>
+                ) : (
+                  <div style={{ width: '100px' }} />
+                )}
+                
+                {/* Center: Step indicator dots */}
+                <div className="flex items-center justify-center gap-2">
+                  {steps.map((_, idx) => (
+                    <motion.button
+                      key={idx}
+                      onClick={() => setCurrentStep(idx)}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <div 
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          idx === currentStep 
+                            ? 'w-8 bg-white' 
+                            : idx < currentStep
+                            ? 'w-2 bg-white/60'
+                            : 'w-2 bg-white/30'
+                        }`}
+                      />
+                    </motion.button>
+                  ))}
                 </div>
-              </ScrollArea.Viewport>
-              <ScrollArea.Scrollbar 
-                orientation="vertical" 
-                className="flex select-none touch-none p-1 transition-all duration-200 ease-out data-[orientation=vertical]:w-2.5 mr-2"
-              >
-                <ScrollArea.Thumb className="flex-1 bg-white/40 hover:bg-white/60 rounded-full transition-colors duration-200" />
-              </ScrollArea.Scrollbar>
-            </ScrollArea.Root>
+                
+                {/* Next/Finish Button */}
+                {currentStep < totalSteps - 1 ? (
+                  <motion.button
+                    type="button"
+                    onClick={handleNext}
+                    className="flex items-center gap-2 bg-white border border-white rounded-xl py-2.5 px-5 font-semibold text-sm transition-all duration-200 hover:bg-white/90 text-black"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span>Next</span>
+                    <ArrowRightIcon className="w-4 h-4" />
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    type="button"
+                    onClick={handleClose}
+                    className="flex items-center gap-2 bg-white border-2 border-white rounded-xl py-2.5 px-6 font-bold text-sm transition-all duration-200 hover:bg-white/90 text-black"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <CheckIcon className="w-4 h-4" />
+                    <span>Finish</span>
+                  </motion.button>
+                )}
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       )}
