@@ -166,7 +166,6 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
                       ? 'shadow-lg ring-2 ring-white/50'
                       : ''
                   } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
-                  initial={{ opacity: level === levelOption ? 1 : 0.7 }}
                   animate={{ opacity: level === levelOption ? 1 : 0.7 }}
                   whileHover={{ scale: 1.05, opacity: 1 }}
                   whileTap={{ scale: 0.95 }}
@@ -207,16 +206,17 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
                     setTimeout(() => handleNext(), 150);
                   }}
                   style={{
-                    backgroundColor: color,
-                    opacity: age === ageOption ? 1 : 0.7
+                    backgroundColor: color
                   }}
-                  className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-all duration-200 text-white ${
+                  className={`py-2.5 px-4 rounded-xl text-sm font-medium text-white ${
                     age === ageOption
                       ? 'shadow-lg ring-2 ring-white/50'
                       : ''
                   } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
+                  animate={{ opacity: age === ageOption ? 1 : 0.7 }}
                   whileHover={{ scale: 1.05, opacity: 1 }}
                   whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
                 >
                   <span className="text-lg">{emoji}</span>
                   <span>{ageOption}</span>

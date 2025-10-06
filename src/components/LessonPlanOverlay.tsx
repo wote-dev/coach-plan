@@ -777,7 +777,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3 }}
             className="w-full max-w-3xl mx-auto relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
-            style={{ maxHeight: '85vh' }}
+            style={{ maxHeight: '85vh', height: '85vh' }}
           >
             {/* Header with progress */}
             <div className="bg-white/5 backdrop-blur-sm border-b border-white/20 px-6 py-5">
@@ -1011,23 +1011,27 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             </div>
             
             {/* Fixed Navigation Footer */}
-            <div className="bg-white/5 backdrop-blur-sm border-t border-white/20 px-6 py-4">
+            <div className="flex-none bg-white/5 backdrop-blur-sm border-t border-white/20 px-6 py-4">
               <div className="flex items-center justify-between gap-3">
                 {/* Back Button */}
-                {currentStep > 0 ? (
-                  <motion.button
-                    type="button"
-                    onClick={handleBack}
-                    className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/25 rounded-xl py-2.5 px-5 font-semibold text-sm transition-all duration-200 hover:bg-white/15 hover:border-white/30 text-white"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <ArrowLeftIcon className="w-4 h-4" />
-                    <span>Back</span>
-                  </motion.button>
-                ) : (
-                  <div style={{ width: '100px' }} />
-                )}
+                <motion.button
+                  layoutId="back-button"
+                  type="button"
+                  onClick={handleBack}
+                  disabled={currentStep === 0}
+                  initial={false}
+                  animate={{ 
+                    opacity: currentStep > 0 ? 1 : 0
+                  }}
+                  transition={{ opacity: { duration: 0.2 } }}
+                  className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/25 rounded-xl py-2.5 px-5 font-semibold text-sm text-white disabled:cursor-default"
+                  whileHover={currentStep > 0 ? { scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.15)', borderColor: 'rgba(255, 255, 255, 0.3)' } : {}}
+                  whileTap={currentStep > 0 ? { scale: 0.98 } : {}}
+                  style={{ minWidth: '100px', pointerEvents: currentStep > 0 ? 'auto' : 'none' }}
+                >
+                  <ArrowLeftIcon className="w-4 h-4" />
+                  <span>Back</span>
+                </motion.button>
                 
                 {/* Center: Step indicator dots with completion states */}
                 <div className="flex items-center justify-center gap-2">
@@ -1040,46 +1044,58 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                       className="relative"
                       title={`Step ${idx + 1}`}
                     >
-                      {idx < currentStep ? (
-                        // Completed step
-                        <div className="flex items-center justify-center w-2 h-2 bg-white/60 rounded-full">
-                          <div className="w-1 h-1 bg-white rounded-full" />
-                        </div>
-                      ) : idx === currentStep ? (
-                        // Current step
-                        <div className="w-8 h-2 bg-white rounded-full shadow-sm" />
-                      ) : (
-                        // Future step
-                        <div className="w-2 h-2 bg-white/20 rounded-full" />
-                      )}
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          width: idx === currentStep ? '32px' : '8px',
+                          backgroundColor: idx < currentStep 
+                            ? 'rgba(255, 255, 255, 0.6)' 
+                            : idx === currentStep 
+                            ? 'rgba(255, 255, 255, 1)' 
+                            : 'rgba(255, 255, 255, 0.2)'
+                        }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                        className="h-2 rounded-full"
+                        style={{ boxShadow: idx === currentStep ? '0 1px 3px rgba(0,0,0,0.1)' : 'none' }}
+                      />
                     </motion.button>
                   ))}
                 </div>
                 
                 {/* Next/Finish Button */}
-                {currentStep < totalSteps - 1 ? (
-                  <motion.button
-                    type="button"
-                    onClick={handleNext}
-                    className="flex items-center gap-2 bg-white border border-white rounded-xl py-2.5 px-5 font-bold text-sm transition-all duration-200 hover:bg-white/95 text-black shadow-sm"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <span>Next</span>
-                    <ArrowRightIcon className="w-4 h-4" />
-                  </motion.button>
-                ) : (
-                  <motion.button
-                    type="button"
-                    onClick={handleClose}
-                    className="flex items-center gap-2 bg-emerald-500 border border-emerald-600 rounded-xl py-2.5 px-6 font-bold text-sm transition-all duration-200 hover:bg-emerald-600 text-white shadow-lg"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <CheckIcon className="w-4 h-4" />
-                    <span>Finish</span>
-                  </motion.button>
-                )}
+                <motion.button
+                  layoutId="next-button"
+                  type="button"
+                  onClick={currentStep < totalSteps - 1 ? handleNext : handleClose}
+                  initial={false}
+                  animate={{
+                    backgroundColor: currentStep < totalSteps - 1 ? 'rgb(255, 255, 255)' : 'rgb(16, 185, 129)'
+                  }}
+                  className={`flex items-center gap-2 border rounded-xl py-2.5 font-bold text-sm shadow-sm ${
+                    currentStep < totalSteps - 1 
+                      ? 'border-white text-black px-5' 
+                      : 'border-emerald-600 text-white px-6 shadow-lg'
+                  }`}
+                  whileHover={{ 
+                    scale: 1.02, 
+                    backgroundColor: currentStep < totalSteps - 1 ? 'rgba(255, 255, 255, 0.95)' : 'rgb(5, 150, 105)' 
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ minWidth: '100px' }}
+                >
+                  {currentStep < totalSteps - 1 ? (
+                    <>
+                      <span>Next</span>
+                      <ArrowRightIcon className="w-4 h-4" />
+                    </>
+                  ) : (
+                    <>
+                      <CheckIcon className="w-4 h-4" />
+                      <span>Finish</span>
+                    </>
+                  )}
+                </motion.button>
               </div>
             </div>
           </motion.div>
