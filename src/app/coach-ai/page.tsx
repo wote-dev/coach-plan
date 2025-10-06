@@ -61,11 +61,32 @@ export default function CoachAIPage() {
       </AnimatePresence>
 
       {!isLoading && (
-        <div className="w-full h-screen flex items-center justify-center p-4 relative overflow-visible" style={{ height: '100dvh' }}>
+        <motion.div 
+          className="w-full h-screen flex items-center justify-center p-4 relative overflow-visible" 
+          style={{ height: '100dvh' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ 
+            duration: 0.6, 
+            ease: [0.22, 1, 0.36, 1]
+          }}
+        >
           {/* Back Button - positioned absolutely in top-left */}
-          <div className="absolute top-6 left-6 z-20">
+          <motion.div 
+            className="absolute top-6 left-6 z-20"
+            initial={{ opacity: 0, x: -30, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ 
+              delay: 0.3, 
+              duration: 0.5, 
+              ease: [0.22, 1, 0.36, 1],
+              type: "spring",
+              stiffness: 100,
+              damping: 15
+            }}
+          >
             <BackButton />
-          </div>
+          </motion.div>
           
           {/* Background container with perfect cross-fade */}
           <div className="fixed inset-0 pointer-events-none">
@@ -77,12 +98,12 @@ export default function CoachAIPage() {
                   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${currentBackground})`,
                   minHeight: '100dvh'
                 }}
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 1.08 }}
+                animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ 
-                  duration: 0.25, 
-                  ease: [0.25, 0.46, 0.45, 0.94] // Smooth easing curve
+                  duration: 0.8, 
+                  ease: [0.22, 1, 0.36, 1]
                 }}
               />
             </AnimatePresence>
@@ -91,23 +112,65 @@ export default function CoachAIPage() {
           <div className="w-full max-w-2xl relative z-10 mt-20 mb-8 md:my-8 overflow-visible">
             <motion.div
               key="form"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 40, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                delay: 0.15,
+                duration: 0.7,
+                ease: [0.22, 1, 0.36, 1],
+                type: "spring",
+                stiffness: 80,
+                damping: 20
+              }}
               className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl shadow-black/20 overflow-visible"
             >
-              <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
+              <motion.div 
+                className="text-center mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  delay: 0.4, 
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                <motion.h1 
+                  className="text-3xl font-bold text-white mb-2 tracking-tight"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    delay: 0.5, 
+                    duration: 0.4,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                >
                   CoachAI
-                </h1>
-                <p className="text-white/80 text-base font-medium">
+                </motion.h1>
+                <motion.p 
+                  className="text-white/80 text-base font-medium"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ 
+                    delay: 0.6, 
+                    duration: 0.4,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                >
                   Generate personalized coaching plans for your clients with AI
-                </p>
-              </div>
-              <div 
+                </motion.p>
+              </motion.div>
+              <motion.div 
                 className="overflow-y-auto overflow-x-visible px-3 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-white/10 hover:scrollbar-thumb-white/40"
                 style={{
                   maxHeight: 'calc(100dvh - 300px)',
                   paddingBottom: 'max(2.5rem, env(safe-area-inset-bottom))'
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ 
+                  delay: 0.7, 
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1]
                 }}
               >
                 <CoachAI 
@@ -116,7 +179,7 @@ export default function CoachAIPage() {
                   onSportChange={handleSportChange}
                   onGeneratingChange={handleGeneratingChange}
                 />
-              </div>
+              </motion.div>
               {/* Bottom fade overlay to avoid hard edge cut-off */}
               <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 rounded-b-3xl bg-gradient-to-t from-black/40 to-transparent" />
             </motion.div>
@@ -128,7 +191,7 @@ export default function CoachAIPage() {
             isOpen={!!generatedPlan}
             onClose={handleCloseOverlay}
           />
-        </div>
+        </motion.div>
       )}
     </>
   );

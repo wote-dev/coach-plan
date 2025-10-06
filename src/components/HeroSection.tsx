@@ -7,19 +7,32 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TennisLoader from './TennisLoader';
 import { useImagePreloader } from '@/hooks/useImagePreloader';
-import { useCallback } from 'react';
+import { useCallback, useState, useTransition } from 'react';
 
 export default function HeroSection() {
   const router = useRouter();
   const isLoading = useImagePreloader(['/tennis5.jpg', '/tennis4.jpg', '/default-bg.jpg'], 900);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const handleViewTransitionNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsNavigating(true);
+    
     const hasVT = typeof document !== 'undefined' && (document as Document & { startViewTransition?: (callback: () => void) => void }).startViewTransition;
     if (hasVT) {
-      e.preventDefault();
       (document as Document & { startViewTransition: (callback: () => void) => void }).startViewTransition(() => {
-        router.push('/coach-ai');
+        startTransition(() => {
+          router.push('/coach-ai');
+        });
       });
+    } else {
+      // Fallback for browsers without View Transitions API
+      setTimeout(() => {
+        startTransition(() => {
+          router.push('/coach-ai');
+        });
+      }, 400);
     }
   }, [router]);
   
@@ -29,21 +42,28 @@ export default function HeroSection() {
         {isLoading && <TennisLoader key="loader" />}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {!isLoading && (
+      <AnimatePresence mode="wait">
+        {!isLoading && !isNavigating && (
       <motion.div
         key="hero-content"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        exit={{ opacity: 0, scale: 0.98 }}
+        transition={{ 
+          duration: 0.4, 
+          ease: [0.22, 1, 0.36, 1]
+        }}
         className="h-screen relative flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
       >
       {/* Background Image */}
       <motion.div 
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0 }}
+        exit={{ scale: 1.05, opacity: 0 }}
+        transition={{ 
+          duration: 0.4, 
+          ease: [0.22, 1, 0.36, 1]
+        }}
         className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(/tennis5.jpg)`,

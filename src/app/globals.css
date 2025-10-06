@@ -229,8 +229,8 @@ body {
   
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 200ms;
-    animation-timing-function: ease-in-out;
+    animation-duration: 600ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   ::view-transition-old(root) {
@@ -242,7 +242,7 @@ body {
   }
   
   ::view-transition-group(root) {
-    animation-duration: 200ms;
+    animation-duration: 600ms;
   }
   
   @keyframes fade-out {
