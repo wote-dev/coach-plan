@@ -4,7 +4,7 @@ export default function FinalCTA() {
   return (
     <section id="book-demo" className="relative isolate py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 text-center">
-        <div className="rounded-3xl bg-white/5 ring-1 ring-white/10 p-10 sm:p-14">
+        <div className="rounded-xl border border-white/10 bg-white/5 p-10 sm:p-14">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">Ready to run elite sessions?</h2>
           <p className="mt-3 text-white/80 max-w-2xl mx-auto">Generate your first plan in seconds or book a walkthrough. We’ll tailor a plan for your program.</p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

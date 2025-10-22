@@ -31,15 +31,18 @@ export default function Features() {
   return (
     <section id="features" className="relative isolate py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <SectionHeader as="h2" size="lg" dotColor="blue" className="mb-6">Features</SectionHeader>
+        <SectionHeader as="h2" size="lg" dotColor="blue" className="mb-3">Features</SectionHeader>
         <p className="text-white/80 max-w-2xl">Everything you need to run elite, consistent sessions—without the prep time.</p>
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {features.map((f) => (
-            <SectionCard key={f.title} className="p-5">
-              <h3 className="text-white font-bold">{f.title}</h3>
-              <p className="mt-2 text-sm text-white/75">{f.desc}</p>
-            </SectionCard>
-          ))}
+            {features.map((f) => (
+              <SectionCard key={f.title} className="p-5">
+                <div className="inline-flex items-center gap-2">
+                  <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
+                  <h3 className="text-white font-bold tracking-tight">{f.title}</h3>
+                </div>
+                <p className="mt-2 text-sm text-white/75">{f.desc}</p>
+              </SectionCard>
+            ))}
         </div>
       </div>
     </section>

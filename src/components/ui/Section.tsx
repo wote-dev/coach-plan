@@ -10,29 +10,29 @@ interface SectionCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const toneToBorder: Record<Tone, string> = {
-  default: "border-white/20",
-  neutral: "border-white/20",
-  emerald: "border-emerald-500/30",
-  yellow: "border-yellow-500/30",
-  danger: "border-red-500/40",
+  default: "border-white/10",
+  neutral: "border-white/10",
+  emerald: "border-emerald-500/20",
+  yellow: "border-lime-300/30",
+  danger: "border-red-400/25",
 };
 
 const toneToBg: Record<Tone, string> = {
-  default: "bg-white/10",
-  neutral: "bg-white/10",
-  emerald: "bg-white/10",
-  yellow: "bg-white/10",
-  danger: "bg-red-500/15",
+  default: "bg-white/5",
+  neutral: "bg-white/5",
+  emerald: "bg-white/5",
+  yellow: "bg-white/5",
+  danger: "bg-red-500/10",
 };
 
 export function SectionCard({ tone = "default", className, ...props }: SectionCardProps) {
   return (
     <div
       className={cn(
-        "backdrop-blur-sm rounded-2xl shadow-md",
+        "rounded-xl border backdrop-blur-[2px] transition-colors",
         toneToBg[tone],
-        "border",
         toneToBorder[tone],
+        "hover:border-white/20",
         className
       )}
       {...props}
@@ -47,15 +47,15 @@ interface SectionHeaderProps extends React.HTMLAttributes<HTMLHeadingElement> {
 }
 
 const sizeToClasses: Record<NonNullable<SectionHeaderProps["size"]>, string> = {
-  sm: "text-sm",
-  md: "text-base",
-  lg: "text-2xl sm:text-3xl font-bold tracking-tight",
+  sm: "text-[11px] font-semibold text-white/60 uppercase tracking-widest",
+  md: "text-xl sm:text-2xl font-semibold tracking-tight",
+  lg: "text-3xl sm:text-4xl font-extrabold tracking-tight",
 };
 
 const dotToClasses: Record<NonNullable<SectionHeaderProps["dotColor"]>, string> = {
-  white: "bg-white",
+  white: "bg-white/80",
   emerald: "bg-emerald-400",
-  yellow: "bg-yellow-400",
+  yellow: "bg-lime-300",
   blue: "bg-blue-400",
   red: "bg-red-400",
 };
@@ -72,13 +72,13 @@ export function SectionHeader({
   return (
     <Comp
       className={cn(
-        "text-white uppercase tracking-wider font-bold flex items-center gap-2",
+        "text-white flex items-center gap-2",
         sizeToClasses[size],
         className
       )}
       {...props}
     >
-      <span className={cn("w-2 h-2 rounded-full", dotToClasses[dotColor])} />
+      <span className={cn("w-1.5 h-1.5 rounded-full", dotToClasses[dotColor])} />
       {children}
     </Comp>
   );

@@ -14,7 +14,7 @@ export default function ROI() {
         <SectionHeader as="h2" size="lg" dotColor="yellow" className="mb-6">Outcomes & ROI</SectionHeader>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {metrics.map((m) => (
-            <SectionCard key={m.label} className="p-5 text-center">
+            <SectionCard key={m.label} className="p-6 text-center">
               <div className="text-3xl font-extrabold text-white">{m.value}</div>
               <div className="mt-1 text-xs font-semibold text-white/70">{m.label}</div>
             </SectionCard>
