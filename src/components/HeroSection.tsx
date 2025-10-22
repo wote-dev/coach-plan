@@ -1,324 +1,170 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRightIcon, PlayIcon, MagicWandIcon } from '@radix-ui/react-icons';
-import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
-import TennisLoader from './TennisLoader';
-import { useImagePreloader } from '@/hooks/useImagePreloader';
-import { useCallback, useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCallback, useTransition } from 'react';
 
 export default function HeroSection() {
   const router = useRouter();
-  const isLoading = useImagePreloader(['/tennis5.jpg', '/tennis4.jpg', '/default-bg.jpg'], 900);
-  const [isNavigating, setIsNavigating] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
-  const handleViewTransitionNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleViewTransitionNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsNavigating(true);
-    
     const hasVT = typeof document !== 'undefined' && (document as Document & { startViewTransition?: (callback: () => void) => void }).startViewTransition;
     if (hasVT) {
       (document as Document & { startViewTransition: (callback: () => void) => void }).startViewTransition(() => {
         startTransition(() => {
-          router.push('/coach-ai');
+          router.push(href);
         });
       });
     } else {
-      // Fallback for browsers without View Transitions API
-      setTimeout(() => {
-        startTransition(() => {
-          router.push('/coach-ai');
-        });
-      }, 400);
+      startTransition(() => router.push(href));
     }
   }, [router]);
-  
-  return (
-    <>
-      <AnimatePresence mode="wait">
-        {isLoading && <TennisLoader key="loader" />}
-      </AnimatePresence>
 
-      <AnimatePresence mode="wait">
-        {!isLoading && !isNavigating && (
-      <motion.div
-        key="hero-content"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0, scale: 0.98 }}
-        transition={{ 
-          duration: 0.4, 
-          ease: [0.22, 1, 0.36, 1]
-        }}
-        className="h-screen relative flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
-      >
-      {/* Background Image */}
-      <motion.div 
-        initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 1.05, opacity: 0 }}
-        transition={{ 
-          duration: 0.4, 
-          ease: [0.22, 1, 0.36, 1]
-        }}
-        className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+  return (
+    <section className="relative isolate overflow-hidden" style={{ minHeight: '100dvh' }}>
+      {/* AO-inspired background */}
+      <div
+        className="absolute inset-0 -z-10"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(/tennis5.jpg)`,
-          minHeight: '100dvh'
+          background: `radial-gradient(60% 60% at 10% 10%, rgba(30,143,213,0.35) 0%, transparent 70%),
+                       radial-gradient(35% 35% at 90% 15%, rgba(204,255,0,0.22) 0%, transparent 60%),
+                       linear-gradient(180deg, #0A2239 0%, #06141F 100%)`,
         }}
       />
-      
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        <div className="space-y-6 lg:space-y-8">
-          {/* Hero Badge */}
-          <motion.div
-            initial={{ scale: 0.8, y: -20 }}
-            animate={{ scale: 1, y: 0 }}
-            transition={{ 
-              delay: 0.2,
-              duration: 0.6,
-              type: "spring",
-              stiffness: 100,
-              damping: 15
-            }}
-            style={{ opacity: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 backdrop-blur-sm glass-effect border border-white/20 text-sm font-medium text-white shadow-lg"
+
+      {/* Court line grid overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-30"
+        style={{
+          backgroundImage: `repeating-linear-gradient(0deg, transparent 0, transparent 118px, rgba(255,255,255,0.08) 120px),
+                             repeating-linear-gradient(90deg, transparent 0, transparent 118px, rgba(255,255,255,0.08) 120px)`,
+          maskImage: 'linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)'
+        }}
+      />
+
+      {/* Decorative AO "O" ring */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 0.7, scale: 1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute left-[max(3vw,16px)] top-[12vh] -z-10"
+        style={{ width: '42vw', height: '42vw' }}
+      >
+        <div className="relative h-full w-full rounded-full" style={{ background: 'radial-gradient(closest-side, rgba(30,143,213,0.22), transparent 70%)' }}>
+          <div className="absolute inset-0 rounded-full border border-white/10" />
+          <div className="absolute inset-[6%] rounded-full border border-white/10" />
+        </div>
+      </motion.div>
+
+      {/* Decorative AO "A" angle */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 0.6, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute right-[-10vw] bottom-[-12vh] -z-10"
+        style={{ width: '48vw', height: '48vw' }}
+      >
+        <div
+          className="h-full w-full rounded-[18%]"
+          style={{
+            background: 'conic-gradient(from 210deg, rgba(204,255,0,0.3), rgba(30,143,213,0.3))',
+            clipPath: 'polygon(15% 0, 100% 60%, 65% 100%, 0 45%)'
+          }}
+        />
+      </motion.div>
+
+      {/* Content */}
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 pt-[18vh] pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-md"
+        >
+          <span className="inline-block size-2 rounded-full" style={{ background: '#CCFF00', boxShadow: '0 0 0 4px rgba(204,255,0,0.12)' }} />
+          <span className="text-xs font-semibold tracking-wide text-white/80">AO-inspired · Coach-ready</span>
+        </motion.div>
+
+        <div className="mt-6 sm:mt-8 max-w-3xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="text-balance font-extrabold tracking-[-0.02em] text-white leading-[1.05] text-4xl sm:text-5xl md:text-6xl"
           >
-            <motion.div
-              initial={{ rotate: -180, scale: 0 }}
-              animate={{ rotate: 0, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.5, type: "spring", stiffness: 200 }}
-            >
-              <PlayIcon className="w-4 h-4" />
-            </motion.div>
-            <motion.span
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 0.4 }}
-            >
-              Professional Coaching Made Simple
-            </motion.span>
-          </motion.div>
+            Elite tennis lesson plans
+            <br />
+            <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5 0%, #CCFF00 60%, #A5FF3B 100%)' }}>
+              in seconds. Not hours.
+            </span>
+          </motion.h1>
 
-          {/* Main Content Block */}
-          <div className="space-y-4 lg:space-y-5">
-            {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white leading-tight">
-              <motion.span 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  delay: 0.4,
-                  duration: 0.7,
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 12
-                }}
-                className="block"
-              >
-                Create Perfect{' '}
-                <motion.span
-                  className="inline-block"
-                  animate={{ 
-                    y: [0, -12, 0],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ 
-                    y: {
-                      repeat: Infinity,
-                      duration: 1.2,
-                      ease: [0.4, 0, 0.6, 1],
-                      repeatDelay: 0.3
-                    },
-                    rotate: {
-                      repeat: Infinity,
-                      duration: 1.2,
-                      ease: "easeInOut",
-                      repeatDelay: 0.3
-                    }
-                  }}
-                >
-                  🎾
-                </motion.span>
-              </motion.span>
-              <motion.span 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  delay: 0.6,
-                  duration: 0.7,
-                  type: "spring",
-                  stiffness: 80,
-                  damping: 12
-                }}
-                className="block bg-gradient-to-r from-white via-white/95 to-white/90 bg-clip-text text-transparent drop-shadow-lg"
-              >
-                Lesson Plans in Seconds
-              </motion.span>
-            </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
+          >
+            Purpose-built for tennis coaches. Generate AO-grade sessions tailored to level, duration, and group size—complete with drills, cues, and progressions.
+          </motion.p>
 
-            {/* Subtitle */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: 0.8,
-                duration: 0.6,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              className="text-base lg:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow-sm"
-            >
-              Generate customized tennis coaching plans for your clients at any skill level and group size. 
-              From warm-ups to cool-downs, we&apos;ve got your coaching sessions covered.
-            </motion.p>
-          </div>
-
-          {/* Features Grid - Compact */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 lg:gap-6 max-w-3xl mx-auto">
-            {[
-              {
-                icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />,
-                title: "Lightning Fast",
-                description: "Generate plans in seconds",
-                delay: 0.9
-              },
-              {
-                icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />,
-                title: "Tennis Specific",
-                description: "Tailored for tennis coaching",
-                delay: 1.0
-              },
-              {
-                icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />,
-                title: "Any Group Size",
-                description: "Individual to team training",
-                delay: 1.1
-              }
-            ].map((feature, index) => (
-              <motion.div 
-                key={index}
-                initial={{ y: 30, scale: 0.9 }}
-                animate={{ y: 0, scale: 1 }}
-                transition={{ 
-                  delay: feature.delay,
-                  duration: 0.6,
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 15
-                }}
-                whileHover={{ 
-                  y: -5,
-                  transition: { duration: 0.2, type: "spring", stiffness: 300 }
-                }}
-                style={{ opacity: 1 }}
-                className="flex flex-col items-center space-y-2"
-              >
-                <motion.div 
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
-                    delay: feature.delay + 0.2,
-                    duration: 0.5,
-                    type: "spring",
-                    stiffness: 150
-                  }}
-                  style={{ opacity: 1 }}
-                  className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/15 backdrop-blur-sm glass-effect flex items-center justify-center"
-                >
-                  <svg className="w-5 h-5 lg:w-6 lg:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    {feature.icon}
-                  </svg>
-                </motion.div>
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: feature.delay + 0.3, duration: 0.4 }}
-                  className="text-center"
-                >
-                  <h3 className="font-semibold text-white text-sm drop-shadow-sm">{feature.title}</h3>
-                  <p className="text-xs text-white/80 leading-tight mt-1">{feature.description}</p>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
           <motion.div
-            initial={{ y: 30, scale: 0.9 }}
-            animate={{ y: 0, scale: 1 }}
-            transition={{ 
-              delay: 1.3,
-              duration: 0.6,
-              type: "spring",
-              stiffness: 100,
-              damping: 15
-            }}
-            style={{ opacity: 1 }}
-            className="flex justify-center items-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3"
           >
             <Link
               href="/coach-ai"
               prefetch
-              onClick={handleViewTransitionNav}
-              className="group inline-flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-white/10 backdrop-blur-xl border-2 border-white rounded-full font-semibold text-base lg:text-lg text-white hover:bg-white/20 transition-all duration-200 shadow-xl hover:shadow-2xl"
+              onClick={(e) => handleViewTransitionNav(e, '/coach-ai')}
+              className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold text-[#06141F] shadow-xl transition-colors focus:outline-none"
+              style={{ background: 'linear-gradient(180deg, #CCFF00 0%, #B8FF36 100%)' }}
             >
-              <MagicWandIcon className="w-4 h-4 lg:w-5 lg:h-5" />
-              <span className="text-base lg:text-lg font-semibold">
-                Try CoachAI
-              </span>
-              <ChevronRightIcon className="w-4 h-4 lg:w-5 lg:h-5 transition-transform group-hover:translate-x-1" />
+              Try Coach AI
+              <svg className="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
             </Link>
+
+            <Link
+              href="/planner"
+              prefetch
+              onClick={(e) => handleViewTransitionNav(e, '/planner')}
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold text-white/90 ring-1 ring-white/25 hover:ring-white/40 transition-colors"
+            >
+              Explore Planner
+            </Link>
+
+            <div className="ml-1 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-2 text-xs font-semibold text-white/70 ring-1 ring-white/10">
+              <span className="inline-block size-2 rounded-full" style={{ background: '#1E8FD5' }} />
+              <span>Designed for funding conversations</span>
+            </div>
           </motion.div>
 
-          {/* Trust Indicators - Compact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              delay: 1.5,
-              duration: 0.6,
-              ease: [0.22, 1, 0.36, 1]
-            }}
-            className="pt-6 mt-4 border-t border-white/20"
+          {/* Micro features */}
+          <motion.ul
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-8 grid grid-cols-2 gap-3 sm:max-w-xl sm:grid-cols-4"
           >
-            <p className="text-sm text-white/80 font-medium drop-shadow-sm">🎾 Trusted by over 100+ coaches worldwide</p>
-            
-            {/* Built by section */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: 1.7,
-                duration: 0.5,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              className="mt-4"
-            >
-              <a 
-                href="https://www.blackcubesolutions.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 cursor-pointer group"
-              >
-                <span className="text-xs text-white font-medium">Built by:</span>
-                <Image 
-                  src="/bcs-dark.png" 
-                  alt="BCS Logo" 
-                  width={80}
-                  height={16}
-                  className="h-4 w-auto filter brightness-0 invert"
-                />
-              </a>
-            </motion.div>
-          </motion.div>
+            {["Level-smart", "Drill-rich", "Coach cues", "Adaptations"].map((item) => (
+              <li key={item} className="text-xs font-semibold text-white/70">
+                <span className="mr-2 inline-block size-1.5 translate-y-[-1px] rounded-full bg-white/60" />
+                {item}
+              </li>
+            ))}
+          </motion.ul>
         </div>
       </div>
-      </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    </section>
   );
 }
