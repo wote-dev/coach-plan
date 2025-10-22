@@ -80,7 +80,8 @@ export default function HeroSection() {
       </motion.div>
 
       {/* Content */}
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 pt-[18vh] pb-24">
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-center lg:grid-cols-2 gap-10">
+        <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,12 +162,14 @@ export default function HeroSection() {
           </motion.ul>
         </div>
 
+        </div>
+
         {/* Right-side mockup (hidden on small screens) */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden lg:block absolute right-6 top-[14vh] z-0 w-[520px] max-w-[38vw]"
+          className="hidden lg:block justify-self-end self-center z-0 w-[520px] max-w-[38vw]"
         >
           <div className="relative h-[520px] rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
