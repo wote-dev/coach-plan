@@ -111,7 +111,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
           >
-            Purpose-built for tennis coaches. Generate AO-grade sessions tailored to level, duration, and group size—complete with drills, cues, and progressions.
+            Helping coaches generate tailored lesson plans for every client — powered by Tennaova’s intelligent coaching model.
           </motion.p>
 
           <motion.div
@@ -127,7 +127,7 @@ export default function HeroSection() {
               className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold text-[#06141F] shadow-xl transition-colors focus:outline-none"
               style={{ background: 'linear-gradient(180deg, #CCFF00 0%, #B8FF36 100%)' }}
             >
-              Try Coach AI
+              Generate a plan
               <svg className="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />
@@ -143,10 +143,6 @@ export default function HeroSection() {
               Explore Planner
             </Link>
 
-            <div className="ml-1 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-2 text-xs font-semibold text-white/70 ring-1 ring-white/10">
-              <span className="inline-block size-2 rounded-full" style={{ background: '#1E8FD5' }} />
-              <span>Designed for funding conversations</span>
-            </div>
           </motion.div>
 
           {/* Micro features */}
@@ -156,7 +152,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.35 }}
             className="mt-8 grid grid-cols-2 gap-3 sm:max-w-xl sm:grid-cols-4"
           >
-            {["Level-smart", "Drill-rich", "Coach cues", "Adaptations"].map((item) => (
+            {["Level-aware", "Client-ready", "Drill library", "Progressions"].map((item) => (
               <li key={item} className="text-xs font-semibold text-white/70">
                 <span className="mr-2 inline-block size-1.5 translate-y-[-1px] rounded-full bg-white/60" />
                 {item}
@@ -164,6 +160,91 @@ export default function HeroSection() {
             ))}
           </motion.ul>
         </div>
+
+        {/* Right-side mockup (hidden on small screens) */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="hidden lg:block absolute right-6 top-[14vh] z-0 w-[520px] max-w-[38vw]"
+        >
+          <div className="relative h-[520px] rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
+
+            <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+              <div>
+                <p className="text-xs font-semibold tracking-wider text-white/60">Session</p>
+                <h3 className="text-lg font-bold text-white">Plan overview</h3>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/15">
+                <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
+                Tennaova model
+              </span>
+            </div>
+
+            <div className="px-5 py-4">
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: 'Level', value: 'Intermediate' },
+                  { label: 'Duration', value: '60 min' },
+                  { label: 'Group', value: '4 players' },
+                ].map((m) => (
+                  <div key={m.label} className="rounded-xl bg-white/5 ring-1 ring-white/10 p-3">
+                    <p className="text-[10px] font-semibold tracking-wider text-white/60">{m.label}</p>
+                    <p className="text-sm font-bold text-white">{m.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-4">
+                <div className="rounded-xl bg-white/5 ring-1 ring-white/10 p-4">
+                  <p className="text-xs font-semibold tracking-wider text-white/60">Warm-up</p>
+                  <ul className="mt-2 space-y-2">
+                    {[
+                      'Dynamic footwork · 5 min',
+                      'Mini-rally rhythm · 7 min',
+                    ].map((t) => (
+                      <li key={t} className="flex items-start gap-2 text-sm text-white/90">
+                        <span className="mt-1 inline-block size-1.5 rounded-full bg-[#1E8FD5]" />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-xl bg-white/5 ring-1 ring-white/10 p-4">
+                  <p className="text-xs font-semibold tracking-wider text-white/60">Main</p>
+                  <ul className="mt-2 space-y-2">
+                    {[
+                      'Cross-court forehands',
+                      'Serve + first ball pattern',
+                      'Approach & volley',
+                    ].map((t) => (
+                      <li key={t} className="flex items-start gap-2 text-sm text-white/90">
+                        <span className="mt-1 inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-5 rounded-xl bg-white/5 ring-1 ring-white/10 p-4">
+                <p className="text-xs font-semibold tracking-wider text-white/60">Coaching cues</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {['Early prep', 'Balance at contact', 'Recover center'].map((c) => (
+                    <span key={c} className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white/80 ring-1 ring-white/10">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 h-16 opacity-40" style={{
+              background: 'radial-gradient(80% 60% at 50% 100%, rgba(30,143,213,0.35) 0%, transparent 70%)'
+            }} />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
