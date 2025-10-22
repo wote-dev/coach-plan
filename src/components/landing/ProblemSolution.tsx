@@ -1,29 +1,53 @@
-import { SectionCard, SectionHeader } from '@/components/ui/Section';
-
 export default function ProblemSolution() {
   return (
-    <section id="problem" className="relative isolate py-20 sm:py-28">
+    <section id="problem" className="py-20 sm:py-28 border-t border-white/5">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <SectionHeader as="h2" size="lg" dotColor="yellow" className="mb-6">Problem → Solution</SectionHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <SectionCard className="p-6 sm:p-8">
-              <h3 className="text-white text-xl font-bold">Before — Manual planning is slow and inconsistent</h3>
-              <ul className="mt-4 space-y-3 text-white/80 text-sm">
-                <li>• 30–60 min per session building plans by hand</li>
-                <li>• Hard to personalize for level, group size, and goals</li>
-                <li>• Quality varies across coaches; knowledge trapped in silos</li>
-              </ul>
-            </SectionCard>
-            <SectionCard className="p-6 sm:p-8">
-              <h3 className="text-white text-xl font-bold">After — Elite plans in seconds, every time</h3>
-              <ul className="mt-4 space-y-3 text-white/80 text-sm">
-                <li>• Generate tailored plans in under 60 seconds</li>
-                <li>• Structured drills, progressions, cues, and adaptations</li>
-                <li>• Consistency across programs with team-wide templates</li>
-              </ul>
-            </SectionCard>
+        <div className="mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+            The problem
+          </h2>
+          <p className="text-white/70 text-lg max-w-2xl">
+            Coaching is great. Planning sessions isn&apos;t. Most coaches spend 45 minutes per session building plans from scratch.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div>
+            <h3 className="text-white font-semibold mb-4">Without Coach Plan</h3>
+            <ul className="space-y-3 text-white/70">
+              <li className="flex items-start gap-3">
+                <span className="text-[#CCFF00] mt-1">•</span>
+                <span>45 minutes per session planning</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#CCFF00] mt-1">•</span>
+                <span>Hard to tailor for different levels</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#CCFF00] mt-1">•</span>
+                <span>Consistency issues across programs</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-white font-semibold mb-4">With Coach Plan</h3>
+            <ul className="space-y-3 text-white/70">
+              <li className="flex items-start gap-3">
+                <span className="text-[#CCFF00] mt-1">✓</span>
+                <span>60 seconds to a complete session</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#CCFF00] mt-1">✓</span>
+                <span>Customized for every skill level</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#CCFF00] mt-1">✓</span>
+                <span>Repeatable, high-quality structure</span>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
     </section>
   );
 }

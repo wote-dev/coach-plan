@@ -37,6 +37,13 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Brand variables */
+:root {
+  --brand-blue: #1E8FD5; /* electric blue */
+  --brand-navy: #06141F; /* deep court navy */
+  --brand-neon: #CCFF00; /* tennis-ball neon */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

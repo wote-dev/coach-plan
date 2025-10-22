@@ -25,7 +25,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative isolate overflow-hidden" style={{ minHeight: '100dvh' }}>
-      {/* AO-inspired background */}
+      {/* Brand-inspired background */}
       <div
         className="absolute inset-0 -z-10"
         style={{
@@ -89,7 +89,7 @@ export default function HeroSection() {
           className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-md"
         >
           <span className="inline-block size-2 rounded-full" style={{ background: '#CCFF00', boxShadow: '0 0 0 4px rgba(204,255,0,0.12)' }} />
-          <span className="text-xs font-semibold tracking-wide text-white/80">AO-inspired · Coach-ready</span>
+          <span className="text-xs font-semibold tracking-wide text-white/80">Modern UI · Coach-ready</span>
         </motion.div>
 
         <div className="mt-6 sm:mt-8 max-w-3xl">
@@ -97,11 +97,10 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-            className="text-balance font-extrabold tracking-[-0.02em] text-white leading-[1.05] text-4xl sm:text-5xl md:text-6xl"
+className="text-pretty font-extrabold text-white tracking-[-0.01em] sm:tracking-[-0.015em] leading-[1.12] sm:leading-[1.08] text-4xl sm:text-6xl md:text-7xl max-w-none"
           >
             Elite tennis lesson plans
-            <br />
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5 0%, #CCFF00 60%, #A5FF3B 100%)' }}>
+            <span className="block mt-2 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5 0%, #CCFF00 60%, #A5FF3B 100%)' }}>
               in seconds. Not hours.
             </span>
           </motion.h1>

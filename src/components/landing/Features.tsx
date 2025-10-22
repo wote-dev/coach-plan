@@ -1,48 +1,22 @@
-import { SectionCard, SectionHeader } from '@/components/ui/Section';
-
-const features = [
-  {
-    title: 'AI lesson plans',
-    desc: 'Level-aware plans with warm-ups, drills, cues, progressions, and cooldowns.',
-  },
-  {
-    title: 'Adaptations & progressions',
-    desc: 'Instantly tailor for number of players, space, and equipment constraints.',
-  },
-  {
-    title: 'Template library',
-    desc: 'Save and share best-practice templates across your team and programs.',
-  },
-  {
-    title: 'Export & sharing',
-    desc: 'Share plans to PDF or link for assistants and athletes; keep your brand.',
-  },
-  {
-    title: 'Team collaboration',
-    desc: 'Comment and iterate on sessions; version history and approvals.',
-  },
-  {
-    title: 'Analytics',
-    desc: 'Track usage, coach consistency, and athlete feedback to improve quality.',
-  },
-];
-
 export default function Features() {
   return (
-    <section id="features" className="relative isolate py-20 sm:py-28">
+    <section id="features" className="py-20 sm:py-28 border-t border-white/5">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <SectionHeader as="h2" size="lg" dotColor="blue" className="mb-3">Features</SectionHeader>
-        <p className="text-white/80 max-w-2xl">Everything you need to run elite, consistent sessions—without the prep time.</p>
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {features.map((f) => (
-              <SectionCard key={f.title} className="p-5">
-                <div className="inline-flex items-center gap-2">
-                  <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
-                  <h3 className="text-white font-bold tracking-tight">{f.title}</h3>
-                </div>
-                <p className="mt-2 text-sm text-white/75">{f.desc}</p>
-              </SectionCard>
-            ))}
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">What&apos;s included</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            { title: 'AI Generation', desc: 'Create complete, structured tennis sessions in 60 seconds.' },
+            { title: 'Adaptations', desc: 'Auto-adjust for group size, skill level, and equipment.' },
+            { title: 'Export & Share', desc: 'PDF export, shareable links, or integrate with your systems.' },
+            { title: 'Templates', desc: 'Build and reuse best practices across your programs.' },
+            { title: 'Collaboration', desc: 'Comment, approve, and iterate together as a team.' },
+            { title: 'Analytics', desc: 'Track usage, adoption, and session effectiveness.' },
+          ].map((f) => (
+            <div key={f.title} className="border border-white/10 rounded-lg p-6 hover:border-white/20 transition-colors">
+              <h3 className="text-white font-semibold mb-2">{f.title}</h3>
+              <p className="text-sm text-white/70">{f.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

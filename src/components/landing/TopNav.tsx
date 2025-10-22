@@ -1,31 +1,41 @@
 import Link from 'next/link';
 
+const NAV_ITEMS = [
+  { href: '#features', label: 'Features' },
+  { href: '#how-it-works', label: 'How it works' },
+  { href: '#roi', label: 'Outcomes' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#security', label: 'Security' },
+  { href: '#team', label: 'Team' },
+] as const;
+
 export default function TopNav() {
   return (
-    <header className="fixed top-0 inset-x-0 z-50">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <div className="mt-4 flex items-center justify-between rounded-2xl bg-white/10 ring-1 ring-white/15 backdrop-blur-md px-4 py-2.5">
-          <Link href="/" className="font-extrabold text-white tracking-tight text-lg">
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5 0%, #CCFF00 100%)' }}>
-              Coach Plan
-            </span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-white/80">
-            <a href="#features" className="hover:text-white">Features</a>
-            <a href="#how-it-works" className="hover:text-white">How it works</a>
-            <a href="#roi" className="hover:text-white">Outcomes</a>
-            <a href="#pricing" className="hover:text-white">Pricing</a>
-            <a href="#security" className="hover:text-white">Security</a>
-            <a href="#team" className="hover:text-white">Team</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <Link href="/coach-ai" className="hidden sm:inline-flex items-center rounded-full px-4 py-2 text-[13px] font-semibold text-white/90 ring-1 ring-white/25 hover:ring-white/40">
-              Try free
-            </Link>
-            <a href="#book-demo" className="inline-flex items-center rounded-full px-4 py-2 text-[13px] font-bold text-[#06141F] shadow-xl" style={{ background: 'linear-gradient(180deg, #CCFF00 0%, #B8FF36 100%)' }}>
-              Book demo
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#070F1A]/95 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-6 px-6">
+        <Link href="/" className="text-base font-semibold tracking-tight text-white">
+          Coach Plan
+        </Link>
+        <nav className="hidden items-center gap-6 text-sm text-white/70 md:flex">
+          {NAV_ITEMS.map((item) => (
+            <a key={item.href} href={item.href} className="transition-colors hover:text-white">
+              {item.label}
             </a>
-          </div>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/coach-ai"
+            className="hidden items-center rounded-full border border-white/20 px-4 py-2 text-[13px] font-semibold text-white/80 transition-colors hover:text-white sm:flex"
+          >
+            Try free
+          </Link>
+          <a
+            href="#book-demo"
+            className="inline-flex items-center rounded-full bg-[#CCFF00] px-4 py-2 text-[13px] font-semibold text-[#05080F] transition-transform hover:translate-y-[-1px]"
+          >
+            Book demo
+          </a>
         </div>
       </div>
     </header>
