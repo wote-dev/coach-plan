@@ -13,7 +13,7 @@ export default function HowItWorks() {
           <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 text-sm text-white/65">
             <p className="font-medium text-white">Director&apos;s note</p>
             <p className="mt-2">
-              "We used to spend Sunday afternoons building sessions. Coach Plan gets us to a great starting point in under a minute, so we can spend time coaching, not formatting docs."
+              &quot;We used to spend Sunday afternoons building sessions. Coach Plan gets us to a great starting point in under a minute, so we can spend time coaching, not formatting docs.&quot;
             </p>
             <p className="mt-4 text-[12px] uppercase tracking-[0.2em] text-white/45">— Head of High Performance, Nike Camps</p>
           </div>

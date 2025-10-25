@@ -60,7 +60,7 @@ export default function ROI() {
             <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 sm:col-span-2">
               <blockquote className="space-y-4 text-sm text-white/70">
                 <p>
-                  "Our staff used Coach Plan during spring season fundraising. Investors could see the operational heartbeat instantly — it was a huge trust signal."
+                  &quot;Our staff used Coach Plan during spring season fundraising. Investors could see the operational heartbeat instantly — it was a huge trust signal.&quot;
                 </p>
                 <p className="text-xs uppercase tracking-[0.18em] text-white/50">— Director of Tennis, Stanford Athletics</p>
               </blockquote>

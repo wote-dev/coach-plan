@@ -8,6 +8,7 @@ const PLANS = [
     tagline: 'Launch quickly with core tooling',
     highlights: ['10 AI plans every month', 'PDF export & share links', 'Private workspace'],
     cta: { href: '/coach-ai', label: 'Start free' },
+    recommended: false,
   },
   {
     name: 'Pro Staff',
@@ -35,6 +36,7 @@ const PLANS = [
       '99.9% uptime SLA',
     ],
     cta: { href: '#book-demo', label: 'Book a call' },
+    recommended: false,
   },
 ] as const;
 

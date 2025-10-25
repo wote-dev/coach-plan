@@ -746,12 +746,41 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{
-            backgroundImage: "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.4)), url(/tennis6.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
         >
+          {/* Brand-inspired background */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10"
+            style={{
+              background: `radial-gradient(60% 60% at 10% 10%, rgba(30,143,213,0.35) 0%, transparent 70%),
+                           radial-gradient(35% 35% at 90% 15%, rgba(204,255,0,0.22) 0%, transparent 60%),
+                           linear-gradient(180deg, #0A2239 0%, #06141F 100%)`,
+            }}
+          />
+          {/* Court line grid overlay */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -z-10 opacity-30"
+            style={{
+              backgroundImage: `repeating-linear-gradient(0deg, transparent 0, transparent 118px, rgba(255,255,255,0.08) 120px),
+                                 repeating-linear-gradient(90deg, transparent 0, transparent 118px, rgba(255,255,255,0.08) 120px)`,
+              maskImage: 'linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)'
+            }}
+          />
+          {/* Decorative ring */}
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute left-[max(3vw,16px)] top-[10vh] -z-10"
+            style={{ width: '42vw', height: '42vw' }}
+          >
+            <div className="relative h-full w-full rounded-full" style={{ background: 'radial-gradient(closest-side, rgba(30,143,213,0.22), transparent 70%)' }}>
+              <div className="absolute inset-0 rounded-full border border-white/10" />
+              <div className="absolute inset-[6%] rounded-full border border-white/10" />
+            </div>
+          </motion.div>
+
           {/* Close button */}
           <motion.button
             onClick={handleClose}
@@ -759,28 +788,30 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ delay: 0.1 }}
-            className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/20 backdrop-blur-lg border border-white/30 hover:bg-white/30 active:bg-white/40 transition-all shadow-xl"
+            className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/15 backdrop-blur-sm ring-1 ring-white/25 hover:bg-white/20 active:bg-white/25 transition-all shadow-xl"
             whileHover={{ 
               scale: 1.1,
               rotate: 90,
               transition: { type: "spring", stiffness: 400, damping: 17 }
             }}
             whileTap={{ scale: 0.9 }}
+            title="Close"
           >
             <Cross2Icon className="w-5 h-5 text-white" />
           </motion.button>
 
           {/* Step-by-step content container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-            className="w-full max-w-3xl mx-auto relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            initial={{ opacity: 0, scale: 0.98, y: 6 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.98, y: 6 }}
+            transition={{ duration: 0.25 }}
+            className="w-full max-w-3xl mx-auto relative rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden flex flex-col"
             style={{ maxHeight: '85vh', height: '85vh' }}
           >
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
             {/* Header with progress */}
-            <div className="bg-white/5 backdrop-blur-sm border-b border-white/20 px-6 py-5">
+            <div className="bg-transparent backdrop-blur-0 border-b border-white/10 px-6 py-5">
               <div className="space-y-4">
                 {/* Title and metadata */}
                 <div className="flex items-start justify-between gap-4">
@@ -842,7 +873,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                       height: isTimerMinimized ? 'auto' : 'auto'
                     }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg overflow-hidden"
+                    className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-xl shadow-lg overflow-hidden"
                   >
                     {isTimerMinimized ? (
                       // Minimized Timer View
@@ -1011,7 +1042,7 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
             </div>
             
             {/* Fixed Navigation Footer */}
-            <div className="flex-none bg-white/5 backdrop-blur-sm border-t border-white/20 px-6 py-4">
+            <div className="flex-none bg-transparent backdrop-blur-0 border-t border-white/10 px-6 py-4">
               <div className="flex items-center justify-between gap-3">
                 {/* Back Button */}
                 <motion.button
@@ -1068,21 +1099,15 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
                   type="button"
                   onClick={currentStep < totalSteps - 1 ? handleNext : handleClose}
                   initial={false}
-                  animate={{
-                    backgroundColor: currentStep < totalSteps - 1 ? 'rgb(255, 255, 255)' : 'rgb(16, 185, 129)'
-                  }}
-                  className={`flex items-center gap-2 border rounded-xl py-2.5 font-bold text-sm shadow-sm ${
+                  className={`flex items-center gap-2 rounded-xl py-2.5 font-bold text-sm shadow-sm px-6 ${
                     currentStep < totalSteps - 1 
-                      ? 'border-white text-black px-5' 
-                      : 'border-emerald-600 text-white px-6 shadow-lg'
+                      ? 'bg-white text-black border border-white hover:bg-white/95' 
+                      : 'bg-[#CCFF00] text-[#05080F] border border-[#B8FF36] hover:bg-[#B8FF36]'
                   }`}
-                  whileHover={{ 
-                    scale: 1.02, 
-                    backgroundColor: currentStep < totalSteps - 1 ? 'rgba(255, 255, 255, 0.95)' : 'rgb(5, 150, 105)' 
-                  }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ minWidth: '100px' }}
+                  transition={{ duration: 0.15 }}
+                  style={{ minWidth: '110px' }}
                 >
                   {currentStep < totalSteps - 1 ? (
                     <>
