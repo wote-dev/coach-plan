@@ -46,6 +46,15 @@ export default function HeroSection() {
         }}
       />
 
+      {/* Top gradient for nav legibility and integration */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-24 -z-10"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(6,20,31,0.9), rgba(6,20,31,0.6), transparent)'
+        }}
+      />
+
       {/* Decorative AO "O" ring */}
       <motion.div
         aria-hidden
@@ -82,26 +91,17 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-center lg:grid-cols-2 gap-10">
         <div className="relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 ring-1 ring-white/20 backdrop-blur-md"
-        >
-          <span className="inline-block size-2 rounded-full" style={{ background: '#CCFF00', boxShadow: '0 0 0 4px rgba(204,255,0,0.12)' }} />
-          <span className="text-xs font-semibold tracking-wide text-white/80">Modern UI · Coach-ready</span>
-        </motion.div>
-
-        <div className="mt-6 sm:mt-8 max-w-3xl">
+        <div className="mt-2 sm:mt-4 max-w-4xl md:max-w-5xl">
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-className="text-pretty font-extrabold text-white tracking-[-0.01em] sm:tracking-[-0.015em] leading-[1.12] sm:leading-[1.08] text-4xl sm:text-6xl md:text-7xl max-w-none"
+            className="font-extrabold text-white leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-6xl max-w-none"
+            style={{ textWrap: 'balance' }}
           >
-            Elite tennis lesson plans
-            <span className="block mt-2 bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5 0%, #CCFF00 60%, #A5FF3B 100%)' }}>
-              in seconds. Not hours.
+            Elite tennis lesson plans{' '}
+            <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #0B72B9 0%, #1E8FD5 50%, #6BD4FF 100%)' }}>
+              in seconds, not hours.
             </span>
           </motion.h1>
 
@@ -145,20 +145,6 @@ className="text-pretty font-extrabold text-white tracking-[-0.01em] sm:tracking-
 
           </motion.div>
 
-          {/* Micro features */}
-          <motion.ul
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-8 grid grid-cols-2 gap-3 sm:max-w-xl sm:grid-cols-4"
-          >
-            {["Level-aware", "Client-ready", "Drill library", "Progressions"].map((item) => (
-              <li key={item} className="text-xs font-semibold text-white/70">
-                <span className="mr-2 inline-block size-1.5 translate-y-[-1px] rounded-full bg-white/60" />
-                {item}
-              </li>
-            ))}
-          </motion.ul>
         </div>
 
         </div>
