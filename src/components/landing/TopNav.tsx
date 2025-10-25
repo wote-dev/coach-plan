@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 const NAV_ITEMS = [
   { href: '#features', label: 'Features' },
@@ -13,17 +12,11 @@ const NAV_ITEMS = [
 export default function TopNav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-transparent backdrop-blur-sm">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-6 px-6 sm:px-8">
+      <div className="relative mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-6 px-6 sm:px-8">
         <Link href="/" className="flex items-center">
-          <Image
-            src="/logo.png"
-            alt="Tennaova"
-            width={80}
-            height={22}
-            className="h-5 w-auto"
-          />
+          <span className="text-white font-extrabold text-lg tracking-tight">tennanova</span>
         </Link>
-        <nav className="hidden items-center gap-6 text-sm text-white/80 md:flex">
+        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-sm text-white/80">
           {NAV_ITEMS.map((item) => (
             <a key={item.href} href={item.href} className="transition-colors hover:text-white">
               {item.label}

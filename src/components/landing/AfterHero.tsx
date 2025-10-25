@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const TRUSTED_BY = ['USTA Florida', 'IMG Academy', 'Nike Camps', 'TopCourt Labs'];
 const METRICS = [
   { label: 'Hours saved per coach each month', value: '18' },
-  { label: 'Sessions planned through Coach Plan', value: '5,400' },
+  { label: 'Sessions planned through tennanova', value: '5,400' },
   { label: 'Average time to first draft', value: '58s' },
   { label: 'Coach satisfaction score', value: '4.8 / 5' },
 ];
@@ -57,7 +57,7 @@ export default function AfterHero() {
                 The operating system for modern coaching teams.
               </h2>
               <p className="text-base text-white/70 sm:text-lg">
-                Coach Plan keeps coaching staffs aligned, replaces days of spreadsheet work, and turns every session into a repeatable playbook.
+                tennanova keeps coaching staffs aligned, replaces days of spreadsheet work, and turns every session into a repeatable playbook.
               </p>
             </div>
             <ul className="space-y-4 text-sm text-white/70 sm:text-base">

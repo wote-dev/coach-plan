@@ -47,7 +47,7 @@ export default function Team() {
             </p>
           </div>
           <a
-            href="mailto:hello@coachplan.com"
+            href="mailto:hello@tennanova.com"
             className="mt-6 inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white/75 transition hover:text-white lg:mt-0"
           >
             Get in touch

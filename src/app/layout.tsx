@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coach Plan - AI-Powered Sports Coaching",
+  title: "tennanova - AI-Powered Sports Coaching",
   description: "Create personalized sports training plans with AI assistance",
   icons: {
     icon: "/favicon.png",

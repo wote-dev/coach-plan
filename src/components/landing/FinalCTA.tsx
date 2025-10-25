@@ -20,7 +20,7 @@ export default function FinalCTA() {
               Create a free workspace
             </Link>
             <a
-              href="mailto:hello@coachplan.com"
+              href="mailto:hello@tennanova.com"
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white/75 transition hover:text-white"
             >
               Book a live walkthrough

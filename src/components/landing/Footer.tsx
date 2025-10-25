@@ -13,8 +13,8 @@ const LINKS = [
     heading: 'Company',
     items: [
       { label: 'About', href: '#team' },
-      { label: 'Careers', href: 'mailto:jobs@coachplan.com' },
-      { label: 'Contact', href: 'mailto:hello@coachplan.com' },
+      { label: 'Careers', href: 'mailto:jobs@tennanova.com' },
+      { label: 'Contact', href: 'mailto:hello@tennanova.com' },
     ],
   },
   {
@@ -22,7 +22,7 @@ const LINKS = [
     items: [
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
-      { label: 'Support', href: 'mailto:support@coachplan.com' },
+      { label: 'Support', href: 'mailto:support@tennanova.com' },
     ],
   },
 ] as const;
@@ -33,7 +33,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6">
         <div className="flex flex-col gap-10 md:flex-row md:justify-between">
           <div className="max-w-sm space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/45">Coach Plan</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/45">tennanova</p>
             <p className="text-sm text-white/60">
               The operating system for high-performance tennis programs. Build shareable coaching plans, align staff, and keep investors close to the win column.
             </p>
@@ -62,12 +62,12 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Coach Plan. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} tennanova. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <a href="https://twitter.com/coachplan" className="transition hover:text-white">
+            <a href="https://twitter.com/tennanova" className="transition hover:text-white">
               Twitter
             </a>
-            <a href="https://linkedin.com/company/coachplan" className="transition hover:text-white">
+            <a href="https://linkedin.com/company/tennanova" className="transition hover:text-white">
               LinkedIn
             </a>
           </div>

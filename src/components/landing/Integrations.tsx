@@ -25,7 +25,7 @@ export default function Integrations() {
           <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/45">Integrations</p>
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">Fits into the tools your staff already uses</h2>
           <p className="text-sm text-white/60 sm:text-base">
-            Coach Plan plugs into your communication, scheduling and reporting stack so the team never re-enters information twice.
+            tennanova plugs into your communication, scheduling and reporting stack so the team never re-enters information twice.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -44,8 +44,8 @@ export default function Integrations() {
           ))}
         </div>
         <div className="rounded-3xl border border-dashed border-white/20 bg-transparent p-8 text-center text-sm text-white/60">
-          Want to extend Coach Plan? Our API enables programmatic plan creation, roster sync and data exports.{' '}
-          <a href="mailto:api@coachplan.com" className="text-white/80 underline-offset-4 hover:underline">
+          Want to extend tennanova? Our API enables programmatic plan creation, roster sync and data exports.{' '}
+          <a href="mailto:api@tennanova.com" className="text-white/80 underline-offset-4 hover:underline">
             Talk to our platform team
           </a>
           .

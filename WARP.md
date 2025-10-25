@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-**Coach Plan** is a Next.js 15 application that generates customized tennis coaching lesson plans. It features both static lesson plans and AI-powered generation using Google's Gemini API.
+**tennanova** is a Next.js 15 application that generates customized tennis coaching lesson plans. It features both static lesson plans and AI-powered generation using Google's Gemini API.
 
 **Key Features:**
 - AI-powered tennis lesson plan generation via Gemini 2.5 Flash

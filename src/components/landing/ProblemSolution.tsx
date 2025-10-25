@@ -13,7 +13,7 @@ export default function ProblemSolution() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-white font-semibold mb-4">Without Coach Plan</h3>
+            <h3 className="text-white font-semibold mb-4">Without tennanova</h3>
             <ul className="space-y-3 text-white/70">
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">•</span>
@@ -30,7 +30,7 @@ export default function ProblemSolution() {
             </ul>
           </div>
           <div>
-            <h3 className="text-white font-semibold mb-4">With Coach Plan</h3>
+            <h3 className="text-white font-semibold mb-4">With tennanova</h3>
             <ul className="space-y-3 text-white/70">
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">✓</span>

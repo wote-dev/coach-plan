@@ -134,14 +134,6 @@ export default function HeroSection() {
               </svg>
             </Link>
 
-            <Link
-              href="/planner"
-              prefetch
-              onClick={(e) => handleViewTransitionNav(e, '/planner')}
-              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold text-white/90 ring-1 ring-white/25 hover:ring-white/40 transition-colors"
-            >
-              Explore Planner
-            </Link>
 
           </motion.div>
 

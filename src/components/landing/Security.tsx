@@ -23,7 +23,7 @@ export default function Security() {
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6">
         <div className="space-y-4 text-center">
           <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/45">Security & compliance</p>
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">Run Coach Plan at scale with confidence</h2>
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">Run tennanova at scale with confidence</h2>
           <p className="text-sm text-white/60 sm:text-base">
             Built with academy directors and enterprise IT teams. We support your procurement, legal and security reviews end-to-end.
           </p>
@@ -51,7 +51,7 @@ export default function Security() {
             </p>
           </div>
           <a
-            href="mailto:security@coachplan.com"
+            href="mailto:security@tennanova.com"
             className="mt-6 inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white/75 transition hover:text-white lg:mt-0"
           >
             Request the security pack

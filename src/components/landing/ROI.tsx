@@ -9,7 +9,7 @@ const OUTCOME_METRICS = [
   {
     stat: '3.2x',
     headline: 'More sessions delivered',
-    copy: 'Clubs using Coach Plan run over three times more structured sessions per season.',
+    copy: 'Clubs using tennanova run over three times more structured sessions per season.',
   },
   {
     stat: '91%',
@@ -29,7 +29,7 @@ export default function ROI() {
               VCs back platforms that create leverage. Coaches stay because the leverage is real.
             </h2>
             <p className="text-sm text-white/65 sm:text-base">
-              Coach Plan translates to measurable output: saved hours, higher retention, and consistent delivery across multi-coach programs. Every metric is pulled from customer rollouts and reviewed quarterly.
+              tennanova translates to measurable output: saved hours, higher retention, and consistent delivery across multi-coach programs. Every metric is pulled from customer rollouts and reviewed quarterly.
             </p>
             <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 text-sm text-white/70">
               <p className="font-medium text-white">Case study · IMG Academy</p>
@@ -60,7 +60,7 @@ export default function ROI() {
             <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 sm:col-span-2">
               <blockquote className="space-y-4 text-sm text-white/70">
                 <p>
-                  &quot;Our staff used Coach Plan during spring season fundraising. Investors could see the operational heartbeat instantly — it was a huge trust signal.&quot;
+                  &quot;Our staff used tennanova during spring season fundraising. Investors could see the operational heartbeat instantly — it was a huge trust signal.&quot;
                 </p>
                 <p className="text-xs uppercase tracking-[0.18em] text-white/50">— Director of Tennis, Stanford Athletics</p>
               </blockquote>
@@ -78,7 +78,7 @@ export default function ROI() {
               href="/coach-ai"
               className="inline-flex items-center justify-center rounded-full bg-[#CCFF00] px-6 py-3 text-sm font-semibold text-[#05080F] transition-transform hover:translate-y-[-1px]"
             >
-              Try Coach Plan
+              Try tennanova
             </Link>
             <a
               href="#book-demo"
