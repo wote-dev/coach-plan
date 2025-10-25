@@ -92,6 +92,7 @@ export default function HeroSection() {
       <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-center lg:grid-cols-2 gap-10">
         <div className="relative z-10">
         <div className="mt-2 sm:mt-4 max-w-4xl md:max-w-5xl">
+          {/* updated hero headline to emphasize speed and AI planning engine */}
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -99,19 +100,20 @@ export default function HeroSection() {
             className="font-extrabold text-white leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-6xl max-w-none"
             style={{ textWrap: 'balance' }}
           >
-            Elite tennis lesson plans{' '}
+            Design elite tennis sessions{' '}
             <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #0B72B9 0%, #1E8FD5 50%, #6BD4FF 100%)' }}>
               in seconds, not hours.
             </span>
           </motion.h1>
 
+          {/* clarified subheadline to position Tennanova as a coaching intelligence platform and fix brand spelling */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
           >
-            Helping coaches generate tailored lesson plans for every client — powered by Tennaova’s intelligent coaching model.
+            Helping coaches generate tailored lesson plans for every athlete — powered by Tennanova’s coaching intelligence platform.
           </motion.p>
 
           <motion.div
@@ -120,6 +122,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3"
           >
+            {/* strengthened primary CTA label */}
             <Link
               href="/coach-ai"
               prefetch
@@ -127,7 +130,7 @@ export default function HeroSection() {
               className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold text-[#06141F] shadow-xl transition-colors focus:outline-none"
               style={{ background: 'linear-gradient(180deg, #CCFF00 0%, #B8FF36 100%)' }}
             >
-              Generate a plan
+              Join Early Access
               <svg className="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />
@@ -158,7 +161,7 @@ export default function HeroSection() {
               </div>
               <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/15">
                 <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
-                Tennaova model
+                Tennanova model
               </span>
             </div>
 

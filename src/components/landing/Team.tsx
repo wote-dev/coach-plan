@@ -25,8 +25,9 @@ export default function Team() {
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">
             Coaches and product builders obsessed with performance
           </h2>
+          {/* tightened team narrative for credibility with coaches and investors */}
           <p className="text-sm text-white/60 sm:text-base">
-            We mix years on court with experience scaling software used by thousands of operators. The result: a product coaches love, and infrastructure that investors trust.
+            We pair years on court with experience scaling software used by thousands of operators. The result: a product coaches love and infrastructure federations and investors trust.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">

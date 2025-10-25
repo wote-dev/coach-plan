@@ -6,8 +6,9 @@ export default function ProblemSolution() {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
             The problem
           </h2>
+          {/* reframed problem statement with clear, scalable pain points */}
           <p className="text-white/70 text-lg max-w-2xl">
-            Coaching is great. Planning sessions isn&apos;t. Most coaches spend 45 minutes per session building plans from scratch.
+            Coaches spend hours planning sessions manually. Lesson quality depends on subjective recall—not consistent data. Elite players rely on fragmented systems (video, analytics, notes, sensors). Federations can’t scale individualized coaching efficiently.
           </p>
         </div>
 
@@ -15,34 +16,36 @@ export default function ProblemSolution() {
           <div>
             <h3 className="text-white font-semibold mb-4">Without tennanova</h3>
             <ul className="space-y-3 text-white/70">
+              {/* clarified pain points */}
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">•</span>
-                <span>45 minutes per session planning</span>
+                <span>Hours lost to manual session planning</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">•</span>
-                <span>Hard to tailor for different levels</span>
+                <span>Quality driven by subjective recall—not consistent data</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">•</span>
-                <span>Consistency issues across programs</span>
+                <span>Fragmented tools (video, analytics, notes, sensors)</span>
               </li>
             </ul>
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">With tennanova</h3>
             <ul className="space-y-3 text-white/70">
+              {/* clarified outcomes */}
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">✓</span>
-                <span>60 seconds to a complete session</span>
+                <span>60 seconds to a complete, athlete‑ready session</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">✓</span>
-                <span>Customized for every skill level</span>
+                <span>Tailored by level, group size, and surface</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-[#CCFF00] mt-1">✓</span>
-                <span>Repeatable, high-quality structure</span>
+                <span>Repeatable, high‑quality structure across teams and sites</span>
               </li>
             </ul>
           </div>

@@ -25,11 +25,12 @@ export default function ROI() {
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/50">Outcomes that matter</p>
+            {/* reframed narrative to attract investors without implying current backing; added business model and platform vision */}
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">
-              VCs back platforms that create leverage. Coaches stay because the leverage is real.
+              Leverage for coaches today. A platform for the ecosystem tomorrow.
             </h2>
             <p className="text-sm text-white/65 sm:text-base">
-              tennanova translates to measurable output: saved hours, higher retention, and consistent delivery across multi-coach programs. Every metric is pulled from customer rollouts and reviewed quarterly.
+              Tennanova delivers measurable output now—saved hours, higher retention, and consistent delivery across multi‑coach, multi‑site programs. Business model: B2C: Monthly SaaS for individual coaches. B2B: White‑label or per‑license sales to federations, academies, and sports organizations. Data & Insights Layer (long‑term): monetize anonymized performance trends. Tennanova’s next phase integrates live data—from Hawkeye, smart rackets, and grip sensors—to power real‑time performance feedback and adaptive session generation. This positions Tennanova not just as a tool, but as the platform for high‑performance coaching ecosystems. Coaching intelligence is the next frontier in sports AI. We’re starting with tennis—a $9B+ global industry—with pathways into other racket sports, fitness coaching, and youth development programs.
             </p>
             <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 text-sm text-white/70">
               <p className="font-medium text-white">Case study · IMG Academy</p>
@@ -73,18 +74,19 @@ export default function ROI() {
           <p className="mt-3 text-sm text-white/65">
             Start with a free workspace for your staff. Upgrade when you are ready to connect the rest of your organisation.
           </p>
+          {/* strengthened CTAs for early access and demo */}
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/coach-ai"
               className="inline-flex items-center justify-center rounded-full bg-[#CCFF00] px-6 py-3 text-sm font-semibold text-[#05080F] transition-transform hover:translate-y-[-1px]"
             >
-              Try tennanova
+              Join Early Access
             </Link>
             <a
               href="#book-demo"
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/70 transition hover:text-white"
             >
-              Book a live walkthrough
+              See Demo
             </a>
           </div>
         </div>

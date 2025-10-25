@@ -3,10 +3,11 @@ export default function SocialProof() {
     <section id="proof" className="py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+          {/* refined stat labels for clarity */}
           {[
-            { label: 'Coaches using', value: '200+' },
+            { label: 'Coaches on platform', value: '200+' },
             { label: 'Plans generated', value: '5K+' },
-            { label: 'Avg prep time saved', value: '45 min' },
+            { label: 'Prep time saved per session', value: '45 min' },
             { label: 'Satisfaction', value: '9/10' },
           ].map((stat) => (
             <div key={stat.label}>

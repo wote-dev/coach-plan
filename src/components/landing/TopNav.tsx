@@ -5,7 +5,7 @@ const NAV_ITEMS = [
   { href: '#how-it-works', label: 'How it works' },
   { href: '#roi', label: 'Outcomes' },
   { href: '#pricing', label: 'Pricing' },
-  { href: '#security', label: 'Security' },
+  { href: '#security', label: 'Founder' },
   { href: '#team', label: 'Team' },
 ] as const;
 
@@ -24,11 +24,12 @@ export default function TopNav() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          {/* updated primary nav CTAs to strengthen conversion and exclusivity */}
           <Link
             href="/coach-ai"
             className="hidden items-center rounded-full border border-white/20 px-4 py-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white sm:flex"
           >
-            Try free
+            Join Early Access
           </Link>
           <a
             href="https://cal.com/danielzverev/"
@@ -36,7 +37,7 @@ export default function TopNav() {
             rel="noopener noreferrer"
             className="inline-flex items-center rounded-full bg-[#CCFF00] px-4 py-2 text-[13px] font-semibold text-[#05080F] transition-transform hover:translate-y-[-1px]"
           >
-            Book demo
+            See Demo
           </a>
         </div>
       </div>

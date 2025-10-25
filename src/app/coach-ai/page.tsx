@@ -113,6 +113,7 @@ export default function CoachAIPage() {
         <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-start lg:grid-cols-2 gap-10">
           {/* Left column: heading */}
           <div className="relative z-10">
+            {/* updated hero headline to position Tennanova as an AI planning engine for coaches and investors */}
             <motion.h1
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -120,18 +121,19 @@ export default function CoachAIPage() {
               className="font-extrabold text-white leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-6xl max-w-none"
               style={{ textWrap: 'balance' }}
             >
-              Generate elite lesson plans{' '}
+              Design elite sessions{' '}
               <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #0B72B9 0%, #1E8FD5 50%, #6BD4FF 100%)' }}>
-                with AI.
+                with our AI planning engine.
               </span>
             </motion.h1>
+            {/* updated subheadline to clarify value for coaches and federations; added integrations and scalability */}
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
             >
-              Tailor every session to your athletes in seconds using Tennaova’s coaching model.
+              Tailor each session with Tennanova’s coaching intelligence platform—built for academies and federations, and ready to ingest Hawkeye, grip‑sensor, and performance analytics data.
             </motion.p>
           </div>
 
@@ -145,14 +147,15 @@ export default function CoachAIPage() {
             <div className="relative rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
 
+              {/* updated tool labels for precision and brand consistency */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div>
                   <p className="text-xs font-semibold tracking-wider text-white/60">CoachAI</p>
-                  <h3 className="text-lg font-bold text-white">Plan generator</h3>
+                  <h3 className="text-lg font-bold text-white">AI plan generator</h3>
                 </div>
                 <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/15">
                   <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
-                  Tennaova model
+                  Tennanova model
                 </span>
               </div>
 

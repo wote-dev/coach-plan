@@ -1,20 +1,21 @@
 import Link from 'next/link';
 
+// updated plan copy and CTAs for clarity and enterprise positioning
 const PLANS = [
   {
     name: 'Starter',
     price: '$0',
     period: '',
-    tagline: 'Launch quickly with core tooling',
+    tagline: 'Launch quickly with core tools',
     highlights: ['10 AI plans every month', 'PDF export & share links', 'Private workspace'],
-    cta: { href: '/coach-ai', label: 'Start free' },
+    cta: { href: '/coach-ai', label: 'Join Early Access' },
     recommended: false,
   },
   {
     name: 'Pro Staff',
     price: '$39',
     period: '/coach / month',
-    tagline: 'Everything you need for a full staff',
+    tagline: 'All the tooling your staff needs',
     highlights: [
       'Unlimited plans & drill library',
       'Shared workspace with roles',
@@ -35,7 +36,7 @@ const PLANS = [
       'SSO/SAML · SOC2 reports',
       '99.9% uptime SLA',
     ],
-    cta: { href: '#book-demo', label: 'Book a call' },
+    cta: { href: '#book-demo', label: 'Partner with Us' },
     recommended: false,
   },
 ] as const;
@@ -46,11 +47,12 @@ export default function Pricing() {
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6">
         <div className="space-y-4 text-center">
           <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/45">Pricing</p>
+          {/* refined pricing headline and subcopy to emphasize scalability */}
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">
-            Straightforward plans that scale with you
+            Clear plans that scale from solo coaches to federations
           </h2>
           <p className="text-sm text-white/60 sm:text-base">
-            Start free. Upgrade when your staff needs shared workflows, integrations, or enterprise controls.
+            Start free. Upgrade as you add staff, integrations, or enterprise controls.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">

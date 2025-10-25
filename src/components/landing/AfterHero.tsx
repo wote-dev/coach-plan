@@ -9,18 +9,19 @@ const METRICS = [
   { label: 'Average time to first draft', value: '58s' },
   { label: 'Coach satisfaction score', value: '4.8 / 5' },
 ];
+// updated feature pillars copy for clarity and elite positioning
 const FEATURE_PILLARS = [
   {
     title: 'Structured in seconds',
-    copy: 'Auto-build full lesson blocks with warm-up, main drills, and cool down tuned to level and group size.',
+    copy: 'Auto-build full lesson blocks—warm‑up, main work, recovery—tuned to level, surface, and group size.',
   },
   {
-    title: 'Always client-ready',
-    copy: 'Every plan ships with coaching cues, progressions and equipment lists, ready to run on court.',
+    title: 'Athlete‑ready by default',
+    copy: 'Every plan includes coaching cues, progressions, and equipment—ready to run on court or share with staff.',
   },
   {
     title: 'Export anywhere',
-    copy: 'Share as PDF, send a link, or sync straight to the team calendar in one click.',
+    copy: 'Share as PDF, send a link, or sync to team calendars in one click.',
   },
 ];
 
@@ -53,18 +54,20 @@ export default function AfterHero() {
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="max-w-xl space-y-6">
             <div className="space-y-3">
+              {/* updated section headline and lead to position Tennanova as an AI planning engine and highlight scalability */}
               <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[42px] sm:leading-[1.05]">
-                The operating system for modern coaching teams.
+                The AI planning engine for high‑performance tennis programs.
               </h2>
               <p className="text-base text-white/70 sm:text-lg">
-                tennanova keeps coaching staffs aligned, replaces days of spreadsheet work, and turns every session into a repeatable playbook.
+                tennanova aligns coaching staffs, replaces hours of manual planning, and turns every session into a repeatable playbook that scales across squads, sites, and seasons.
               </p>
             </div>
             <ul className="space-y-4 text-sm text-white/70 sm:text-base">
+              {/* refreshed bullet points for clarity and coach benefit */}
               {[
-                'Centralise lesson plans, drills and client notes in one workspace.',
-                'Spin up structured sessions in seconds, then tailor the details on the fly.',
-                'Spot gaps instantly with equipment, skill focus and time allocations side-by-side.',
+                'Centralize lesson plans, drills, and athlete notes in one workspace.',
+                'Generate structured sessions in seconds, then tailor on the fly with pro‑grade cues.',
+                'See equipment, skill focus, timing, and adaptations at a glance.',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#CCFF00]" />

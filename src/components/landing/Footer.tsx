@@ -14,7 +14,8 @@ const LINKS = [
     items: [
       { label: 'About', href: '#team' },
       { label: 'Careers', href: 'mailto:jobs@tennanova.com' },
-      { label: 'Contact', href: 'mailto:hello@tennanova.com' },
+      // strengthened CTA label for partnerships
+      { label: 'Partner with Us', href: 'mailto:hello@tennanova.com' },
     ],
   },
   {
@@ -34,8 +35,9 @@ export default function Footer() {
         <div className="flex flex-col gap-10 md:flex-row md:justify-between">
           <div className="max-w-sm space-y-3">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/45">tennanova</p>
+            {/* updated company descriptor to emphasize AI planning engine, integrations, and scale */}
             <p className="text-sm text-white/60">
-              The operating system for high-performance tennis programs. Build shareable coaching plans, align staff, and keep investors close to the win column.
+              The AI planning engine for high‑performance tennis. Build shareable coaching plans, align staff, and integrate with Hawkeye, grip sensors, and analytics—scaling to federations and future racket sports.
             </p>
           </div>
           <div className="grid flex-1 gap-8 sm:grid-cols-3">
