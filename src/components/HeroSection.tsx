@@ -92,18 +92,16 @@ export default function HeroSection() {
       <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-center lg:grid-cols-2 gap-10">
         <div className="relative z-10">
         <div className="mt-2 sm:mt-4 max-w-4xl md:max-w-5xl">
-          {/* updated hero headline to emphasize speed and AI planning engine */}
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-            className="font-extrabold text-white leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-6xl max-w-none"
-            style={{ textWrap: 'balance' }}
+            className="font-extrabold tracking-tight text-white leading-[1.05] max-w-[22ch] md:max-w-[24ch]"
+            style={{ textWrap: 'balance', fontSize: 'clamp(32px, 6.2vw, 72px)' }}
           >
-            Design elite tennis sessions{' '}
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg, #0B72B9 0%, #1E8FD5 50%, #6BD4FF 100%)' }}>
-              in seconds, not hours.
-            </span>
+            <span className="block">Create tennis plans</span>
+            <span className="mt-1 block text-blue-300">in seconds, not hours.</span>
           </motion.h1>
 
           {/* clarified subheadline to position Tennanova as a coaching intelligence platform and fix brand spelling */}
