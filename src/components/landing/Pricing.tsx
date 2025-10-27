@@ -8,7 +8,7 @@ const PLANS = [
     period: '',
     tagline: 'Launch quickly with core tools',
     highlights: ['10 AI plans every month', 'PDF export & share links', 'Private workspace'],
-    cta: { href: '/coach-ai', label: 'Join Early Access' },
+    cta: { href: '/planner', label: 'Join Early Access' },
     recommended: false,
   },
   {
@@ -23,7 +23,7 @@ const PLANS = [
       'Usage analytics',
     ],
     recommended: true,
-    cta: { href: '/coach-ai', label: 'Start 14-day trial' },
+    cta: { href: '/planner', label: 'Start 14-day trial' },
   },
   {
     name: 'Enterprise',

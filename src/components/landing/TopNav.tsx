@@ -26,7 +26,7 @@ export default function TopNav() {
         <div className="flex items-center gap-2">
           {/* updated primary nav CTAs to strengthen conversion and exclusivity */}
           <Link
-            href="/coach-ai"
+            href="/planner"
             className="hidden items-center rounded-full border border-white/20 px-4 py-2 text-[13px] font-semibold text-white/90 transition-colors hover:text-white sm:flex"
           >
             Join Early Access

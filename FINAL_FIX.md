@@ -7,11 +7,13 @@ Added a **smooth 200ms crossfade** between pages to prevent any black flash.
 ### Changes Made:
 
 1. **View Transitions CSS** (`src/app/globals.css`)
+
    - Old page fades out (opacity 1 → 0) in 200ms
    - New page fades in (opacity 0 → 1) in 200ms
    - Both happen simultaneously = **crossfade with no gap**
 
 2. **Framer Motion Fallback** (`src/components/SmoothPageTransition.tsx`)
+
    - New wrapper component using AnimatePresence with `mode="wait"`
    - 200ms fade-in/fade-out animation
    - Ensures smooth transitions even without View Transitions API support
@@ -35,4 +37,5 @@ Added a **smooth 200ms crossfade** between pages to prevent any black flash.
 ✅ Works in all browsers (View Transitions API + Framer Motion fallback)
 
 ### Test:
-Visit http://localhost:3000 → Click "Try CoachAI" → Should see smooth fade transition
+
+Visit http://localhost:3000 → Click "Try tennanova" → Should see smooth fade transition

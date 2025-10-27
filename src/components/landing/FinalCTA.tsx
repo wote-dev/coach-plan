@@ -17,7 +17,7 @@ export default function FinalCTA() {
           {/* strengthened CTAs for early access, demo, and partnerships */}
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/coach-ai"
+              href="/planner"
               className="inline-flex items-center justify-center rounded-full bg-[#CCFF00] px-7 py-3 text-sm font-semibold text-[#05080F] transition-transform hover:translate-y-[-1px]"
             >
               Join Early Access

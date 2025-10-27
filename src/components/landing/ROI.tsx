@@ -30,7 +30,7 @@ export default function ROI() {
               From planning to performance — built for scale.
             </h2>
             <p className="text-sm text-white/65 sm:text-base">
-              Tennanova addresses the $9B global tennis coaching market with an AI-powered platform that generates comprehensive lesson plans in under 60 seconds. Our dual revenue model combines B2C monthly subscriptions for individual coaches with B2B enterprise licensing for academies and federations. Early validation shows coaches reducing planning time by 42% while delivering 3.2x more structured sessions per season. The platform's modular architecture supports current lesson planning needs while establishing the data foundation for future performance analytics and real-time coaching insights across tennis and adjacent sports verticals.
+              Tennanova addresses the $9B global tennis coaching market with an AI-powered platform that generates comprehensive lesson plans in under 60 seconds. Our dual revenue model combines B2C monthly subscriptions for individual coaches with B2B enterprise licensing for academies and federations. Early validation shows coaches reducing planning time by 42% while delivering 3.2x more structured sessions per season. The platform&apos;s modular architecture supports current lesson planning needs while establishing the data foundation for future performance analytics and real-time coaching insights across tennis and adjacent sports verticals.
             </p>
             <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 text-sm text-white/70">
               <p className="font-medium text-white">Case study · IMG Academy</p>
@@ -77,7 +77,7 @@ export default function ROI() {
           {/* strengthened CTAs for early access and demo */}
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/coach-ai"
+              href="/planner"
               className="inline-flex items-center justify-center rounded-full bg-[#CCFF00] px-6 py-3 text-sm font-semibold text-[#05080F] transition-transform hover:translate-y-[-1px]"
             >
               Join Early Access

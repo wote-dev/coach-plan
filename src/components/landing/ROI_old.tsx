@@ -144,7 +144,7 @@ export default function ROI() {
           {/* CTA */}
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              href="/coach-ai"
+              href="/planner"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-[#06141F] shadow-lg hover:shadow-xl transition-all hover:scale-105"
               style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #B8FF36 100%)' }}
             >

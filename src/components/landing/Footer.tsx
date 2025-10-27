@@ -4,7 +4,7 @@ const LINKS = [
   {
     heading: 'Product',
     items: [
-      { label: 'Coach AI', href: '/coach-ai' },
+      { label: 'tennanova', href: '/planner' },
       { label: 'Pricing', href: '#pricing' },
       { label: 'Security', href: '#security' },
     ],

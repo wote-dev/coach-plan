@@ -3,19 +3,20 @@
 import * as Select from '@radix-ui/react-select';
 import * as Slider from '@radix-ui/react-slider';
 import { ChevronDownIcon, CheckIcon, MagicWandIcon, ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
+import { Sparkles, Target, Trophy, Baby, GraduationCap, User, UserCircle } from 'lucide-react';
 import { useState, useEffect, startTransition } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActionState } from 'react';
 import { generateAILessonPlan } from '@/app/actions/generate-lesson-plan';
 import { LessonPlan } from '@/data/lessonPlans';
 
-interface CoachAIProps {
+interface PlannerProps {
   onPlanGenerated: (plan: Partial<LessonPlan>) => void;
   onSportChange?: (sport: string) => void;
   onGeneratingChange?: (isGenerating: boolean) => void;
 }
 
-export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingChange }: CoachAIProps) {
+export default function Planner({ onPlanGenerated, onSportChange, onGeneratingChange }: PlannerProps) {
   const [sport] = useState<string>('Tennis'); // Default to Tennis
   const [level, setLevel] = useState<string>('');
   const [age, setAge] = useState<string>('');
@@ -23,11 +24,11 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   const [numberOfPeople, setNumberOfPeople] = useState<string>('');
   const [equipment, setEquipment] = useState<string>('');
   const [objectives, setObjectives] = useState<string>('');
-  
+
   // Step management
   const [currentStep, setCurrentStep] = useState<number>(1);
   const totalSteps = 6; // Skill Level, Age, Number of People, Duration, Equipment, Objectives
-  
+
   // Track if we've already processed this plan to avoid re-triggering on remount
   const [processedPlanId, setProcessedPlanId] = useState<string | null>(null);
 
@@ -45,7 +46,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
       default: return false;
     }
   };
-  
+
   const isFormValid = level && age && numberOfPeople; // sport is always Tennis
 
   // Handle successful plan generation using useEffect to avoid state updates during render
@@ -68,24 +69,24 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   useEffect(() => {
     onSportChange?.('Tennis');
   }, [onSportChange]);
-  
+
   // Notify parent of generating state changes
   useEffect(() => {
     onGeneratingChange?.(isPending);
   }, [isPending, onGeneratingChange]);
-  
+
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
   };
-  
+
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
   };
-  
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (currentStep === totalSteps && isFormValid) {
@@ -100,7 +101,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
   };
 
   return (
-    <form 
+    <form
       onSubmit={handleSubmit}
       className="space-y-6"
       style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}
@@ -113,7 +114,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
       <input type="hidden" name="numberOfPeople" value={numberOfPeople} />
       <input type="hidden" name="equipment" value={equipment} />
       <input type="hidden" name="objectives" value={objectives} />
-      
+
       {/* Progress Indicator */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs text-white/60">
@@ -121,7 +122,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
           <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
         </div>
         <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-          <motion.div 
+          <motion.div
             className="h-full bg-white rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
@@ -144,35 +145,36 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
               style={{ minHeight: '280px' }}
             >
             <label className="text-sm font-medium text-white text-center">What is your client&apos;s skill level?</label>
-            <div className="flex flex-col md:flex-row gap-3 justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { label: 'Beginner', emoji: '👶🏻', color: '#10b981' },
-                { label: 'Intermediate', emoji: '👱🏻‍♂️', color: '#eab308' },
-                { label: 'Advanced', emoji: '👵🏽', color: '#ef4444' }
-              ].map(({ label: levelOption, emoji, color }) => (
+                { label: 'Beginner', icon: Sparkles, sub: 'Fundamentals' },
+                { label: 'Intermediate', icon: Target, sub: 'Consistency & patterns' },
+                { label: 'Advanced', icon: Trophy, sub: 'High intensity & tactics' }
+              ].map(({ label: levelOption, icon: Icon, sub }) => (
                 <motion.button
                   key={levelOption}
                   type="button"
                   onClick={() => {
                     setLevel(levelOption);
-                    // Auto-advance to next step after a brief delay
                     setTimeout(() => handleNext(), 150);
                   }}
-                  style={{
-                    backgroundColor: color
-                  }}
-                  className={`py-2.5 px-5 rounded-xl text-base font-medium text-white ${
+                  className={`group relative rounded-2xl px-4 py-4 text-left transition-all border ${
                     level === levelOption
-                      ? 'shadow-lg ring-2 ring-white/50'
-                      : ''
-                  } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
-                  animate={{ opacity: level === levelOption ? 1 : 0.7 }}
-                  whileHover={{ scale: 1.05, opacity: 1 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
+                      ? 'bg-white/10 border-white/30 ring-2 ring-[#1E8FD5]'
+                      : 'bg-white/5 border-white/15 hover:bg-white/10 hover:border-white/25'
+                  } focus:outline-none focus:ring-2 focus:ring-[#1E8FD5]/60`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <span className="text-lg">{emoji}</span>
-                  <span>{levelOption}</span>
+                  <div className="flex items-center gap-3">
+                    <div className={`${level === levelOption ? 'text-[#CCFF00]' : 'text-white/85'} size-9 rounded-lg flex items-center justify-center bg-white/10`}>
+                      <Icon className="size-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-white">{levelOption}</div>
+                      <div className="text-xs text-white/60">{sub}</div>
+                    </div>
+                  </div>
                 </motion.button>
               ))}
             </div>
@@ -190,36 +192,37 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
             style={{ minHeight: '280px' }}
           >
             <label className="text-sm font-medium text-white text-center">What is your client&apos;s age group?</label>
-            <div className="flex flex-wrap gap-3 justify-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { label: 'Youth (5-12)', emoji: '🧒', color: '#3b82f6' },
-                { label: 'Teen (13-17)', emoji: '🧑', color: '#a855f7' },
-                { label: 'Adult (18-59)', emoji: '👨', color: '#10b981' },
-                { label: 'Senior (60+)', emoji: '👴', color: '#f97316' }
-              ].map(({ label: ageOption, emoji, color }) => (
+                { label: 'Youth (5-12)', icon: Baby, sub: 'Foundational development' },
+                { label: 'Teen (13-17)', icon: GraduationCap, sub: 'Skill building' },
+                { label: 'Adult (18-59)', icon: User, sub: 'Performance' },
+                { label: 'Senior (60+)', icon: UserCircle, sub: 'Longevity' }
+              ].map(({ label: ageOption, icon: Icon, sub }) => (
                 <motion.button
                   key={ageOption}
                   type="button"
                   onClick={() => {
                     setAge(ageOption);
-                    // Auto-advance to next step after a brief delay
                     setTimeout(() => handleNext(), 150);
                   }}
-                  style={{
-                    backgroundColor: color
-                  }}
-                  className={`py-2.5 px-4 rounded-xl text-sm font-medium text-white ${
+                  className={`group relative rounded-2xl px-4 py-4 text-left transition-all border ${
                     age === ageOption
-                      ? 'shadow-lg ring-2 ring-white/50'
-                      : ''
-                  } focus:outline-none focus:ring-2 focus:ring-white/50 flex items-center gap-2`}
-                  animate={{ opacity: age === ageOption ? 1 : 0.7 }}
-                  whileHover={{ scale: 1.05, opacity: 1 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
+                      ? 'bg-white/10 border-white/30 ring-2 ring-[#1E8FD5]'
+                      : 'bg-white/5 border-white/15 hover:bg-white/10 hover:border-white/25'
+                  } focus:outline-none focus:ring-2 focus:ring-[#1E8FD5]/60`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <span className="text-lg">{emoji}</span>
-                  <span>{ageOption}</span>
+                  <div className="flex items-center gap-3">
+                    <div className={`${age === ageOption ? 'text-[#CCFF00]' : 'text-white/85'} size-9 rounded-lg flex items-center justify-center bg-white/10`}>
+                      <Icon className="size-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-white">{ageOption}</div>
+                      <div className="text-xs text-white/60">{sub}</div>
+                    </div>
+                  </div>
                 </motion.button>
               ))}
             </div>
@@ -378,7 +381,7 @@ export default function CoachAI({ onPlanGenerated, onSportChange, onGeneratingCh
             <span>Back</span>
           </motion.button>
         )}
-        
+
         {currentStep < totalSteps ? (
           <motion.button
             type="submit"
