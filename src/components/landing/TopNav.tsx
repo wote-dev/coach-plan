@@ -15,7 +15,7 @@ export default function TopNav() {
       <div className="relative mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-6 px-6 sm:px-8">
         <Link href="/" className="flex items-center">
           <img
-            src="/tennanova.png"
+            src="/tennanova-logo.png"
             alt="Tennanova Logo"
             className="h-8 w-auto"
           />

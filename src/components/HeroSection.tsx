@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useTransition } from 'react';
+import { Chip } from '@/components/ui/Chip';
 
 export default function HeroSection() {
   const router = useRouter();
@@ -29,8 +30,8 @@ export default function HeroSection() {
       <div
         className="absolute inset-0 -z-10"
         style={{
-          background: `radial-gradient(60% 60% at 10% 10%, rgba(30,143,213,0.35) 0%, transparent 70%),
-                       radial-gradient(35% 35% at 90% 15%, rgba(204,255,0,0.22) 0%, transparent 60%),
+          background: `radial-gradient(60% 60% at 10% 10%, rgba(30,143,213,0.42) 0%, transparent 70%),
+                       radial-gradient(35% 35% at 90% 15%, rgba(204,255,0,0.24) 0%, transparent 60%),
                        linear-gradient(180deg, #0A2239 0%, #06141F 100%)`,
         }}
       />
@@ -38,7 +39,7 @@ export default function HeroSection() {
       {/* Court line grid overlay */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-30"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-25"
         style={{
           backgroundImage: `repeating-linear-gradient(0deg, transparent 0, transparent 118px, rgba(255,255,255,0.08) 120px),
                              repeating-linear-gradient(90deg, transparent 0, transparent 118px, rgba(255,255,255,0.08) 120px)`,
@@ -55,26 +56,24 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Decorative AO "O" ring */}
+      {/* Decorative AO elements */}
       <motion.div
         aria-hidden
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 0.7, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 0.75, scale: 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="absolute left-[max(3vw,16px)] top-[12vh] -z-10"
         style={{ width: '42vw', height: '42vw' }}
       >
-        <div className="relative h-full w-full rounded-full" style={{ background: 'radial-gradient(closest-side, rgba(30,143,213,0.22), transparent 70%)' }}>
+        <div className="relative h-full w-full rounded-full" style={{ background: 'radial-gradient(closest-side, rgba(30,143,213,0.26), transparent 70%)' }}>
           <div className="absolute inset-0 rounded-full border border-white/10" />
           <div className="absolute inset-[6%] rounded-full border border-white/10" />
         </div>
       </motion.div>
-
-      {/* Decorative AO "A" angle */}
       <motion.div
         aria-hidden
         initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 0.6, y: 0 }}
+        animate={{ opacity: 0.65, y: 0 }}
         transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className="absolute right-[-10vw] bottom-[-12vh] -z-10"
         style={{ width: '48vw', height: '48vw' }}
@@ -82,77 +81,92 @@ export default function HeroSection() {
         <div
           className="h-full w-full rounded-[18%]"
           style={{
-            background: 'conic-gradient(from 210deg, rgba(204,255,0,0.3), rgba(30,143,213,0.3))',
+            background: 'conic-gradient(from 210deg, rgba(204,255,0,0.28), rgba(30,143,213,0.28))',
             clipPath: 'polygon(15% 0, 100% 60%, 65% 100%, 0 45%)'
           }}
         />
       </motion.div>
 
       {/* Content */}
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-center lg:grid-cols-2 gap-10">
-        <div className="relative z-10">
-        <div className="mt-2 sm:mt-4 max-w-4xl md:max-w-5xl">
-          {/* Headline */}
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 sm:px-8 md:py-28 lg:grid-cols-12 lg:gap-8 lg:py-32">
+        {/* Left column */}
+        <div className="relative z-10 lg:col-span-7">
+          <div className="flex flex-wrap items-center gap-2">
+            <Chip color="blue">Private beta</Chip>
+            <Chip>Coach‑first design</Chip>
+            <Chip color="yellow">Under 60s per plan</Chip>
+          </div>
+
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-            className="font-extrabold tracking-tight text-white leading-[1.05] max-w-[22ch] md:max-w-[24ch]"
-            style={{ textWrap: 'balance', fontSize: 'clamp(32px, 6.2vw, 72px)' }}
+            className="mt-6 text-white font-extrabold tracking-[-0.02em] leading-[1.1] max-w-[18ch]"
+            style={{ textWrap: 'balance', fontSize: 'clamp(30px, 4.2vw, 56px)' }}
           >
-            <span className="block">Create tennis plans</span>
-            <span className="mt-1 block text-blue-300">in seconds, not hours.</span>
+            Rethink how coaches design tennis sessions
+            <span className="block text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5, #CCFF00)' }}>with Tennanova.</span>
           </motion.h1>
 
-          {/* refined subheadline to focus on core value proposition */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
+            className="mt-5 max-w-2xl text-base text-white/80 sm:mt-6 sm:text-lg md:text-xl"
           >
-            AI-powered lesson planning that adapts to your athletes&apos; level, group size, and available equipment — ready in under 60 seconds.
+            Standardize coaching quality, free up staff time, and turn every plan into a repeatable playbook your program can scale. Coming soon: Hawk‑Eye data for professional players.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-wrap items-center gap-3 sm:mt-10"
           >
-            {/* strengthened primary CTA label */}
             <Link
               href="/planner"
               prefetch
               onClick={(e) => handleViewTransitionNav(e, '/planner')}
-              className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold text-[#06141F] shadow-xl transition-colors focus:outline-none"
+              className="group inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-bold text-[#06141F] shadow-xl focus:outline-none"
               style={{ background: 'linear-gradient(180deg, #CCFF00 0%, #B8FF36 100%)' }}
             >
-              Join Early Access
+              Try the planner
               <svg className="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />
               </svg>
             </Link>
-
-
+            <Link
+              href="#how-it-works"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-3 text-[15px] font-semibold text-white/85 backdrop-blur-sm"
+            >
+              See how it works
+            </Link>
           </motion.div>
 
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-white/55">
+            <div className="inline-flex items-center gap-2">
+              <span className="inline-block size-1.5 rounded-full bg-[#1E8FD5]" />
+              Server‑side only API calls
+            </div>
+            <div className="inline-flex items-center gap-2">
+              <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
+              Export‑ready plans
+            </div>
+          </div>
         </div>
 
-        </div>
-
-        {/* Right-side mockup (hidden on small screens) */}
+        {/* Right column: product mock */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden lg:block justify-self-end self-center z-0 w-[520px] max-w-[38vw]"
+          className="relative hidden justify-self-end self-center lg:col-span-5 lg:block"
         >
-          <div className="relative h-[520px] rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden">
+          <div className="relative h-[540px] w-[520px] max-w-[38vw] overflow-hidden rounded-3xl bg-white/5 ring-1 ring-white/10 backdrop-blur-md shadow-[0_40px_120px_rgba(6,20,31,0.6)]">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
 
-            <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <div>
                 <p className="text-xs font-semibold tracking-wider text-white/60">Session</p>
                 <h3 className="text-lg font-bold text-white">Plan overview</h3>
@@ -170,7 +184,7 @@ export default function HeroSection() {
                   { label: 'Duration', value: '60 min' },
                   { label: 'Group', value: '4 players' },
                 ].map((m) => (
-                  <div key={m.label} className="rounded-xl bg-white/5 ring-1 ring-white/10 p-3">
+                  <div key={m.label} className="rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
                     <p className="text-[10px] font-semibold tracking-wider text-white/60">{m.label}</p>
                     <p className="text-sm font-bold text-white">{m.value}</p>
                   </div>
@@ -178,7 +192,7 @@ export default function HeroSection() {
               </div>
 
               <div className="mt-5 grid grid-cols-2 gap-4">
-                <div className="rounded-xl bg-white/5 ring-1 ring-white/10 p-4">
+                <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
                   <p className="text-xs font-semibold tracking-wider text-white/60">Warm-up</p>
                   <ul className="mt-2 space-y-2">
                     {[
@@ -192,7 +206,7 @@ export default function HeroSection() {
                     ))}
                   </ul>
                 </div>
-                <div className="rounded-xl bg-white/5 ring-1 ring-white/10 p-4">
+                <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
                   <p className="text-xs font-semibold tracking-wider text-white/60">Main</p>
                   <ul className="mt-2 space-y-2">
                     {[
@@ -209,7 +223,7 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              <div className="mt-5 rounded-xl bg-white/5 ring-1 ring-white/10 p-4">
+              <div className="mt-5 rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
                 <p className="text-xs font-semibold tracking-wider text-white/60">Coaching cues</p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {['Early prep', 'Balance at contact', 'Recover center'].map((c) => (
