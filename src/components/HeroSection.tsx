@@ -104,14 +104,14 @@ export default function HeroSection() {
             <span className="mt-1 block text-blue-300">in seconds, not hours.</span>
           </motion.h1>
 
-          {/* clarified subheadline to position Tennanova as a coaching intelligence platform and fix brand spelling */}
+          {/* refined subheadline to focus on core value proposition */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
           >
-            Helping coaches generate tailored lesson plans for every athlete — powered by Tennanova’s coaching intelligence platform.
+            AI-powered lesson planning that adapts to your athletes' level, group size, and available equipment — ready in under 60 seconds.
           </motion.p>
 
           <motion.div

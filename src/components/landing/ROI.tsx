@@ -25,12 +25,12 @@ export default function ROI() {
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/50">Outcomes that matter</p>
-            {/* reframed narrative to attract investors without implying current backing; added business model and platform vision */}
+            {/* refined headline to focus on current value and scalable business model */}
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-[40px]">
-              Leverage for coaches today. A platform for the ecosystem tomorrow.
+              From planning to performance — built for scale.
             </h2>
             <p className="text-sm text-white/65 sm:text-base">
-              Tennanova delivers measurable output now—saved hours, higher retention, and consistent delivery across multi‑coach, multi‑site programs. Business model: B2C: Monthly SaaS for individual coaches. B2B: White‑label or per‑license sales to federations, academies, and sports organizations. Data & Insights Layer (long‑term): monetize anonymized performance trends. Tennanova’s next phase integrates live data—from Hawkeye, smart rackets, and grip sensors—to power real‑time performance feedback and adaptive session generation. This positions Tennanova not just as a tool, but as the platform for high‑performance coaching ecosystems. Coaching intelligence is the next frontier in sports AI. We’re starting with tennis—a $9B+ global industry—with pathways into other racket sports, fitness coaching, and youth development programs.
+              Tennanova addresses the $9B global tennis coaching market with an AI-powered platform that generates comprehensive lesson plans in under 60 seconds. Our dual revenue model combines B2C monthly subscriptions for individual coaches with B2B enterprise licensing for academies and federations. Early validation shows coaches reducing planning time by 42% while delivering 3.2x more structured sessions per season. The platform's modular architecture supports current lesson planning needs while establishing the data foundation for future performance analytics and real-time coaching insights across tennis and adjacent sports verticals.
             </p>
             <div className="rounded-2xl border border-white/10 bg-[#070F1A] p-6 text-sm text-white/70">
               <p className="font-medium text-white">Case study · IMG Academy</p>

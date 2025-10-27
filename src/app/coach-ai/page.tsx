@@ -110,9 +110,9 @@ export default function CoachAIPage() {
         </AnimatePresence>
 
         {/* Content */}
-        <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-start lg:grid-cols-2 gap-10">
+        <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-24 md:py-28 lg:py-32 grid items-center lg:grid-cols-2 gap-10">
           {/* Left column: heading */}
-          <div className="relative z-10">
+          <div className="relative z-10 flex flex-col justify-center">
             {/* updated hero headline to position Tennanova as an AI planning engine for coaches and investors */}
             <motion.h1
               initial={{ opacity: 0, y: 18 }}
@@ -133,7 +133,7 @@ export default function CoachAIPage() {
               transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="mt-5 sm:mt-6 text-pretty text-white/80 text-base sm:text-lg md:text-xl max-w-2xl"
             >
-              Tailor each session with Tennanova’s coaching intelligence platform—built for academies and federations, and ready to ingest Hawkeye, grip‑sensor, and performance analytics data.
+              Tailor each session with Tennanova's coaching intelligence platform—built for academies and federations, and ready to ingest Hawkeye, grip‑sensor, and performance analytics data. Once we secure funding, we'll integrate Hawkeye data to create personalized coaching plans that evolve with each athlete's performance patterns.
             </motion.p>
           </div>
 
@@ -142,7 +142,7 @@ export default function CoachAIPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="justify-self-end self-start z-0 w-full max-w-[720px]"
+            className="justify-self-end self-center z-0 w-full max-w-[720px]"
           >
             <div className="relative rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
