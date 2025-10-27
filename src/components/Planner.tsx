@@ -3,7 +3,7 @@
 import * as Select from '@radix-ui/react-select';
 import * as Slider from '@radix-ui/react-slider';
 import { ChevronDownIcon, CheckIcon, MagicWandIcon, ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
-import { Sparkles, Target, Trophy, Baby, GraduationCap, User, UserCircle } from 'lucide-react';
+import { Sparkles, Target, Trophy, Baby, GraduationCap, User, UserCircle, Lock, ShieldCheck, UploadCloud, BarChart3, KeyRound } from 'lucide-react';
 import { useState, useEffect, startTransition } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useActionState } from 'react';
@@ -27,7 +27,7 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
 
   // Step management
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const totalSteps = 6; // Skill Level, Age, Number of People, Duration, Equipment, Objectives
+  const totalSteps = 7; // Skill Level, Age, Number of People, Duration, Equipment, Objectives, Hawkeye (Locked)
 
   // Track if we've already processed this plan to avoid re-triggering on remount
   const [processedPlanId, setProcessedPlanId] = useState<string | null>(null);
@@ -43,6 +43,7 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
       case 4: return true; // Duration always has a default value
       case 5: return true; // Optional field
       case 6: return true; // Optional field
+      case 7: return true; // Locked beta step (no input required)
       default: return false;
     }
   };
@@ -114,6 +115,8 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
       <input type="hidden" name="numberOfPeople" value={numberOfPeople} />
       <input type="hidden" name="equipment" value={equipment} />
       <input type="hidden" name="objectives" value={objectives} />
+      {/* Placeholder for future Hawkeye ingestion */}
+      <input type="hidden" name="hawkeyeData" value="" />
 
       {/* Progress Indicator */}
       <div className="space-y-2">
@@ -132,7 +135,7 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
       </div>
 
       {/* Step Content with AnimatePresence */}
-      <div className="relative" style={{ minHeight: currentStep === 5 || currentStep === 6 ? '220px' : currentStep === 1 || currentStep === 2 ? '280px' : '180px' }}>
+      <div className="relative" style={{ minHeight: currentStep === 7 ? '320px' : (currentStep === 5 || currentStep === 6 ? '240px' : currentStep === 1 || currentStep === 2 ? '280px' : '200px') }}>
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 1 && (
             <motion.div
@@ -351,6 +354,60 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
               className="w-full bg-white/10 backdrop-blur-sm border border-white/30 rounded-2xl px-4 py-3 text-base text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-inset focus:ring-offset-0 resize-none overflow-visible mb-2"
               style={{ fontSize: '16px' }}
             />
+          </motion.div>
+        )}
+
+        {currentStep === 7 && (
+          <motion.div
+            key="step7"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="space-y-4 absolute w-full"
+          >
+            <div className="rounded-2xl bg-white/5 backdrop-blur-md border border-white/15 p-4 sm:p-5 relative overflow-hidden">
+              <div className="absolute inset-0 pointer-events-none" style={{
+                background: 'radial-gradient(60% 80% at 0% 0%, rgba(30,143,213,0.18) 0%, transparent 70%), radial-gradient(45% 45% at 100% 0%, rgba(204,255,0,0.12) 0%, transparent 60%)'
+              }} />
+
+              <div className="flex items-center justify-between gap-2 relative z-10">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/15">
+                  <Lock className="size-3.5" />
+                  Hawkeye analytics — Private beta
+                </div>
+                <div className="hidden sm:inline-flex items-center gap-1 text-[11px] text-white/60">
+                  <ShieldCheck className="size-3.5" /> Secure ingestion
+                </div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div className="md:col-span-3 space-y-2">
+                  <h4 className="text-sm font-semibold text-white">Input Hawkeye data to analyse your game</h4>
+                  <p className="text-xs text-white/70">Upload match tracking exports (CSV/JSON) or paste a session link. Tennanova will map ball trajectories, depth, and error patterns to a personalised coaching plan.</p>
+
+                  <ul className="mt-3 space-y-1.5 text-xs text-white/70">
+                    <li className="flex items-center gap-2"><BarChart3 className="size-3.5 text-white/80" /> Pattern detection: serve placement, rally length, error clusters</li>
+                    <li className="flex items-center gap-2"><KeyRound className="size-3.5 text-white/80" /> Tactical insights aligned to player level and goals</li>
+                  </ul>
+                </div>
+
+                <div className="md:col-span-2">
+                  <div className="rounded-xl border border-white/15 bg-white/5 p-3">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-xs font-medium text-white/80">Upload data (CSV/JSON)</label>
+                      <button type="button" disabled className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 px-3 py-2 text-xs text-white/80 disabled:opacity-70">
+                        <UploadCloud className="size-4" /> Choose file
+                      </button>
+                      <input type="file" disabled className="hidden" aria-hidden />
+                      <label className="text-xs font-medium text-white/80 mt-2">Or paste session link</label>
+                      <input disabled placeholder="hawk-eye:// or https://..." className="w-full rounded-xl bg-white/10 border border-white/20 px-3 py-2 text-xs text-white/70 placeholder:text-white/40" />
+                      <p className="text-[11px] text-white/60">Sign in to unlock Hawkeye analysis.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

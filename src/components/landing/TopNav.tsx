@@ -14,7 +14,11 @@ export default function TopNav() {
     <header className="fixed inset-x-0 top-0 z-50 bg-transparent backdrop-blur-sm">
       <div className="relative mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-6 px-6 sm:px-8">
         <Link href="/" className="flex items-center">
-          <span className="text-white font-extrabold text-lg tracking-tight">tennanova</span>
+          <img
+            src="/tennanova.png"
+            alt="Tennanova Logo"
+            className="h-8 w-auto"
+          />
         </Link>
         <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-sm text-white/80">
           {NAV_ITEMS.map((item) => (

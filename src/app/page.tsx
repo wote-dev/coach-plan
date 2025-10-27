@@ -8,6 +8,7 @@ import ROI from '@/components/landing/ROI';
 import Pricing from '@/components/landing/Pricing';
 import Security from '@/components/landing/Security';
 import Integrations from '@/components/landing/Integrations';
+import HawkeyeBeta from '@/components/landing/HawkeyeBeta';
 import Team from '@/components/landing/Team';
 import FinalCTA from '@/components/landing/FinalCTA';
 import Footer from '@/components/landing/Footer';
@@ -23,6 +24,7 @@ export default function Home() {
       <Pricing />
       <Security />
       <Integrations />
+      <HawkeyeBeta />
       <Team />
       <FinalCTA />
       <Footer />
