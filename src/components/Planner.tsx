@@ -192,11 +192,11 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
             style={{ minHeight: '280px' }}
           >
             <label className="text-sm font-medium text-white text-center">What is your client&apos;s age group?</label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {[
-                { label: 'Youth (5-12)', icon: Baby, sub: 'Foundational development' },
-                { label: 'Teen (13-17)', icon: GraduationCap, sub: 'Skill building' },
-                { label: 'Adult (18-59)', icon: User, sub: 'Performance' },
+                { label: 'Youth (5‑12)', icon: Baby, sub: 'Foundational development' },
+                { label: 'Teen (13‑17)', icon: GraduationCap, sub: 'Skill building' },
+                { label: 'Adult (18‑59)', icon: User, sub: 'Performance' },
                 { label: 'Senior (60+)', icon: UserCircle, sub: 'Longevity' }
               ].map(({ label: ageOption, icon: Icon, sub }) => (
                 <motion.button
@@ -219,7 +219,7 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
                       <Icon className="size-5" />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-white">{ageOption}</div>
+                      <div className="text-sm font-semibold text-white md:whitespace-nowrap">{ageOption}</div>
                       <div className="text-xs text-white/60">{sub}</div>
                     </div>
                   </div>
