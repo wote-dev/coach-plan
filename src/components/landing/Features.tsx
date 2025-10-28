@@ -1,4 +1,5 @@
 export default function Features() {
+  const BGS = ['/tennis1.jpg', '/tennis2.jpg', '/tennis3.jpg', '/tennis4.jpg', '/tennis5.jpg', '/tennis6.jpg'];
   return (
     <section id="features" className="py-20 sm:py-28 border-t border-white/5">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
@@ -13,12 +14,24 @@ export default function Features() {
             { title: 'Templates & playbooks', desc: 'Codify best practice and reuse across teams, sites, and seasons.' },
             { title: 'Collaboration & approvals', desc: 'Comment, review, and align staff with roles and permissions.' },
             { title: 'Performance analytics (roadmap)', desc: 'Hook into Hawkeye, grip sensors, and athlete tracking to enrich plans and outcomes.' },
-          ].map((f) => (
-            <div key={f.title} className="border border-white/10 rounded-lg p-6 hover:border-white/20 transition-colors">
-              <h3 className="text-white font-semibold mb-2">{f.title}</h3>
-              <p className="text-sm text-white/70">{f.desc}</p>
-            </div>
-          ))}
+          ].map((f, i) => {
+            const bg = i % 2 === 0 ? BGS[i % BGS.length] : null;
+            return (
+              <div key={f.title} className="relative overflow-hidden border border-white/10 rounded-lg p-6 hover:border-white/20 transition-colors">
+                {bg && (
+                  <>
+                    <div
+                      className="absolute inset-0 -z-10"
+                      style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                    />
+                    <div className="absolute inset-0 -z-10 bg-black/40" />
+                  </>
+                )}
+                <h3 className="text-white font-semibold mb-2">{f.title}</h3>
+                <p className="text-sm text-white/80">{f.desc}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

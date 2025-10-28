@@ -43,7 +43,11 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="border-y border-white/10 bg-[#060D16] py-28">
+    <section id="pricing" className="relative overflow-hidden border-y border-white/10 py-28">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0" style={{ backgroundImage: "url('/tennis4.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 bg-[#060D16]/85" />
+      </div>
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6">
         <div className="space-y-4 text-center">
           <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/45">Pricing</p>
@@ -56,13 +60,18 @@ export default function Pricing() {
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {PLANS.map((plan) => (
-            <div
-              key={plan.name}
-              className={`flex flex-col rounded-3xl border border-white/10 bg-[#070F1A] p-7 ${
-                plan.recommended ? 'ring-1 ring-[#CCFF00]' : ''
-              }`}
-            >
+          {PLANS.map((plan, i) => {
+            const BGS = ['/tennis2.jpg', '/tennis6.jpg', '/tennis3.jpg'];
+            const bg = plan.recommended ? '/tennis6.jpg' : BGS[i % BGS.length];
+            return (
+              <div
+                key={plan.name}
+                className={`relative overflow-hidden flex flex-col rounded-3xl border border-white/10 bg-[#070F1A]/80 p-7 ${
+                  plan.recommended ? 'ring-1 ring-[#CCFF00]' : ''
+                }`}
+              >
+                <div className="absolute inset-0 -z-10" style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                <div className="absolute inset-0 -z-10 bg-black/45" />
               <div className="flex items-center justify-between">
                 <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white/45">{plan.name}</p>
                 {plan.recommended && (
@@ -96,8 +105,9 @@ export default function Pricing() {
                   {plan.cta.label}
                 </Link>
               </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
         <p className="text-center text-[13px] text-white/45">
           Annual billing available on request · Cancel anytime · Discounts for junior programs and non-profits

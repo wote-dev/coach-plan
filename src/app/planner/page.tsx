@@ -144,18 +144,16 @@ export default function PlannerPage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="justify-self-end self-center z-0 w-full max-w-[720px]"
           >
-            <div className="relative rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur-md shadow-2xl overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#1E8FD5] to-[#CCFF00]" />
-
-              {/* updated tool labels for precision and brand consistency */}
+            <div className="relative rounded-2xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] overflow-hidden" style={{ background: 'linear-gradient(180deg, #0F2138 0%, #0A1624 100%)' }}>
+              {/* SESSION OVERVIEW style header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div>
-                  <p className="text-xs font-semibold tracking-wider text-white/60">tennanova</p>
-                  <h3 className="text-lg font-bold text-white">AI plan generator</h3>
+                  <p className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">Session overview</p>
+                  <h3 className="text-lg font-semibold text-white/90">Customize your session</h3>
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/15">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-3 py-1.5 text-[11px] font-medium text-white/80 ring-1 ring-white/10">
                   <span className="inline-block size-1.5 rounded-full" style={{ background: '#CCFF00' }} />
-                  Tennanova model
+                  Live sync ready
                 </span>
               </div>
 

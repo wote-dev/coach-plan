@@ -2,7 +2,7 @@
 
 import { LessonPlan, DetailedActivity } from '@/data/lessonPlans';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { 
   Cross2Icon, 
   ArrowLeftIcon, 
@@ -174,6 +174,36 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
   const [timerInitialTime, setTimerInitialTime] = useState<number>(0);
   const [isTimerMinimized, setIsTimerMinimized] = useState<boolean>(false);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Prevent background scrolling when overlay is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevTouchAction = body.style.touchAction;
+    const prevPaddingRight = body.style.paddingRight;
+
+    // Account for scrollbar to avoid layout shift
+    const scrollBarWidth = window.innerWidth - html.clientWidth;
+
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    body.style.touchAction = 'none';
+    body.style.setProperty('overscroll-behavior', 'none');
+    if (scrollBarWidth > 0) body.style.paddingRight = `${scrollBarWidth}px`;
+
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+      body.style.touchAction = prevTouchAction;
+      body.style.paddingRight = prevPaddingRight;
+      body.style.removeProperty('overscroll-behavior');
+    };
+  }, [isOpen]);
   
   // Build steps dynamically based on lesson plan content
   const steps = useMemo(() => {
@@ -643,14 +673,14 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
     }
   };
   
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setCurrentStep(0);
     setIsTimerRunning(false);
     if (timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
     }
     onClose();
-  };
+  }, [onClose]);
   
   const handleTimerStart = () => {
     setIsTimerRunning(true);
@@ -740,12 +770,13 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+<motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ overscrollBehavior: 'none' }}
         >
           {/* Brand-inspired background */}
           <div
@@ -1000,8 +1031,8 @@ export default function LessonPlanOverlay({ lessonPlan, isOpen, onClose }: Lesso
               </div>
             </div>
             
-            {/* Scrollable step content */}
-            <div className="flex-1 overflow-y-auto" ref={scrollViewportRef}>
+{/* Scrollable step content */}
+            <div className="flex-1 overflow-y-auto" ref={scrollViewportRef} style={{ overscrollBehavior: 'contain' }}>
               <div className="px-6 py-4">
                     <AnimatePresence mode="wait">
                       {currentStepData && (

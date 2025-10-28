@@ -135,7 +135,7 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
       </div>
 
       {/* Step Content with AnimatePresence */}
-      <div className="relative" style={{ minHeight: currentStep === 7 ? '320px' : (currentStep === 5 || currentStep === 6 ? '240px' : currentStep === 1 || currentStep === 2 ? '280px' : '200px') }}>
+      <div className="relative" style={{ minHeight: currentStep === 7 ? '560px' : (currentStep === 5 || currentStep === 6 ? '260px' : currentStep === 1 || currentStep === 2 ? '300px' : '220px') }}>
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 1 && (
             <motion.div
@@ -393,16 +393,22 @@ export default function Planner({ onPlanGenerated, onSportChange, onGeneratingCh
                 </div>
 
                 <div className="md:col-span-2">
-                  <div className="rounded-xl border border-white/15 bg-white/5 p-3">
-                    <div className="flex flex-col gap-2">
+                  <div className="relative rounded-xl border border-white/15 bg-white/5 p-3 overflow-hidden">
+                    {/* Disabled overlay to visually grey/blur uploader in private beta */}
+                    <div className="pointer-events-none absolute inset-0 rounded-xl bg-black/30 backdrop-blur-[2px] z-10" />
+
+                    <div className="flex flex-col gap-2 opacity-70 select-none">
                       <label className="text-xs font-medium text-white/80">Upload data (CSV/JSON)</label>
-                      <button type="button" disabled className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 px-3 py-2 text-xs text-white/80 disabled:opacity-70">
+                      <button type="button" disabled aria-disabled className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 px-3 py-2 text-xs text-white/80 grayscale cursor-not-allowed">
                         <UploadCloud className="size-4" /> Choose file
                       </button>
                       <input type="file" disabled className="hidden" aria-hidden />
                       <label className="text-xs font-medium text-white/80 mt-2">Or paste session link</label>
                       <input disabled placeholder="hawk-eye:// or https://..." className="w-full rounded-xl bg-white/10 border border-white/20 px-3 py-2 text-xs text-white/70 placeholder:text-white/40" />
                       <p className="text-[11px] text-white/60">Sign in to unlock Hawkeye analysis.</p>
+                      <button type="button" disabled aria-disabled className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold border border-white/20 text-white/60 bg-white/5 cursor-not-allowed">
+                        Hawkeye uploader (beta)
+                      </button>
                     </div>
                   </div>
                 </div>

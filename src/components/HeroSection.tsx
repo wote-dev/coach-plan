@@ -105,7 +105,7 @@ export default function HeroSection() {
             style={{ textWrap: 'balance', fontSize: 'clamp(30px, 4.2vw, 56px)' }}
           >
             Rethink how coaches design tennis sessions
-            <span className="block text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5, #CCFF00)' }}>with Tennanova.</span>
+            <span className="block text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(90deg, #1E8FD5, #CCFF00)' }}>with TennaNova.</span>
           </motion.h1>
 
           <motion.p

@@ -2,9 +2,15 @@ import Link from 'next/link';
 
 export default function FinalCTA() {
   return (
-    <section id="book-demo" className="bg-[#040910] py-28">
+    <section id="book-demo" className="relative overflow-hidden py-28">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0" style={{ backgroundImage: "url('/stadium.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 bg-[#040910]/85" />
+      </div>
       <div className="mx-auto max-w-5xl px-6">
-        <div className="rounded-3xl border border-white/10 bg-[#070F1A] p-10 text-center sm:p-14">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#070F1A]/80 p-10 text-center sm:p-14">
+          <div className="absolute inset-0 -z-10" style={{ backgroundImage: "url('/tennis6.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div className="absolute inset-0 -z-10 bg-black/40" />
           <p className="text-[12px] font-semibold uppercase tracking-[0.26em] text-white/45">Join the next wave</p>
           {/* updated final CTA headline to be investor‑ready and athlete‑centric */}
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-[42px]">

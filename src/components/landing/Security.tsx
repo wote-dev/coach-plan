@@ -1,6 +1,10 @@
 export default function Security() {
   return (
-    <section id="security" className="bg-[#050B13] py-28">
+    <section id="security" className="relative overflow-hidden py-28">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0" style={{ backgroundImage: "url('/tennis5.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 bg-[#050B13]/85" />
+      </div>
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6">
         <div className="space-y-4 text-center">
           {/* repurposed section to Founder story */}
@@ -28,8 +32,10 @@ export default function Security() {
                 'I’m building an AI planning engine so coaches can focus on athletes—not admin',
               ],
             },
-          ].map((item) => (
-            <div key={item.title} className="rounded-3xl border border-white/10 bg-[#070F1A] p-7">
+          ].map((item, i) => (
+            <div key={item.title} className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#070F1A]/80 p-7">
+              <div className="absolute inset-0 -z-10" style={{ backgroundImage: `url(${i % 2 === 0 ? '/tennis1.jpg' : '/tennis2.jpg'})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+              <div className="absolute inset-0 -z-10 bg-black/45" />
               <p className="text-[13px] font-semibold uppercase tracking-[0.22em] text-white/45">{item.title}</p>
               <ul className="mt-4 space-y-4 text-sm text-white/70">
                 {item.bullets.map((bullet) => (
@@ -42,7 +48,9 @@ export default function Security() {
             </div>
           ))}
         </div>
-        <div className="rounded-3xl border border-white/10 bg-[#070F1A] p-7 text-sm text-white/70 lg:flex lg:items-center lg:justify-between">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#070F1A]/80 p-7 text-sm text-white/70 lg:flex lg:items-center lg:justify-between">
+          <div className="absolute inset-0 -z-10" style={{ backgroundImage: "url('/tennis3.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div className="absolute inset-0 -z-10 bg-black/45" />
           <div className="max-w-xl">
             <p className="text-white">Let’s connect</p>
             <p className="mt-2">
